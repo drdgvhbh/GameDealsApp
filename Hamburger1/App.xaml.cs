@@ -10,24 +10,32 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 
 namespace Hamburger1 {
-    /// Documentation on APIs used in this page:
-    /// https://github.com/Windows-XAML/Template10/wiki
+    using MetroLog;
+    using MetroLog.Targets;
 
+    /// <summary>
+    /// The app.
+    /// </summary>
     [Bindable]
-    sealed partial class App : BootStrapper {
+    public sealed partial class App : BootStrapper {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="App"/> class.
+        /// </summary>
         public App() {
-            InitializeComponent();
-            SplashFactory = (e) => new Views.Splash(e);
+            this.InitializeComponent();
+            this.SplashFactory = (e) => new Views.Splash(e);
 
-            #region app settings
-
-            // some settings must be set in app.constructor
             var settings = SettingsService.Instance;
-            RequestedTheme = settings.AppTheme;
-            CacheMaxDuration = settings.CacheMaxDuration;
-            ShowShellBackButton = settings.UseShellBackButton;
+            this.RequestedTheme = settings.AppTheme;
+            this.CacheMaxDuration = settings.CacheMaxDuration;
+            this.ShowShellBackButton = settings.UseShellBackButton;
 
-            #endregion
+#if DEBUG
+            LogManagerFactory.DefaultConfiguration.AddTarget(
+                LogLevel.Trace,
+                LogLevel.Fatal,
+                new StreamingFileTarget());
+#endif
         }
 
         public override UIElement CreateRootElement(IActivatedEventArgs e) {

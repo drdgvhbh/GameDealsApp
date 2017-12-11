@@ -1,52 +1,107 @@
-﻿using Template10.Mvvm;
-using System.Collections.Generic;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Template10.Services.NavigationService;
-using Windows.UI.Xaml.Navigation;
+﻿namespace Hamburger1.ViewModels {
+    using System.Collections.Generic;
+    using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Net.Http;
+    using System.Threading.Tasks;
 
-namespace Hamburger1.ViewModels {
+    using Hamburger1.Controls;
+    using Hamburger1.Messages;
+    using Hamburger1.Models;
+    using Hamburger1.Views;
+
+    using MetroLog;
+
+    using Template10.Mvvm;
+    using Template10.Services.NavigationService;
+    using Template10.Services.SerializationService;
+
+    using Windows.ApplicationModel;
+    using Windows.UI.Xaml.Navigation;
+
     public class MainPageViewModel : ViewModelBase {
+        /// <summary>
+        ///     The log.
+        /// </summary>
+        private static readonly ILogger Log = LogManagerFactory
+            .DefaultLogManager.GetLogger<MainPageViewModel>();
+
+        private string _Value = "Gas";
+
+        private AccessToken accessToken;
+
+        public ObservableCollection<Deal> DealsList { get; }
+
         public MainPageViewModel() {
-            if (Windows.ApplicationModel.DesignMode.DesignModeEnabled) {
-                Value = "Designtime value";
+            if (DesignMode.DesignModeEnabled) {
+                this.Value = "Designtime value";
+            }
+
+            this.DealsList = new ObservableCollection<Deal>();
+            this.accessToken = new AccessToken();
+        }
+
+        public string Value {
+            get {
+                return this._Value;
+            }
+
+            set {
+                this.Set(ref this._Value, value);
             }
         }
 
-        string _Value = "Gas";
-        public string Value { get { return _Value; } set { Set(ref _Value, value); } }
+        public void GotoAbout() =>
+            this.NavigationService.Navigate(typeof(SettingsPage), 2);
 
-        public override async Task OnNavigatedToAsync(object parameter, NavigationMode mode, IDictionary<string, object> suspensionState) {
-            if (suspensionState.Any()) {
-                Value = suspensionState[nameof(Value)]?.ToString();
-            }
-            await Task.CompletedTask;
-        }
+        public void GotoPrivacy() =>
+            this.NavigationService.Navigate(typeof(SettingsPage), 1);
 
-        public override async Task OnNavigatedFromAsync(IDictionary<string, object> suspensionState, bool suspending) {
+        public void GotoSettings() =>
+            this.NavigationService.Navigate(typeof(SettingsPage), 0);
+
+        /// <summary>
+        ///     The nav to details page.
+        /// </summary>
+        public void NavToDetailsPage() =>
+            this.NavigationService.Navigate(typeof(DetailPage), this.Value);
+
+        public override async Task OnNavigatedFromAsync(
+            IDictionary<string, object> suspensionState,
+            bool suspending) {
             if (suspending) {
-                suspensionState[nameof(Value)] = Value;
+                suspensionState[nameof(this.Value)] = this.Value;
             }
+
             await Task.CompletedTask;
         }
 
-        public override async Task OnNavigatingFromAsync(NavigatingEventArgs args) {
+        public override async Task OnNavigatedToAsync(
+            object parameter,
+            NavigationMode mode,
+            IDictionary<string, object> suspensionState) {
+            if (suspensionState.Any()) {
+                this.Value = suspensionState[nameof(this.Value)]?.ToString();
+            }
+
+            if (parameter is string param) {
+                SerializationService.Json.TryDeserialize(
+                    param,
+                    out this.accessToken);
+                Log.Info("Access Token set to {0}", this.accessToken);
+            }
+            this.DealsList.Add(new Deal("Derp"));
+            await Task.CompletedTask;
+        }
+
+        public override async Task OnNavigatingFromAsync(
+            NavigatingEventArgs args) {
             args.Cancel = false;
             await Task.CompletedTask;
         }
 
-        public void GotoDetailsPage() =>
-            NavigationService.Navigate(typeof(Views.DetailPage), Value);
-
-        public void GotoSettings() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 0);
-
-        public void GotoPrivacy() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 1);
-
-        public void GotoAbout() =>
-            NavigationService.Navigate(typeof(Views.SettingsPage), 2);
-
+        public async Task PopulateDealsList() {
+            var client = new HttpClient();
+        }
     }
 }
