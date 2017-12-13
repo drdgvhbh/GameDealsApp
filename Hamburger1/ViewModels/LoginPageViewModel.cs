@@ -26,8 +26,7 @@
 
         public async void Authenticate() {
             this.IsNotAuthenticating = false;
-            var startUri = new UriBuilder
-            {
+            var startUri = new UriBuilder {
                 Scheme = "https",
                 Host = "api.isthereanydeal.com",
                 Path = "oauth/authorize",

@@ -1,8 +1,11 @@
 ﻿namespace Hamburger1.ViewModels {
+    using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.IO;
     using System.Linq;
     using System.Net.Http;
+    using System.Runtime.InteropServices.WindowsRuntime;
     using System.Threading.Tasks;
 
     using Hamburger1.Controls;
@@ -17,7 +20,13 @@
     using Template10.Services.SerializationService;
 
     using Windows.ApplicationModel;
+    using Windows.ApplicationModel.Resources;
+    using Windows.Storage.Streams;
+    using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
+
+    using Hamburger1.Models.ITAD;
+    using Hamburger1.Models.Steam;
 
     public class MainPageViewModel : ViewModelBase {
         /// <summary>
@@ -36,7 +45,6 @@
             if (DesignMode.DesignModeEnabled) {
                 this.Value = "Designtime value";
             }
-
             this.DealsList = new ObservableCollection<Deal>();
             this.accessToken = new AccessToken();
         }
@@ -48,6 +56,7 @@
 
             set {
                 this.Set(ref this._Value, value);
+                this.RaisePropertyChanged();
             }
         }
 
@@ -90,7 +99,8 @@
                     out this.accessToken);
                 Log.Info("Access Token set to {0}", this.accessToken);
             }
-            this.DealsList.Add(new Deal("Derp"));
+            this.DealsList.Clear();
+            await this.PopulateDealsList();
             await Task.CompletedTask;
         }
 
@@ -101,7 +111,73 @@
         }
 
         public async Task PopulateDealsList() {
-            var client = new HttpClient();
+            try {
+                var resources = ResourceLoader.GetForCurrentView("apiKeys");
+                var itadKey = resources.GetString("ITAD");
+                var uriBuilder = new UriBuilder
+                {
+                    Scheme = "https",
+                    Host = "api.isthereanydeal.com",
+                    Path = "v01/deals/list/ca",
+                    Query = "key=" + itadKey + "&country=CAD" + "&offset=0"
+                            + "&limit=2000"
+                };
+                var client = new Windows.Web.Http.HttpClient();
+                var response = await client.GetAsync(uriBuilder.Uri);
+                var recentDeals =
+                    RecentDealsResponse.FromJson(response.Content.ToString());
+                uriBuilder = new UriBuilder
+                {
+                    Scheme = "https",
+                    Host = "api.steampowered.com",
+                    Path = "ISteamApps/GetAppList/v0002"
+                };
+                response = await client.GetAsync(uriBuilder.Uri);
+                var steamApps =
+                    GetAppListResponse.FromJson(response.Content.ToString());
+                Dictionary<string, long> appIdMap =
+                    new Dictionary<string, long>();
+                foreach (var app in steamApps.Applist.Apps) {
+                    if (!appIdMap.ContainsKey(app.Name)) {
+                        appIdMap.Add(app.Name, app.Appid);
+                    }
+                }
+                Log.Debug(recentDeals.Data.List.Length.ToString());
+                Log.Debug(appIdMap.ContainsKey("Diluvion").ToString());
+                foreach (var game in recentDeals.Data.List) {
+                    var image = new BitmapImage(
+                        new Uri("ms-appx:///Assets/NoPreviewAvaliable.png"));
+                    try {
+                        var imagePath =
+                            "steam/apps/" + appIdMap[game.Title]
+                            + "/header.jpg";
+                        uriBuilder = new UriBuilder
+                        {
+                            Scheme = "http",
+                            Host = "cdn.akamai.steamstatic.com",
+                            Path = imagePath
+                        };
+                        image = new BitmapImage(
+                            new Uri(uriBuilder.ToString(), UriKind.Absolute));
+
+                    }
+                    catch (KeyNotFoundException e) {
+                        Log.Debug(e.Message);
+                    }
+
+
+                    this.DealsList.Add(
+                        new Deal(
+                            game.Title,
+                            "$" + game.PriceNew,
+                            "$" + game.PriceOld,
+                            "-" + game.PriceCut + "%",
+                            image));
+                }
+
+            } catch (System.Runtime.InteropServices.COMException e) {
+                Log.Debug("No Internet");
+            }
         }
     }
 }
