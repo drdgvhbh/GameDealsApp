@@ -1,0 +1,26 @@
+﻿<UserControl
+    x:Class="GoodGameDeals.Controls.DealPricingControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoodGameDeals.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="390"
+    d:DesignWidth="400" Height="74">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="52*"/>
+            <RowDefinition Height="48*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="320*"/>
+            <ColumnDefinition Width="60*"/>
+            <ColumnDefinition Width="10*"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="DiscountView" Margin="0" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Height="21" Padding="4,0" TextAlignment="Center" VerticalAlignment="Center" MinWidth="0" MinHeight="0" FontSize="14" Background="#FF3F871E" PlaceholderText="-10%" HorizontalAlignment="Right" Text="{Binding Discount, ElementName=userControl, Mode=TwoWay}" Grid.RowSpan="2"/>
+        <TextBlock x:Name="GamePriceViewOld" Margin="0" TextWrapping="Wrap" TextAlignment="Right" FontSize="12" Foreground="#FF828282" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding GamePriceOld, ElementName=userControl}" Grid.Column="1" />
+        <TextBlock x:Name="GamePriceView" Margin="0" TextWrapping="Wrap" TextAlignment="Right" FontSize="16" Foreground="White" Text="{Binding GamePrice, ElementName=userControl}" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" />
+    </Grid>
+</UserControl>
