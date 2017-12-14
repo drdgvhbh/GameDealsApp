@@ -1,14 +1,15 @@
-﻿namespace GoodGameDeals.ViewModels {
+﻿namespace GoodGameDeals.ViewModels.MainPage {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
-    using System.IO;
     using System.Linq;
-    using System.Net.Http;
-    using System.Runtime.InteropServices.WindowsRuntime;
     using System.Threading.Tasks;
 
-    using GoodGameDeals.Controls;
+    using GoodGameDeals.Messages;
+    using GoodGameDeals.Models;
+    using GoodGameDeals.Models.ITAD;
+    using GoodGameDeals.Models.Steam;
+    using GoodGameDeals.Views;
 
     using MetroLog;
 
@@ -18,15 +19,8 @@
 
     using Windows.ApplicationModel;
     using Windows.ApplicationModel.Resources;
-    using Windows.Storage.Streams;
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
-
-    using GoodGameDeals.Messages;
-    using GoodGameDeals.Models;
-    using GoodGameDeals.Models.ITAD;
-    using GoodGameDeals.Models.Steam;
-    using GoodGameDeals.Views;
 
     public class MainPageViewModel : ViewModelBase {
         /// <summary>
@@ -39,13 +33,13 @@
 
         private AccessToken accessToken;
 
-        public ObservableCollection<Deal> DealsList { get; }
+        public GameDealsViewModel GameDealsViewModel { get; }
 
         public MainPageViewModel() {
             if (DesignMode.DesignModeEnabled) {
                 this.Value = "Designtime value";
             }
-            this.DealsList = new ObservableCollection<Deal>();
+            this.GameDealsViewModel = new GameDealsViewModel();
             this.accessToken = new AccessToken();
         }
 
@@ -99,8 +93,13 @@
                     out this.accessToken);
                 Log.Info("Access Token set to {0}", this.accessToken);
             }
-            this.DealsList.Clear();
-            await this.PopulateDealsList();
+
+            await this.GameDealsViewModel.OnNavigatedToAsync(
+                parameter,
+                mode,
+                suspensionState);
+/*            this.DealsList.Clear();
+            await this.PopulateDealsList();*/
             await Task.CompletedTask;
         }
 
@@ -110,7 +109,7 @@
             await Task.CompletedTask;
         }
 
-        public async Task PopulateDealsList() {
+   /*     public async Task PopulateDealsList() {
             try {
                 var resources = ResourceLoader.GetForCurrentView("apiKeys");
                 var itadKey = resources.GetString("ITAD");
@@ -142,8 +141,6 @@
                         appIdMap.Add(app.Name, app.Appid);
                     }
                 }
-                Log.Debug(recentDeals.Data.List.Length.ToString());
-                Log.Debug(appIdMap.ContainsKey("Diluvion").ToString());
                 foreach (var game in recentDeals.Data.List) {
                     var image = new BitmapImage(
                         new Uri("ms-appx:///Assets/NoPreviewAvaliable.png"));
@@ -178,6 +175,6 @@
             } catch (System.Runtime.InteropServices.COMException e) {
                 Log.Debug("No Internet");
             }
-        }
+        }*/
     }
 }

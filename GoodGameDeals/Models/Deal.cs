@@ -1,44 +1,26 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GoodGameDeals.Models {
-    using Windows.UI.Xaml.Media.Imaging;
-
+﻿namespace GoodGameDeals.Models {
     public class Deal {
-        public string GameTitle { get; private set; }
-
-        public string GamePrice { get; private set; }
-
-        public string GamePriceOld { get; private set; }
-
-        public string Discount { get; private set; }
-
-        public BitmapImage Image { get; private set; }
-
-/*        public Deal() : this(string.Empty) {
-
-        }
-
-        public Deal(string gameTitle) : this(gameTitle, "$0.00") {
-        }
-
-        public Deal(string gameTitle, string gamePrice)
-                : this(gameTitle, gamePrice, "$0.00") {
-        }
-
-        public Deal(string gameTitle, string gamePrice, string gamePriceOld)
-            : this(gameTitle, gamePrice, gamePriceOld, "-0%") {
-        }*/
-
-        public Deal(string gameTitle, string gamePrice, string gamePriceOld, string discount, BitmapImage image) {
-            this.GameTitle = gameTitle;
-            this.GamePrice = gamePrice;
-            this.GamePriceOld = gamePriceOld;
+        public Deal(
+                string url,
+                long discount,
+                double gamePriceOld,
+                double gamePrice,
+                string store) {
+            this.Url = url;
             this.Discount = discount;
-            this.Image = image;
+            this.GamePriceOld = gamePriceOld;
+            this.GamePrice = gamePrice;
+            this.Store = store;
         }
+
+        public long Discount { get; }
+
+        public double GamePrice { get; }
+
+        public double GamePriceOld { get; }
+
+        public string Store { get; }
+
+        public string Url { get; }
     }
 }

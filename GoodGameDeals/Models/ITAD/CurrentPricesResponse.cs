@@ -1,7 +1,14 @@
-﻿namespace GoodGameDeals.Models.ITAD {
+﻿// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
+//
+//    using QuickType;
+//
+//    var data = CurrentPricesResponse.FromJson(jsonString);
+//
+
+namespace GoodGameDeals.Models.ITAD {
     using Newtonsoft.Json;
 
-    public partial class RecentDealsResponse {
+    public partial class CurrentPricesResponse {
         [JsonProperty("data")]
         public DataC Data { get; set; }
 
@@ -13,31 +20,32 @@
             public string Currency { get; set; }
         }
 
-        public class DataC {
-            [JsonProperty("count")]
-            public long Count { get; set; }
 
+        [JsonConverter(typeof(PlainConverter))]
+        public class DataC {
+            [JsonProperty("plain")]
+            public Plain
+                Plain { get; set; }
+
+        }
+
+        public class Plain {
             [JsonProperty("list")]
             public List[] List { get; set; }
 
             [JsonProperty("urls")]
-            public PurpleUrls Urls { get; set; }
+            public Urls Urls { get; set; }
         }
 
-        public class PurpleUrls {
-            [JsonProperty("deals")]
-            public string Deals { get; set; }
+
+        public class Urls {
+            [JsonProperty("game")]
+            public string Game { get; set; }
         }
 
         public class List {
-            [JsonProperty("added")]
-            public long Added { get; set; }
-
             [JsonProperty("drm")]
             public string[] Drm { get; set; }
-
-            [JsonProperty("plain")]
-            public string Plain { get; set; }
 
             [JsonProperty("price_cut")]
             public long PriceCut { get; set; }
@@ -51,19 +59,8 @@
             [JsonProperty("shop")]
             public Shop Shop { get; set; }
 
-            [JsonProperty("title")]
-            public string Title { get; set; }
-
-            [JsonProperty("urls")]
-            public FluffyUrls Urls { get; set; }
-        }
-
-        public class FluffyUrls {
-            [JsonProperty("buy")]
-            public string Buy { get; set; }
-
-            [JsonProperty("game")]
-            public string Game { get; set; }
+            [JsonProperty("url")]
+            public string Url { get; set; }
         }
 
         public class Shop {
@@ -75,15 +72,15 @@
         }
     }
 
-    public partial class RecentDealsResponse {
-        public static RecentDealsResponse FromJson(string json) =>
-            JsonConvert.DeserializeObject<RecentDealsResponse>(
+    public partial class CurrentPricesResponse {
+        public static CurrentPricesResponse FromJson(string json) =>
+            JsonConvert.DeserializeObject<CurrentPricesResponse>(
                 json,
                 Converter.Settings);
     }
 
     public static partial class Serialize {
-        public static string ToJson(this RecentDealsResponse self) =>
+        public static string ToJson(this CurrentPricesResponse self) =>
             JsonConvert.SerializeObject(self, Converter.Settings);
     }
 }

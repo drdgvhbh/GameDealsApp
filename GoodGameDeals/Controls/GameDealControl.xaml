@@ -5,11 +5,16 @@
     xmlns:local="using:GoodGameDeals.Controls"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="using:GoodGameDeals.Controls"
+    xmlns:Converters="using:GoodGameDeals.Converters"
+    xmlns:converters="using:Template10.Converters"
     mc:Ignorable="d"
     d:DesignHeight="300"
     d:DesignWidth="400" Width="614" Height="100">
     <UserControl.Resources>
-        <Style x:Key="TextBoxStyle1" TargetType="TextBox">
+        <Converters:DoubleToCurrency x:Key="DoubleToCurrencyConverter"/>
+        <Converters:IntegerToPercentage x:Key="IntegerToPercentageConverter" />
+            <Style x:Key="TextBoxStyle1" TargetType="TextBox">
             <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
             <Setter Property="MinHeight" Value="{ThemeResource TextControlThemeMinHeight}"/>
             <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
@@ -472,6 +477,144 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style TargetType="PivotHeaderItem">
+            <Setter Property="FontSize" Value="{ThemeResource PivotHeaderItemFontSize}" />
+            <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}" />
+            <Setter Property="FontWeight" Value="{ThemeResource PivotHeaderItemThemeFontWeight}" />
+            <Setter Property="CharacterSpacing" Value="{ThemeResource PivotHeaderItemCharacterSpacing}" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
+            <Setter Property="Padding" Value="{ThemeResource PivotHeaderItemMargin}" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="IsTabStop" Value="False" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PivotHeaderItem">
+                        <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                            <Grid.Resources>
+                                <Style x:Key="BaseContentPresenterStyle" TargetType="ContentPresenter">
+                                    <Setter Property="FontFamily" Value="XamlAutoFontFamily"/>
+                                    <Setter Property="FontWeight" Value="SemiBold"/>
+                                    <Setter Property="FontSize" Value="15"/>
+                                    <Setter Property="TextWrapping" Value="Wrap"/>
+                                    <Setter Property="LineStackingStrategy" Value="MaxHeight"/>
+                                    <Setter Property="TextLineBounds" Value="Full"/>
+                                    <Setter Property="OpticalMarginAlignment" Value="TrimSideBearings"/>
+                                </Style>
+                                <Style x:Key="BodyContentPresenterStyle" TargetType="ContentPresenter" BasedOn="{StaticResource BaseContentPresenterStyle}">
+                                    <Setter Property="FontFamily" Value="{ThemeResource PivotHeaderItemFontFamily}" />
+                                    <Setter Property="FontWeight" Value="{ThemeResource PivotHeaderItemThemeFontWeight}"/>
+                                    <Setter Property="FontSize" Value="{ThemeResource PivotHeaderItemFontSize}"/>
+                                </Style>
+                            </Grid.Resources>
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="SelectionStates">
+                                    <VisualStateGroup.Transitions>
+                                        <VisualTransition From="Unselected" To="UnselectedLocked" GeneratedDuration="0:0:0.33" />
+                                        <VisualTransition From="UnselectedLocked" To="Unselected" GeneratedDuration="0:0:0.33" />
+                                    </VisualStateGroup.Transitions>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlDisabledBaseMediumLowBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Unselected" />
+                                    <VisualState x:Name="UnselectedLocked">
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="ContentPresenterTranslateTransform"
+                                 Storyboard.TargetProperty="X"
+                                 Duration="0" To="{ThemeResource PivotHeaderItemLockedTranslation}" />
+                                            <DoubleAnimation Storyboard.TargetName="ContentPresenter"
+                                 Storyboard.TargetProperty="(UIElement.Opacity)"
+                                 Duration="0" To="0" />
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Selected">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
+                                               Storyboard.TargetProperty="Background" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="UnselectedPointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
+                                               Storyboard.TargetProperty="Background" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedPointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                                Storyboard.TargetProperty="Foreground" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
+                                               Storyboard.TargetProperty="Background" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="UnselectedPressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
+                                               Storyboard.TargetProperty="Background" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="SelectedPressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter"
+                                               Storyboard.TargetProperty="Foreground" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightAltBaseMediumHighBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="Grid"
+                                               Storyboard.TargetProperty="Background" >
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightTransparentBrush}" />
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter
+            x:Name="ContentPresenter"
+            Content="{TemplateBinding Content}"
+            ContentTemplate="{TemplateBinding ContentTemplate}"
+            Margin="{TemplateBinding Padding}"
+            FontSize="{TemplateBinding FontSize}"
+            FontFamily="{TemplateBinding FontFamily}"
+            FontWeight="{TemplateBinding FontWeight}"
+            HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+            VerticalAlignment="{TemplateBinding VerticalContentAlignment}">
+                                <ContentPresenter.RenderTransform>
+                                    <TranslateTransform x:Name="ContentPresenterTranslateTransform" />
+                                </ContentPresenter.RenderTransform>
+                            </ContentPresenter>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     <Grid Margin="0"
        >
@@ -500,39 +643,18 @@
         </Grid.ColumnDefinitions>
         <TextBlock x:Name="GameTitleView" Margin="0" Text="{Binding GameTitle, ElementName=userControl}" FontSize="18" IsHitTestVisible="False" HorizontalAlignment="Left" Grid.Column="2" Grid.Row="1" VerticalAlignment="Top" Grid.RowSpan="2" Grid.ColumnSpan="4" TextTrimming="CharacterEllipsis"/>
         <Image x:Name="GameImageView"
-               Grid.Row="0" Grid.RowSpan="10" Source="{Binding Image, ElementName=userControl}" Stretch="UniformToFill"/>
-        <Pivot Grid.ColumnSpan="4" Margin="0" Grid.RowSpan="5" Grid.Column="2" Grid.Row="1" >
-            <PivotItem Margin="0">
-                <PivotItem.Header>
-                    <local:TabHeader />
-                </PivotItem.Header>
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="52*"/>
-                        <RowDefinition Height="48*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="320*"/>
-                        <ColumnDefinition Width="60*"/>
-                        <ColumnDefinition Width="10*"/>
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="DiscountView" Margin="0" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Height="21" Padding="4,0" TextAlignment="Center" VerticalAlignment="Center" MinWidth="0" MinHeight="0" FontSize="14" Background="#FF3F871E" PlaceholderText="-10%" HorizontalAlignment="Right" Text="{Binding Discount, ElementName=userControl, Mode=TwoWay}" Style="{StaticResource TextBoxStyle1}" Grid.RowSpan="2"/>
-                    <TextBlock x:Name="GamePriceViewOld" Margin="0" TextWrapping="Wrap" TextAlignment="Right" FontSize="12" Foreground="#FF828282" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding GamePriceOld, ElementName=userControl}" Grid.Column="1" />
-                    <TextBlock x:Name="GamePriceView" Margin="0" TextWrapping="Wrap" TextAlignment="Right" FontSize="16" Foreground="White" Text="{Binding GamePrice, ElementName=userControl}" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" />
-                </Grid>
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <local:TabHeader />
-                </PivotItem.Header>
-                <Grid/>
-            </PivotItem>
-            <PivotItem>
-                <PivotItem.Header>
-                    <local:TabHeader />
-                </PivotItem.Header>
-                <Grid/>
-            </PivotItem>
+               Grid.Row="0" Grid.RowSpan="6" Source="{Binding Image, ElementName=userControl}" Stretch="UniformToFill"/>
+        <Pivot Grid.ColumnSpan="4" Margin="0" Grid.RowSpan="5" Grid.Column="2" Grid.Row="1" ItemsSource="{Binding DealsList, ElementName=userControl}" >
+            <Pivot.HeaderTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Store}" />
+                </DataTemplate>
+            </Pivot.HeaderTemplate>
+            <Pivot.ItemTemplate>
+                <DataTemplate>
+                    <Controls:DealPricingControl GamePrice="{Binding GamePrice, Converter={StaticResource DoubleToCurrencyConverter}}" GamePriceOld="{Binding GamePriceOld, Converter={StaticResource DoubleToCurrencyConverter}}" Discount="{Binding Discount, Converter={StaticResource IntegerToPercentageConverter}}" />
+                </DataTemplate>
+            </Pivot.ItemTemplate>
         </Pivot>
     </Grid>
 </UserControl>

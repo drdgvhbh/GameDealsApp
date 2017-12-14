@@ -8,11 +8,13 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:local="using:GoodGameDeals.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:vm="using:GoodGameDeals.ViewModels" xmlns:Controls="using:GoodGameDeals.Controls" x:Class="GoodGameDeals.Views.MainPage"
+      xmlns:vm="using:GoodGameDeals.ViewModels" xmlns:Controls="using:GoodGameDeals.Controls"
+      xmlns:mainPage="using:GoodGameDeals.ViewModels.MainPage"
+    x:Class="GoodGameDeals.Views.MainPage"
       mc:Ignorable="d">
 
     <Page.DataContext>
-        <vm:MainPageViewModel x:Name="ViewModel" />
+        <mainPage:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
     <Grid>
         <Grid.ColumnDefinitions>
@@ -44,7 +46,7 @@
             </TextBlock>
         </Viewbox>
         <ScrollViewer HorizontalAlignment="Left" Margin="0" Grid.Column="1" Grid.Row="3" Width="634" Background="#BF292929">
-            <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding DealsList}" Margin="10,10,0,0" >
+            <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding GameDealsViewModel.GamesList}" Margin="10,10,0,0" >
                 <ItemsControl.Resources>
                     <Style TargetType="ContentPresenter">
                         <Setter Property="Padding" Value="0" />
@@ -58,7 +60,8 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Controls:GameDealControl GameTitle="{Binding GameTitle}" GamePrice="{Binding GamePrice}" GamePriceOld="{Binding GamePriceOld}" Discount="{Binding Discount}" Image="{Binding Image}" MaxHeight="100"/>
+                        <Controls:GameDealControl GameTitle="{Binding GameTitle}" Image="{Binding GameImage}" DealsList="{Binding DealsList}" MaxHeight="100"/>
+                        <!--GamePrice="{Binding GamePrice}" GamePriceOld="{Binding GamePriceOld}" Discount="{Binding Discount}"-->
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

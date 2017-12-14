@@ -17,8 +17,25 @@ using Windows.UI.Xaml.Navigation;
 
 namespace GoodGameDeals.Controls {
     public sealed partial class TabHeader : UserControl {
+        public static readonly DependencyProperty TitleProperty =
+            DependencyProperty.Register(
+                "Title",
+                typeof(string),
+                typeof(TabHeader),
+                new PropertyMetadata("Title"));
+
         public TabHeader() {
             this.InitializeComponent();
+        }
+
+        public string Title {
+            get {
+                return (string)this.GetValue(TitleProperty);
+            }
+
+            set {
+                this.SetValue(TitleProperty, value);
+            }
         }
     }
 }
