@@ -486,7 +486,7 @@
             <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseMediumBrush}" />
             <Setter Property="Padding" Value="{ThemeResource PivotHeaderItemMargin}" />
             <Setter Property="Height" Value="30" />
-            <Setter Property="FontSize" Value="12"/>
+            <Setter Property="FontSize" Value="14"/>
             <Setter Property="VerticalContentAlignment" Value="Center" />
             <Setter Property="IsTabStop" Value="False" />
             <Setter Property="Template">
@@ -652,7 +652,7 @@
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate>
-                    <Controls:DealPricingControl GamePrice="{Binding GamePrice, Converter={StaticResource DoubleToCurrencyConverter}}" GamePriceOld="{Binding GamePriceOld, Converter={StaticResource DoubleToCurrencyConverter}}" Discount="{Binding Discount, Converter={StaticResource IntegerToPercentageConverter}}" />
+                    <Controls:DealPricingControl GamePrice="{Binding GamePrice, Converter={StaticResource DoubleToCurrencyConverter}}" GamePriceOld="{Binding GamePriceOld, Converter={StaticResource DoubleToCurrencyConverter}}" Discount="{Binding Discount, Converter={StaticResource IntegerToPercentageConverter}, ConverterParameter=true}" />
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>

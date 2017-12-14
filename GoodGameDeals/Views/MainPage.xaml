@@ -16,20 +16,11 @@
     <Page.DataContext>
         <mainPage:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-    <Grid>
+    <Grid Background="#BF292929">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="35*"/>
             <ColumnDefinition Width="1480*"/>
         </Grid.ColumnDefinitions>
-        <Grid.Background>
-            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
-                <LinearGradientBrush.RelativeTransform>
-                    <CompositeTransform CenterY="0.5" CenterX="0.5"/>
-                </LinearGradientBrush.RelativeTransform>
-                <GradientStop Color="#FF435D7E" Offset="0"/>
-                <GradientStop Color="#FF222D40" Offset="1"/>
-            </LinearGradientBrush>
-        </Grid.Background>
         <Grid.RowDefinitions>
             <RowDefinition Height="21*" />
             <RowDefinition Height="57*"/>
@@ -38,14 +29,14 @@
             <RowDefinition Height="21*"/>
             <!--<<< Will resize to the size of contents -->
         </Grid.RowDefinitions>
-        <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Left" Grid.RowSpan="2">
-            <TextBlock HorizontalAlignment="Left" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="48" Margin="0" Width="254" Height="74">
+        <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">
+            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="48" Margin="0" Width="254" Height="74">
                 <Run Text="Latest Deals"/>
                 <LineBreak/>
                 <Run/>
             </TextBlock>
         </Viewbox>
-        <ScrollViewer HorizontalAlignment="Left" Margin="0" Grid.Column="1" Grid.Row="3" Width="634" Background="#BF292929">
+        <ScrollViewer Margin="0" Grid.Column="1" Grid.Row="3" Width="634">
             <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding GameDealsViewModel.GamesList}" Margin="10,10,0,0" >
                 <ItemsControl.Resources>
                     <Style TargetType="ContentPresenter">

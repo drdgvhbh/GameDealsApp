@@ -15,7 +15,11 @@ namespace GoodGameDeals.Converters {
                 Type targetType,
                 object parameter,
                 string language) {
-            return ((long)value / 100.0).ToString("P0", CultureInfo.CurrentCulture);
+            var text = ((long)value / 100.0).ToString("P0", CultureInfo.CurrentCulture);
+            if (parameter is string b && bool.Parse(b)) {
+                text = "-" + text;
+            }
+            return text;
         }
 
         public object ConvertBack(
