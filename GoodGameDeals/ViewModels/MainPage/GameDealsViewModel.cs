@@ -4,6 +4,7 @@
     using System.Collections.ObjectModel;
     using System.Reactive.Windows.Foundation;
     using System.Text;
+    using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
     using Windows.ApplicationModel.Resources;
@@ -107,9 +108,12 @@
                     counter++;
                 }
 
+                var regex = new Regex(@":|-");
+                var gameHeader = regex.Split(game.Title, 2);
                 this.GamesList.Add(
                     new Game(
-                        game.Title,
+                        gameHeader[0].Trim(),
+                        gameHeader.Length == 2 ? gameHeader[1].Trim() : string.Empty,
                         image,
                         dealsCollection));
             }

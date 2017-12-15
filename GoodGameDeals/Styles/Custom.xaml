@@ -8,7 +8,6 @@
 
     <Color x:Key="CustomColor">SteelBlue</Color>
     <Color x:Key="ContrastColor">White</Color>
-    <Color x:Key="SystemAccentColor">SteelBlue</Color>
 
     <ResourceDictionary.ThemeDictionaries>
 
@@ -18,9 +17,22 @@
             <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{StaticResource CustomColor}" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource ContrastColor}" />
+            <SolidColorBrush x:Key="AccentColor">#6E89AD</SolidColorBrush>
+            <SolidColorBrush x:Key="DiscountGreen" Color="#FFF1DF"/>
 
             <Style TargetType="controls:HamburgerMenu">
-                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
+                <Setter Property="HamburgerBackground" Value="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" />
+                <Setter Property="HamburgerForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavAreaBackground" Value="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" />
+                <Setter Property="NavButtonForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonBackground" Value="Transparent" />
+                <Setter Property="NavButtonHoverForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonHoverBackground" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                <Setter Property="NavButtonPressedForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonPressedBackground" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}" />
+                <Setter Property="NavButtonCheckedForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonCheckedBackground" Value="Transparent" />
+                <Setter Property="NavButtonCheckedIndicatorBrush" Value="{StaticResource AccentColor}" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
                 <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
@@ -38,36 +50,27 @@
 
         </ResourceDictionary>
 
-        <ResourceDictionary x:Key="Default">
-
+        <ResourceDictionary x:Key="Dark">
             <SolidColorBrush x:Key="CustomColorBrush" Color="{StaticResource CustomColor}" />
             <SolidColorBrush x:Key="ContrastColorBrush" Color="{StaticResource ContrastColor}" />
             <SolidColorBrush x:Key="ExtendedSplashBackground" Color="{StaticResource CustomColor}" />
             <SolidColorBrush x:Key="ExtendedSplashForeground" Color="{StaticResource ContrastColor}" />
+            <SolidColorBrush x:Key="AccentColor">#6E89AD</SolidColorBrush>
+            <SolidColorBrush x:Key="DiscountGreen" Color="#789EB2"/>
 
             <Style TargetType="controls:HamburgerMenu">
-
-                <!--
-
-                Windows 10 2015 (1511) Hamburger1 Menu Style
-                Simply replace AccentColor with the follow setters.
-
-                <Setter Property="HamburgerBackground" Value="{StaticResource CustomColorBrush}" />
-                <Setter Property="HamburgerForeground" Value="White" />
-                <Setter Property="NavAreaBackground" Value="#FF2C2C2C" />
-                <Setter Property="NavButtonForeground" Value="White" />
+                <Setter Property="HamburgerBackground" Value="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" />
+                <Setter Property="HamburgerForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavAreaBackground" Value="{ThemeResource SystemControlAltMediumLowAcrylicWindowMediumBrush}" />
+                <Setter Property="NavButtonForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
                 <Setter Property="NavButtonBackground" Value="Transparent" />
-                <Setter Property="NavButtonHoverForeground" Value="White" />
-                <Setter Property="NavButtonHoverBackground" Value="#FF585858" />
-                <Setter Property="NavButtonPressedForeground" Value="White" />
-                <Setter Property="NavButtonPressedBackground" Value="#FF848484" />
-                <Setter Property="NavButtonCheckedForeground" Value="White" />
-                <Setter Property="NavButtonCheckedBackground" Value="#FF2A4E6C" />
-                <Setter Property="NavButtonCheckedIndicatorBrush" Value="Transparent" />
-
-                -->
-
-                <Setter Property="AccentColor" Value="{StaticResource CustomColor}" />
+                <Setter Property="NavButtonHoverForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonHoverBackground" Value="{ThemeResource SystemControlBackgroundBaseLowBrush}" />
+                <Setter Property="NavButtonPressedForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonPressedBackground" Value="{ThemeResource SystemControlBackgroundBaseMediumBrush}" />
+                <Setter Property="NavButtonCheckedForeground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+                <Setter Property="NavButtonCheckedBackground" Value="Transparent" />
+                <Setter Property="NavButtonCheckedIndicatorBrush" Value="#6E89AD" />
                 <Setter Property="VisualStateNarrowMinWidth" Value="{StaticResource NarrowMinWidth}" />
                 <Setter Property="VisualStateNormalMinWidth" Value="{StaticResource NormalMinWidth}" />
                 <Setter Property="VisualStateWideMinWidth" Value="{StaticResource WideMinWidth}" />
@@ -84,7 +87,6 @@
                 <Setter Property="GrabberBrush" Value="{ThemeResource CustomColorBrush}" />
                 <Setter Property="GrabberVisibility" Value="Visible" />
             </Style>
-
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="HighContrast">

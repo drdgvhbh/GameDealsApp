@@ -16,28 +16,20 @@
     <Page.DataContext>
         <mainPage:MainPageViewModel x:Name="ViewModel" />
     </Page.DataContext>
-    <Grid Background="#BF292929">
+    <Grid Background="{ThemeResource SystemControlAltHighAcrylicWindowBrush}">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="35*"/>
-            <ColumnDefinition Width="1480*"/>
+            <ColumnDefinition Width="0*"/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="21*" />
-            <RowDefinition Height="57*"/>
-            <RowDefinition Height="17*"/>
-            <RowDefinition Height="964*"/>
-            <RowDefinition Height="21*"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
             <!--<<< Will resize to the size of contents -->
         </Grid.RowDefinitions>
-        <Viewbox Grid.Row="1" Grid.Column="2" HorizontalAlignment="Center" Grid.RowSpan="2">
-            <TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" VerticalAlignment="Center" FontSize="48" Margin="0" Width="254" Height="74">
-                <Run Text="Latest Deals"/>
-                <LineBreak/>
-                <Run/>
-            </TextBlock>
-        </Viewbox>
-        <ScrollViewer Margin="0" Grid.Column="1" Grid.Row="3" Width="634">
-            <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding GameDealsViewModel.GamesList}" Margin="10,10,0,0" >
+        <TextBlock Style="{StaticResource HeaderTextBlockStyle}" Text="Latest Deals" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" FontFamily="Segoe UI" FontWeight="Light" Margin="24,0,0,0" Grid.ColumnSpan="2" Width="279" HorizontalAlignment="Left"/>
+        <Rectangle Grid.ColumnSpan="2" HorizontalAlignment="Stretch" Height="1" VerticalAlignment="Bottom" Fill="{StaticResource AccentColor}" Margin="24,0,24,0"/>
+        <ScrollViewer Margin="24,24,0,24" Grid.Row="1" Width="634" HorizontalAlignment="Left" Grid.ColumnSpan="2">
+            <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top" ItemsSource="{Binding GameDealsViewModel.GamesList}" >
                 <ItemsControl.Resources>
                     <Style TargetType="ContentPresenter">
                         <Setter Property="Padding" Value="0" />
@@ -51,8 +43,7 @@
                 </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate>
-                        <Controls:GameDealControl GameTitle="{Binding GameTitle}" Image="{Binding GameImage}" DealsList="{Binding DealsList}" MaxHeight="100"/>
-                        <!--GamePrice="{Binding GamePrice}" GamePriceOld="{Binding GamePriceOld}" Discount="{Binding Discount}"-->
+                        <Controls:GameDealControl GameTitle="{Binding GameTitle}" Image="{Binding GameImage}" GameSubtitle="{Binding GameSubtitle}" DealsList="{Binding DealsList}" MaxHeight="100"/>
                     </DataTemplate>
                 </ItemsControl.ItemTemplate>
             </ItemsControl>

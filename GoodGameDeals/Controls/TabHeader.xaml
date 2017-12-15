@@ -24,11 +24,10 @@
             FontFamily="Segoe UI"
             Text="{Binding Title, ElementName=userControl}"
             Style="{StaticResource CaptionTextBlockStyle}"
-            LineStackingStrategy="BlockLineHeight"
-            LineHeight="14"
+            LineStackingStrategy="BlockLineHeight"            
             MaxLines="2"
             IsTextScaleFactorEnabled="False"
             TextAlignment="Center"
-            Margin="0" FontSize="12" Grid.Row="1" Padding="5,0" />
+            Margin="0" Grid.Row="1" Padding="5,0" />
     </Grid>
 </UserControl>

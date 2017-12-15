@@ -6,9 +6,11 @@
     public class Game {
         public Game(
                 string gameTitle,
+                string gameSubtitle,
                 BitmapImage image,
                 ObservableCollection<Deal> dealsList) {
             this.GameTitle = gameTitle;
+            this.GameSubtitle = gameSubtitle;
             this.GameImage = image;
             this.DealsList = dealsList;
         }
@@ -27,5 +29,10 @@
         ///     Gets the game title.
         /// </summary>
         public string GameTitle { get; }
+
+        /// <summary>
+        /// Gets the game subtitle.
+        /// </summary>
+        public string GameSubtitle { get; }
     }
 }

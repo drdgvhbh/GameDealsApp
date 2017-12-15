@@ -98,8 +98,6 @@
                 parameter,
                 mode,
                 suspensionState);
-/*            this.DealsList.Clear();
-            await this.PopulateDealsList();*/
             await Task.CompletedTask;
         }
 
@@ -108,73 +106,5 @@
             args.Cancel = false;
             await Task.CompletedTask;
         }
-
-   /*     public async Task PopulateDealsList() {
-            try {
-                var resources = ResourceLoader.GetForCurrentView("apiKeys");
-                var itadKey = resources.GetString("ITAD");
-                var uriBuilder = new UriBuilder
-                {
-                    Scheme = "https",
-                    Host = "api.isthereanydeal.com",
-                    Path = "v01/deals/list/ca",
-                    Query = "key=" + itadKey + "&country=CAD" + "&offset=0"
-                            + "&limit=2000"
-                };
-                var client = new Windows.Web.Http.HttpClient();
-                var response = await client.GetAsync(uriBuilder.Uri);
-                var recentDeals =
-                    RecentDealsResponse.FromJson(response.Content.ToString());
-                uriBuilder = new UriBuilder
-                {
-                    Scheme = "https",
-                    Host = "api.steampowered.com",
-                    Path = "ISteamApps/GetAppList/v0002"
-                };
-                response = await client.GetAsync(uriBuilder.Uri);
-                var steamApps =
-                    GetAppListResponse.FromJson(response.Content.ToString());
-                Dictionary<string, long> appIdMap =
-                    new Dictionary<string, long>();
-                foreach (var app in steamApps.Applist.Apps) {
-                    if (!appIdMap.ContainsKey(app.Name)) {
-                        appIdMap.Add(app.Name, app.Appid);
-                    }
-                }
-                foreach (var game in recentDeals.Data.List) {
-                    var image = new BitmapImage(
-                        new Uri("ms-appx:///Assets/NoPreviewAvaliable.png"));
-                    try {
-                        var imagePath =
-                            "steam/apps/" + appIdMap[game.Title]
-                            + "/header.jpg";
-                        uriBuilder = new UriBuilder
-                        {
-                            Scheme = "http",
-                            Host = "cdn.akamai.steamstatic.com",
-                            Path = imagePath
-                        };
-                        image = new BitmapImage(
-                            new Uri(uriBuilder.ToString(), UriKind.Absolute));
-
-                    }
-                    catch (KeyNotFoundException e) {
-                        Log.Debug(e.Message);
-                    }
-
-
-                    this.DealsList.Add(
-                        new Deal(
-                            game.Title,
-                            "$" + game.PriceNew,
-                            "$" + game.PriceOld,
-                            "-" + game.PriceCut + "%",
-                            image));
-                }
-
-            } catch (System.Runtime.InteropServices.COMException e) {
-                Log.Debug("No Internet");
-            }
-        }*/
     }
 }

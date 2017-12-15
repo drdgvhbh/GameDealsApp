@@ -3,8 +3,10 @@ namespace GoodGameDeals.Controls {
     using System;
     using System.Collections.ObjectModel;
 
+    using Windows.UI;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
+    using Windows.UI.Xaml.Media;
     using Windows.UI.Xaml.Media.Imaging;
 
     using GoodGameDeals.Models;
@@ -17,6 +19,13 @@ namespace GoodGameDeals.Controls {
                 typeof(string),
                 typeof(GameDealControl),
                 new PropertyMetadata("Game Title"));
+
+        public static readonly DependencyProperty GameSubtitleProperty =
+            DependencyProperty.Register(
+                "GameSubtitle",
+                typeof(string),
+                typeof(GameDealControl),
+                new PropertyMetadata("Game Subtitle"));
 
         public static readonly DependencyProperty ImageProperty =
             DependencyProperty.Register(
@@ -34,6 +43,12 @@ namespace GoodGameDeals.Controls {
 
         public GameDealControl() {
             this.InitializeComponent();
+            this.grid.PointerEntered += (sender, args) => {
+                VisualStateManager.GoToState(this, "PointerOver", true);
+            };
+            this.grid.PointerExited += (sender, args) => {
+                VisualStateManager.GoToState(this, "Normal", true);
+            };
         }
 
         public string GameTitle {
@@ -43,6 +58,16 @@ namespace GoodGameDeals.Controls {
 
             set {
                 this.SetValue(GameTitleProperty, value);
+            }
+        }
+
+        public string GameSubtitle {
+            get {
+                return (string)this.GetValue(GameSubtitleProperty);
+            }
+
+            set {
+                this.SetValue(GameSubtitleProperty, value);
             }
         }
 
