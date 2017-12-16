@@ -71,16 +71,4 @@ namespace GoodGameDeals.Models.ITAD {
             public string Name { get; set; }
         }
     }
-
-    public partial class CurrentPricesResponse {
-        public static CurrentPricesResponse FromJson(string json) =>
-            JsonConvert.DeserializeObject<CurrentPricesResponse>(
-                json,
-                Converter.Settings);
-    }
-
-    public static partial class Serialize {
-        public static string ToJson(this CurrentPricesResponse self) =>
-            JsonConvert.SerializeObject(self, Converter.Settings);
-    }
 }

@@ -1,14 +1,16 @@
 ﻿<common:BootStrapper x:Class="GoodGameDeals.App"
                      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                     xmlns:common="using:Template10.Common">
+                     xmlns:common="using:Template10.Common"
+                     xmlns:containers="using:GoodGameDeals.Containers"
+                     xmlns:vm="using:GoodGameDeals.ViewModels">
 
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
                 <ResourceDictionary Source="Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
-
+            <containers:RootContainer x:Key="Root"/>
             <!--  custom resources  -->
 
         </ResourceDictionary>

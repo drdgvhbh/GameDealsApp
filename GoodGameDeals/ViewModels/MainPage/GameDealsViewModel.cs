@@ -15,12 +15,18 @@
 
     using MetroLog;
 
-    using Template10.Mvvm;
-
     using Windows.UI.Xaml.Navigation;
     using Windows.Web.Http;
 
+    using GoodGameDeals.Collections.ObjectModel;
     using GoodGameDeals.Models.ITAD;
+    using GoodGameDeals.Services.HttpServices;
+
+    using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+    using Template10.Common;
+    using Template10.Controls;
+    using Template10.Mvvm;
 
     public class GameDealsViewModel : ViewModelBase {
         /// <summary>
@@ -37,14 +43,26 @@
 
         private string itadApiKey;
 
-        public GameDealsViewModel() {
+        private IsThereAnyDealService itadService;
+
+        private SteamService steamService;
+
+        public GameDealsViewModel(
+                IsThereAnyDealService itadService,
+                SteamService steamService) {
             this.isFirstLoad = true;
+            this.itadService = itadService;
+            this.steamService = steamService;
             this.GamesList = new ObservableCollection<Game>();
             this.appIdDictionary = new Dictionary<string, long>();
             this.client = new HttpClient();
+            this.gameCache = new HashSet<RecentDealsResponse.List>();
             this.itadApiKey = ResourceLoader.GetForCurrentView("apiKeys")
                 .GetString("ITAD");
+            ObservableLinkedList<int> derp = new ObservableLinkedList<int>();
         }
+
+        public HashSet<RecentDealsResponse.List> gameCache;
 
         public ObservableCollection<Game> GamesList { get; }
 
@@ -52,41 +70,30 @@
                 object parameter,
                 NavigationMode mode,
                 IDictionary<string, object> state) {
-            await this.OnFirstLoad();
+            if (mode == NavigationMode.New || mode == NavigationMode.Refresh) {
+                await this.OnFirstLoad();
+            }
             await this.PopulateGamesList();
             await Task.CompletedTask;
         }
 
         public async Task PopulateGamesList() {
-            this.GamesList.Clear();
-            var uriBuilder = new UriBuilder {
-                Scheme = "https",
-                Host = "api.isthereanydeal.com",
-                Path = "v01/deals/list/ca",
-                Query = "key=" + this.itadApiKey + "&country=CAD" + "&offset=0"
-                        + "&limit=50"
-            };
-            var response = await this.client.GetAsync(uriBuilder.Uri);
-            var recentDeals =
-                RecentDealsResponse.FromJson(response.Content.ToString());
+            var recentDeals = await this.itadService.RecentDeals();
             foreach (var game in recentDeals.Data.List) {
-                var image = this.GetGameBanner(game.Title);
+                if (this.gameCache.Contains(game)) {
+                    continue;
+                }
 
-                // Get all the deals associated with this game
-                var query = new StringBuilder();
-                query.AppendFormat(
-                    "key={0}&plains={1}&country=CAD",
-                    this.itadApiKey,
-                    game.Plain);
-                uriBuilder = new UriBuilder {
-                    Scheme = "https",
-                    Host = "api.isthereanydeal.com",
-                    Path = "v01/game/prices/ca",
-                    Query = query.ToString()
-                };
-                response = await this.client.GetAsync(uriBuilder.Uri);
-                var deals =
-                    CurrentPricesResponse.FromJson(response.Content.ToString());
+                this.gameCache.Add(game);
+                long id = -1;
+                try {
+                    id = this.appIdDictionary[game.Title];
+                }
+                catch (KeyNotFoundException) {
+                }
+                var image = await
+                    this.steamService.GameLogo(id);
+                var deals = await this.itadService.CurrentPrices(game.Plain);
                 var dealsCollection = new ObservableCollection<Deal>();
 
                 // Only take the top 3 deals
@@ -119,30 +126,7 @@
             }
 
             await Task.CompletedTask;
-        }
 
-        private BitmapImage GetGameBanner(string gameName) {
-            var image = new BitmapImage(
-                new Uri("ms-appx:///Assets/NoPreviewAvaliable.png"));
-            try {
-                var imagePath =
-                    "steam/apps/" + this.appIdDictionary[gameName]
-                    + "/header.jpg";
-                var uriBuilder = new UriBuilder {
-                    Scheme = "http",
-                    Host = "cdn.akamai.steamstatic.com",
-                    Path = imagePath
-                };
-                image = new BitmapImage(
-                    new Uri(uriBuilder.ToString(), UriKind.Absolute));
-            }
-            catch (KeyNotFoundException) {
-                Log.Info(
-                    "Image not found for game \"{0}\"",
-                    gameName);
-            }
-
-            return image;
         }
 
         /// <summary>
@@ -156,16 +140,8 @@
             if (!this.isFirstLoad) {
                 await Task.CompletedTask;
             }
+            var steamApps = await this.steamService.AppList();
 
-            var uriBuilder = new UriBuilder
-            {
-                Scheme = "https",
-                Host = "api.steampowered.com",
-                Path = "ISteamApps/GetAppList/v0002"
-            };
-            var response = await client.GetAsync(uriBuilder.Uri);
-            var steamApps =
-                GetAppListResponse.FromJson(response.Content.ToString());
             foreach (var app in steamApps.Applist.Apps) {
                 if (!this.appIdDictionary.ContainsKey(app.Name)) {
                     this.appIdDictionary.Add(app.Name, app.Appid);
@@ -173,7 +149,6 @@
             }
 
             this.isFirstLoad = false;
-            Log.Info("[Success] First Load");
             await Task.CompletedTask;
         }
     }

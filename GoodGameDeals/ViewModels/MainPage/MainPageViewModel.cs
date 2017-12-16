@@ -1,26 +1,23 @@
 ﻿namespace GoodGameDeals.ViewModels.MainPage {
-    using System;
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
     using System.Linq;
     using System.Threading.Tasks;
 
     using GoodGameDeals.Messages;
-    using GoodGameDeals.Models;
-    using GoodGameDeals.Models.ITAD;
-    using GoodGameDeals.Models.Steam;
     using GoodGameDeals.Views;
 
     using MetroLog;
 
-    using Template10.Mvvm;
+
     using Template10.Services.NavigationService;
     using Template10.Services.SerializationService;
 
     using Windows.ApplicationModel;
-    using Windows.ApplicationModel.Resources;
-    using Windows.UI.Xaml.Media.Imaging;
     using Windows.UI.Xaml.Navigation;
+
+    using GoodGameDeals.Services.HttpServices;
+
+    using Template10.Mvvm;
 
     public class MainPageViewModel : ViewModelBase {
         /// <summary>
@@ -35,11 +32,11 @@
 
         public GameDealsViewModel GameDealsViewModel { get; }
 
-        public MainPageViewModel() {
+        public MainPageViewModel(GameDealsViewModel gameDealsViewModel) {
             if (DesignMode.DesignModeEnabled) {
                 this.Value = "Designtime value";
             }
-            this.GameDealsViewModel = new GameDealsViewModel();
+            this.GameDealsViewModel = gameDealsViewModel;
             this.accessToken = new AccessToken();
         }
 
@@ -106,5 +103,6 @@
             args.Cancel = false;
             await Task.CompletedTask;
         }
+
     }
 }
