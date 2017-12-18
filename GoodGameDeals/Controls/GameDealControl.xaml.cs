@@ -32,7 +32,7 @@ namespace GoodGameDeals.Controls {
                 "Image",
                 typeof(BitmapImage),
                 typeof(GameDealControl),
-                new PropertyMetadata(new BitmapImage(new Uri("ms-appx:///Assets/NoPreviewAvaliable.png"))));
+                new PropertyMetadata(new BitmapImage()));
 
         public static readonly DependencyProperty DealsListProperty =
             DependencyProperty.Register(
