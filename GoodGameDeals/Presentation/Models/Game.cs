@@ -1,4 +1,4 @@
-﻿namespace GoodGameDeals.Models {
+namespace GoodGameDeals.Models {
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
@@ -11,7 +11,7 @@
                 string gameTitle,
                 string gameSubtitle,
                 BitmapImage image,
-                ObservableCollection<Deal> dealsList) {
+                ObservableCollection<DealModel> dealsList) {
             this.Id = id;
             this.GameTitle = gameTitle;
             this.GameSubtitle = gameSubtitle;
@@ -24,7 +24,7 @@
         /// <summary>
         ///     Gets the deals list.
         /// </summary>
-        public ObservableCollection<Deal> DealsList { get; }
+        public ObservableCollection<DealModel> DealsList { get; }
 
         /// <summary>
         ///     Gets the game image.
@@ -48,7 +48,7 @@
         public bool Equals(Game other) {
             return other != null &&
                    this.Id == other.Id &&
-                   EqualityComparer<ObservableCollection<Deal>>.Default.Equals(this.DealsList, other.DealsList) &&
+                   EqualityComparer<ObservableCollection<DealModel>>.Default.Equals(this.DealsList, other.DealsList) &&
                    EqualityComparer<BitmapImage>.Default.Equals(this.GameImage, other.GameImage) &&
                    this.GameSubtitle == other.GameSubtitle &&
                    this.GameTitle == other.GameTitle;
@@ -57,7 +57,7 @@
         public override int GetHashCode() {
             var hashCode = -1712704214;
             hashCode = hashCode * -1521134295 + this.Id.GetHashCode();
-            hashCode = hashCode * -1521134295 + EqualityComparer<ObservableCollection<Deal>>.Default.GetHashCode(this.DealsList);
+            hashCode = hashCode * -1521134295 + EqualityComparer<ObservableCollection<DealModel>>.Default.GetHashCode(this.DealsList);
             hashCode = hashCode * -1521134295 + EqualityComparer<BitmapImage>.Default.GetHashCode(this.GameImage);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(this.GameSubtitle);
             hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(this.GameTitle);

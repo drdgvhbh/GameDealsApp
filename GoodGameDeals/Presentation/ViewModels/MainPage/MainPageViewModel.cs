@@ -26,29 +26,15 @@
         private static readonly ILogger Log = LogManagerFactory
             .DefaultLogManager.GetLogger<MainPageViewModel>();
 
-        private string _Value = "Gas";
-
         private AccessToken accessToken;
 
         public GameDealsViewModel GameDealsViewModel { get; }
 
         public MainPageViewModel(GameDealsViewModel gameDealsViewModel) {
             if (DesignMode.DesignModeEnabled) {
-                this.Value = "Designtime value";
             }
             this.GameDealsViewModel = gameDealsViewModel;
             this.accessToken = new AccessToken();
-        }
-
-        public string Value {
-            get {
-                return this._Value;
-            }
-
-            set {
-                this.Set(ref this._Value, value);
-                this.RaisePropertyChanged();
-            }
         }
 
         public void GotoAbout() =>
@@ -60,17 +46,17 @@
         public void GotoSettings() =>
             this.NavigationService.Navigate(typeof(SettingsPage), 0);
 
-        /// <summary>
+/*        /// <summary>
         ///     The nav to details page.
         /// </summary>
         public void NavToDetailsPage() =>
-            this.NavigationService.Navigate(typeof(DetailPage), this.Value);
+            this.NavigationService.Navigate(typeof(DetailPage), this.Value);*/
 
         public override async Task OnNavigatedFromAsync(
             IDictionary<string, object> suspensionState,
             bool suspending) {
             if (suspending) {
-                suspensionState[nameof(this.Value)] = this.Value;
+/*                suspensionState[nameof(this.Value)] = this.Value;*/
             }
 
             await Task.CompletedTask;
@@ -81,7 +67,7 @@
             NavigationMode mode,
             IDictionary<string, object> suspensionState) {
             if (suspensionState.Any()) {
-                this.Value = suspensionState[nameof(this.Value)]?.ToString();
+/*                this.Value = suspensionState[nameof(this.Value)]?.ToString();*/
             }
 
             if (parameter is string param) {

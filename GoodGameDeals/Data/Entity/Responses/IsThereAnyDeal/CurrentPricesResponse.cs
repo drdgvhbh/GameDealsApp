@@ -1,11 +1,6 @@
-﻿// To parse this JSON data, add NuGet 'Newtonsoft.Json' then do:
-//
-//    using QuickType;
-//
-//    var data = CurrentPricesResponse.FromJson(jsonString);
-//
+﻿namespace GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal {
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal.Converters;
 
-namespace GoodGameDeals.Models.ITAD {
     using Newtonsoft.Json;
 
     public partial class CurrentPricesResponse {

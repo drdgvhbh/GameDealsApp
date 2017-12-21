@@ -1,4 +1,6 @@
 ﻿namespace GoodGameDeals.Services.JsonServices {
+    using System;
+
     using Newtonsoft.Json;
 
     public class JsonService<T> {

@@ -95,57 +95,70 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Collections\ObjectModel\ObservableLinkedList.cs" />
+    <Compile Include="Data\Collections\ObjectModel\ObservableLinkedList.cs" />
     <Compile Include="Containers\RootContainer.cs" />
-    <Compile Include="Controls\DealPricingControl.xaml.cs">
+    <Compile Include="Data\Entity\Country.cs" />
+    <Compile Include="Data\Repositories\IIsThereAnyDealRepository.cs" />
+    <Compile Include="Data\Repositories\IsThereAnyDealRepository.cs" />
+    <Compile Include="Data\Repositories\Stores\IsThereAnyDealStore.cs" />
+    <Compile Include="Data\Repositories\Stores\IIsThereAnyDealStore.cs" />
+    <Compile Include="Data\Repositories\Stores\IsThereAnyDealStoreFactory.cs" />
+    <Compile Include="Domain\Deal.cs" />
+    <Compile Include="Domain\DealUrl.cs" />
+    <Compile Include="Domain\Interactors\AbstractInteractor.cs" />
+    <Compile Include="Domain\Interactors\RecentDealsInteractor.cs" />
+    <Compile Include="Domain\Mappers\RecentDealsResponseListDealConverter.cs" />
+    <Compile Include="Domain\Shop.cs" />
+    <Compile Include="Presentation\Controls\DealPricingControl.xaml.cs">
       <DependentUpon>DealPricingControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\GameDealControl.xaml.cs">
+    <Compile Include="Presentation\Controls\GameDealControl.xaml.cs">
       <DependentUpon>GameDealControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Controls\TabHeader.xaml.cs">
+    <Compile Include="Presentation\Controls\TabHeader.xaml.cs">
       <DependentUpon>TabHeader.xaml</DependentUpon>
     </Compile>
     <Compile Include="Converters\DoubleToCurrency.cs" />
     <Compile Include="Converters\IntegerToPercentage.cs" />
+    <Compile Include="Presentation\Mappers\DealDealModelConverter.cs" />
     <Compile Include="Services\HttpServices\IsThereAnyDealService.cs" />
     <Compile Include="Services\HttpServices\SteamService.cs" />
     <Compile Include="Services\JsonServices\JsonService.cs" />
-    <Compile Include="ViewModels\ViewModelLocator.cs" />
+    <Compile Include="Presentation\ViewModels\ViewModelLocator.cs" />
     <Compile Include="Messages\AccessToken.cs" />
-    <Compile Include="Models\Deal.cs" />
-    <Compile Include="Models\Game.cs" />
-    <Compile Include="Models\ITAD\CurrentPricesResponse.cs" />
-    <Compile Include="Models\ITAD\PlainConverter.cs" />
-    <Compile Include="Models\ITAD\RecentDealsResponse.cs" />
-    <Compile Include="Models\Steam\GetAppListResponse.cs" />
+    <Compile Include="Presentation\Models\DealModel.cs" />
+    <Compile Include="Presentation\Models\Game.cs" />
+    <Compile Include="Data\Entity\Responses\IsThereAnyDeal\CurrentPricesResponse.cs" />
+    <Compile Include="Data\Entity\Responses\IsThereAnyDeal\Converters\PlainConverter.cs" />
+    <Compile Include="Data\Entity\Responses\IsThereAnyDeal\RecentDealsResponse.cs" />
+    <Compile Include="Presentation\Models\Steam\GetAppListResponse.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
-    <Compile Include="ViewModels\LoginPageViewModel.cs" />
-    <Compile Include="ViewModels\MainPage\GameDealsViewModel.cs" />
-    <Compile Include="ViewModels\MainPage\MainPageViewModel.cs" />
-    <Compile Include="ViewModels\DetailPageViewModel.cs" />
-    <Compile Include="ViewModels\SettingsPageViewModel.cs" />
-    <Compile Include="Views\Busy.xaml.cs">
+    <Compile Include="Presentation\ViewModels\LoginPageViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\MainPage\GameDealsViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\MainPage\MainPageViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\DetailPageViewModel.cs" />
+    <Compile Include="Presentation\ViewModels\SettingsPageViewModel.cs" />
+    <Compile Include="Presentation\Views\Busy.xaml.cs">
       <DependentUpon>Busy.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\DetailPage.xaml.cs">
+    <Compile Include="Presentation\Views\DetailPage.xaml.cs">
       <DependentUpon>DetailPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Login.xaml.cs">
+    <Compile Include="Presentation\Views\Login.xaml.cs">
       <DependentUpon>Login.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\MainPage.xaml.cs">
+    <Compile Include="Presentation\Views\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\SettingsPage.xaml.cs">
+    <Compile Include="Presentation\Views\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Shell.xaml.cs">
+    <Compile Include="Presentation\Views\Shell.xaml.cs">
       <DependentUpon>Shell.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Views\Splash.xaml.cs">
+    <Compile Include="Presentation\Views\Splash.xaml.cs">
       <DependentUpon>Splash.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -155,16 +168,16 @@
     </AppxManifest>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Assets\NoPreviewAvaliable.png" />
-    <Content Include="Assets\Placeholder.png" />
+    <Content Include="Presentation\Assets\NoPreviewAvaliable.png" />
+    <Content Include="Presentation\Assets\Placeholder.png" />
     <Content Include="Properties\Default.rd.xml" />
-    <Content Include="Assets\LockScreenLogo.scale-200.png" />
-    <Content Include="Assets\SplashScreen.scale-200.png" />
-    <Content Include="Assets\Square150x150Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.scale-200.png" />
-    <Content Include="Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
-    <Content Include="Assets\StoreLogo.png" />
-    <Content Include="Assets\Wide310x150Logo.scale-200.png" />
+    <Content Include="Presentation\Assets\LockScreenLogo.scale-200.png" />
+    <Content Include="Presentation\Assets\SplashScreen.scale-200.png" />
+    <Content Include="Presentation\Assets\Square150x150Logo.scale-200.png" />
+    <Content Include="Presentation\Assets\Square44x44Logo.scale-200.png" />
+    <Content Include="Presentation\Assets\Square44x44Logo.targetsize-24_altform-unplated.png" />
+    <Content Include="Presentation\Assets\StoreLogo.png" />
+    <Content Include="Presentation\Assets\Wide310x150Logo.scale-200.png" />
   </ItemGroup>
   <ItemGroup>
     <ApplicationDefinition Include="App.xaml">
@@ -173,54 +186,59 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
-    <Page Include="Controls\DealPricingControl.xaml">
+    <Page Include="Presentation\Controls\DealPricingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\GameDealControl.xaml">
+    <Page Include="Presentation\Controls\GameDealControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Controls\TabHeader.xaml">
+    <Page Include="Presentation\Controls\TabHeader.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Styles\Custom.xaml">
+    <Page Include="Presentation\Styles\Custom.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Page>
-    <Page Include="Views\Busy.xaml">
+    <Page Include="Presentation\Views\Busy.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\DetailPage.xaml">
+    <Page Include="Presentation\Views\DetailPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Login.xaml">
+    <Page Include="Presentation\Views\Login.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\MainPage.xaml">
+    <Page Include="Presentation\Views\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Views\SettingsPage.xaml">
+    <Page Include="Presentation\Views\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Shell.xaml">
+    <Page Include="Presentation\Views\Shell.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Views\Splash.xaml">
+    <Page Include="Presentation\Views\Splash.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
+    <Folder Include="Presentation\Models\ITAD\" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="AutoMapper">
+      <Version>6.2.2</Version>
+    </PackageReference>
     <PackageReference Include="MetroLog">
       <Version>1.0.1</Version>
     </PackageReference>

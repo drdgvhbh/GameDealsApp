@@ -1,8 +1,9 @@
-﻿namespace GoodGameDeals.Models.ITAD {
-    using Newtonsoft.Json;
+﻿namespace GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal {
     using System;
     using System.Collections.Generic;
     using System.Linq;
+
+    using Newtonsoft.Json;
 
     public partial class RecentDealsResponse : IEquatable<RecentDealsResponse> {
         [JsonProperty("data")]
@@ -152,7 +153,7 @@
             public string Title { get; set; }
 
             [JsonProperty("urls")]
-            public FluffyUrls Urls { get; set; }
+            public DealUrl Urls { get; set; }
 
             public override bool Equals(object obj) {
                 return this.Equals(obj as List);
@@ -168,7 +169,7 @@
                        this.PriceOld == other.PriceOld &&
                        EqualityComparer<Shop>.Default.Equals(this.Shop, other.Shop) &&
                        this.Title == other.Title &&
-                       EqualityComparer<FluffyUrls>.Default.Equals(this.Urls, other.Urls);
+                       EqualityComparer<DealUrl>.Default.Equals(this.Urls, other.Urls);
             }
 
             public override int GetHashCode() {
@@ -180,7 +181,7 @@
                 hashCode = hashCode * -1521134295 + this.PriceOld.GetHashCode();
                 hashCode = hashCode * -1521134295 + EqualityComparer<Shop>.Default.GetHashCode(this.Shop);
                 hashCode = hashCode * -1521134295 + EqualityComparer<string>.Default.GetHashCode(this.Title);
-                hashCode = hashCode * -1521134295 + EqualityComparer<FluffyUrls>.Default.GetHashCode(this.Urls);
+                hashCode = hashCode * -1521134295 + EqualityComparer<DealUrl>.Default.GetHashCode(this.Urls);
                 return hashCode;
             }
 
@@ -193,7 +194,7 @@
             }
         }
 
-        public class FluffyUrls : IEquatable<FluffyUrls> {
+        public class DealUrl : IEquatable<DealUrl> {
             [JsonProperty("buy")]
             public string Buy { get; set; }
 
@@ -201,10 +202,10 @@
             public string Game { get; set; }
 
             public override bool Equals(object obj) {
-                return this.Equals(obj as FluffyUrls);
+                return this.Equals(obj as DealUrl);
             }
 
-            public bool Equals(FluffyUrls other) {
+            public bool Equals(DealUrl other) {
                 return other != null &&
                        this.Buy == other.Buy &&
                        this.Game == other.Game;
@@ -217,11 +218,11 @@
                 return hashCode;
             }
 
-            public static bool operator ==(FluffyUrls urls1, FluffyUrls urls2) {
-                return EqualityComparer<FluffyUrls>.Default.Equals(urls1, urls2);
+            public static bool operator ==(DealUrl urls1, DealUrl urls2) {
+                return EqualityComparer<DealUrl>.Default.Equals(urls1, urls2);
             }
 
-            public static bool operator !=(FluffyUrls urls1, FluffyUrls urls2) {
+            public static bool operator !=(DealUrl urls1, DealUrl urls2) {
                 return !(urls1 == urls2);
             }
         }

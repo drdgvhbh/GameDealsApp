@@ -3,10 +3,10 @@
     using System.Text;
     using System.Threading.Tasks;
 
-    using GoodGameDeals.Models.ITAD;
-
     using Windows.ApplicationModel.Resources;
     using Windows.Web.Http;
+
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
 
     public class IsThereAnyDealService {
         private const int RecentDealsLimit = 50;

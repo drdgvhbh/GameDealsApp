@@ -1,7 +1,6 @@
 ﻿namespace GoodGameDeals.Containers {
     using System;
 
-    using GoodGameDeals.Models.ITAD;
     using GoodGameDeals.Services.HttpServices;
     using GoodGameDeals.Services.JsonServices;
     using GoodGameDeals.ViewModels;
@@ -14,7 +13,17 @@
 
     using Windows.Web.Http;
 
+    using AutoMapper;
+
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.Repositories;
+    using GoodGameDeals.Data.Repositories.Stores;
+    using GoodGameDeals.Domain;
+    using GoodGameDeals.Domain.Interactors;
+    using GoodGameDeals.Domain.Mappers;
+    using GoodGameDeals.Models;
     using GoodGameDeals.Models.Steam;
+    using GoodGameDeals.Presentation.Mappers;
 
     public class RootContainer {
         private readonly IUnityContainer container;
@@ -24,6 +33,11 @@
             this.RegisterJsonServices();
             this.RegisterHttpServices();
             this.RegisterViewModels();
+            this.RegisterMappings();
+            this.RegisterFactories();
+            this.RegisterRepositories();
+            this.RegisterStores();
+            this.RegisterInteractors();
         }
 
         public ViewModelLocator ViewModelLocatorInstance =>
@@ -56,6 +70,42 @@
             this.container.RegisterInstance<Func<string, GetAppListResponse>>(
                 this.container.Resolve<JsonService<GetAppListResponse>>()
                     .FromJson);
+        }
+
+        private void RegisterInteractors() {
+            this.container.RegisterType<RecentDealsInteractor>(
+                new ContainerControlledLifetimeManager());
+        }
+
+        private void RegisterStores() {
+            this.container
+                .RegisterType<IIsThereAnyDealStore, IsThereAnyDealStore>(
+                    new ContainerControlledLifetimeManager());
+        }
+
+        private void RegisterRepositories() {
+            this.container
+                .RegisterType<IIsThereAnyDealRepository, IsThereAnyDealRepository>(
+                    new ContainerControlledLifetimeManager());
+
+        }
+
+        private void RegisterMappings() {
+            var config = new MapperConfiguration(
+                cfg => {
+                    cfg.CreateMap<RecentDealsResponse.List, Deal>()
+                        .ConvertUsing(new RecentDealsResponseListDealConverter());
+                    cfg.CreateMap<Deal, DealModel>()
+                        .ConvertUsing(new DealDealModelConverter());
+                });
+            var mapper = new Mapper(config);
+            this.container.RegisterInstance<IMapper>(mapper);
+        }
+
+        private void RegisterFactories() {
+            this.container.RegisterType<IsThereAnyDealStoreFactory>(
+                new ContainerControlledLifetimeManager());
+
         }
 
         private void RegisterHttpServices() {

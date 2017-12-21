@@ -5,7 +5,7 @@
   <Properties>
     <DisplayName>Set DisplayName in AppxManifest/Packaging</DisplayName>
     <PublisherDisplayName>Set PublisherName in AppxManifest/Packaging</PublisherDisplayName>
-    <Logo>Assets\StoreLogo.png</Logo>
+    <Logo>Presentation\Assets\StoreLogo.png</Logo>
   </Properties>
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.0.0" MaxVersionTested="10.0.0.0" />
@@ -15,10 +15,10 @@
   </Resources>
   <Applications>
     <Application Id="App" Executable="$targetnametoken$.exe" EntryPoint="Good Game Deals.App">
-      <uap:VisualElements DisplayName="Good Game Deals" Square150x150Logo="Assets\Square150x150Logo.png" Square44x44Logo="Assets\Square44x44Logo.png" Description="Sample" BackgroundColor="transparent">
-        <uap:DefaultTile Wide310x150Logo="Assets\Wide310x150Logo.png">
+      <uap:VisualElements DisplayName="Good Game Deals" Square150x150Logo="Presentation\Assets\Square150x150Logo.png" Square44x44Logo="Presentation\Assets\Square44x44Logo.png" Description="Sample" BackgroundColor="transparent">
+        <uap:DefaultTile Wide310x150Logo="Presentation\Assets\Wide310x150Logo.png">
         </uap:DefaultTile>
-        <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:SplashScreen Image="Presentation\Assets\SplashScreen.png" />
       </uap:VisualElements>
     </Application>
   </Applications>

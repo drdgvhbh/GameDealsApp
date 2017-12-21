@@ -10,6 +10,7 @@ using Windows.UI.Xaml.Data;
 using Windows.UI.Xaml.Controls;
 
 namespace GoodGameDeals {
+    using GoodGameDeals.Containers;
     using GoodGameDeals.Services.SettingsServices;
 
     using MetroLog;
@@ -50,6 +51,8 @@ namespace GoodGameDeals {
         }
 
         public override async Task OnStartAsync(StartKind startKind, IActivatedEventArgs args) {
+            var derp = (RootContainer)this.Resources["Root"];
+
             // TODO: add your long-running task here
             await NavigationService.NavigateAsync(typeof(Views.MainPage));
         }

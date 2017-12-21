@@ -47,7 +47,7 @@ namespace GoodGameDeals.Services.HttpServices {
                     new Uri(uriBuilder.ToString(), UriKind.Absolute));
             }
             return new BitmapImage(
-                new Uri("ms-appx:///Assets/NoPreviewAvaliable.png"));
+                new Uri("ms-appx:///Presentation/Assets/NoPreviewAvaliable.png"));
         }
     }
 }

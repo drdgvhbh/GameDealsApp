@@ -1,7 +1,8 @@
-﻿namespace GoodGameDeals.Models.ITAD {
+﻿namespace GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal.Converters {
     using System;
     using System.Linq;
-    using System.Reflection;
+
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;

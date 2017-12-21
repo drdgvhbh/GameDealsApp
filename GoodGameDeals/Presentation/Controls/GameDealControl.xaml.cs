@@ -37,9 +37,9 @@ namespace GoodGameDeals.Controls {
         public static readonly DependencyProperty DealsListProperty =
             DependencyProperty.Register(
                 "DealsList",
-                typeof(ObservableCollection<Deal>),
+                typeof(ObservableCollection<DealModel>),
                 typeof(GameDealControl),
-                new PropertyMetadata(new ObservableCollection<Deal>()));
+                new PropertyMetadata(new ObservableCollection<DealModel>()));
 
         public GameDealControl() {
             this.InitializeComponent();
@@ -81,9 +81,9 @@ namespace GoodGameDeals.Controls {
             }
         }
 
-        public ObservableCollection<Deal> DealsList {
+        public ObservableCollection<DealModel> DealsList {
             get {
-                return (ObservableCollection<Deal>)this.GetValue(DealsListProperty);
+                return (ObservableCollection<DealModel>)this.GetValue(DealsListProperty);
             }
 
             set {

@@ -8,7 +8,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Styles\Custom.xaml" />
+                <ResourceDictionary Source="Presentation\Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <containers:RootContainer x:Key="Root"/>
             <!--  custom resources  -->

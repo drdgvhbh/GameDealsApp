@@ -2,13 +2,13 @@
     using System;
     using System.Collections.Generic;
 
-    public class Deal : IEquatable<Deal> {
-        public Deal(
-            string url,
-            long discount,
-            double gamePriceOld,
-            double gamePrice,
-            string store) {
+    public class DealModel : IEquatable<DealModel> {
+        public DealModel(
+                string url,
+                long discount,
+                double gamePriceOld,
+                double gamePrice,
+                string store) {
             this.Url = url;
             this.Discount = discount;
             this.GamePriceOld = gamePriceOld;
@@ -26,15 +26,15 @@
 
         public string Url { get; }
 
-        public static bool operator ==(Deal deal1, Deal deal2) =>
-            EqualityComparer<Deal>.Default.Equals(deal1, deal2);
+        public static bool operator ==(DealModel deal1, DealModel deal2) =>
+            EqualityComparer<DealModel>.Default.Equals(deal1, deal2);
 
-        public static bool operator !=(Deal deal1, Deal deal2) =>
+        public static bool operator !=(DealModel deal1, DealModel deal2) =>
             !(deal1 == deal2);
 
-        public override bool Equals(object obj) => this.Equals(obj as Deal);
+        public override bool Equals(object obj) => this.Equals(obj as DealModel);
 
-        public bool Equals(Deal other) {
+        public bool Equals(DealModel other) {
             return other != null
                 && this.Discount == other.Discount
                 && Math.Abs(this.GamePrice - other.GamePrice) < double.Epsilon

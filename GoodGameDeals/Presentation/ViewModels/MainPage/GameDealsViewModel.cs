@@ -2,6 +2,8 @@
     using System;
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
+    using System.Linq;
+    using System.Reactive.Linq;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
 
@@ -11,8 +13,12 @@
 
     using Windows.UI.Xaml.Navigation;
 
-    using GoodGameDeals.Collections.ObjectModel;
-    using GoodGameDeals.Models.ITAD;
+    using AutoMapper;
+
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Domain;
+    using GoodGameDeals.Domain.Interactors;
+    using GoodGameDeals.Presentation.Mappers;
     using GoodGameDeals.Services.HttpServices;
 
     using Template10.Mvvm;
@@ -31,7 +37,13 @@
 
         private ObservableCollection<Game> gamesList;
 
+        private RecentDealsInteractor recentDealsInteractor;
+
+        private IMapper mapper;
+
         public GameDealsViewModel(
+                IMapper mapper,
+                RecentDealsInteractor recentDealsInteractor,
                 IsThereAnyDealService itadService,
                 SteamService steamService) {
             this.isFirstLoad = true;
@@ -41,6 +53,8 @@
             this.GamesCollectionView = new AdvancedCollectionView(this.gamesList, true);
             this.appIdDictionary = new Dictionary<string, long>();
             this.gameCache = new HashSet<RecentDealsResponse.List>();
+            this.recentDealsInteractor = recentDealsInteractor;
+            this.mapper = mapper;
             this.itadApiKey = ResourceLoader.GetForCurrentView("apiKeys")
                 .GetString("ITAD");
 
@@ -69,8 +83,22 @@
         }
 
         public async Task PopulateGamesList() {
-/*            using (this.GamesCollectionView.DeferRefresh()) {*/
-                this.gamesList.Clear();
+            /*            using (this.GamesCollectionView.DeferRefresh()) {*/
+            var derp = this.recentDealsInteractor.UseCaseObservable(null);
+            var trash = derp
+                .Select(
+                    list => {
+                        return list.Select(
+                                dealItem =>
+                                    this.mapper.Map<Deal, DealModel>(dealItem))
+                            .ToList();
+                    });
+
+            trash.Subscribe(
+                _ => {
+                    var asdf = _;
+                });
+            this.gamesList.Clear();
                 var recentDeals = await this.itadService.RecentDeals();
                 foreach (var game in recentDeals.Data.List) {
                     await this.AddGame(game);
@@ -93,9 +121,10 @@
             catch (KeyNotFoundException) {
             }
             var image = await this.steamService.GameLogo(id);
+
             var deals =
                 await this.itadService.CurrentPrices(game.Plain);
-            var dealsCollection = new ObservableCollection<Deal>();
+            var dealsCollection = new ObservableCollection<DealModel>();
 
             // Only take the top 3 deals
             var counter = 1;
@@ -107,7 +136,7 @@
                     continue;
                 }
                 dealsCollection.Add(
-                    new Deal(
+                    new DealModel(
                         deal.Url,
                         deal.PriceCut,
                         deal.PriceOld,
