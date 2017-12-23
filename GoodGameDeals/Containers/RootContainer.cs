@@ -1,6 +1,19 @@
 ﻿namespace GoodGameDeals.Containers {
     using System;
+    using System.Collections.Generic;
 
+    using AutoMapper;
+
+    using GoodGameDeals.Data.Cache;
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.Entity.Responses.Steam;
+    using GoodGameDeals.Data.Repositories;
+    using GoodGameDeals.Data.Repositories.Stores;
+    using GoodGameDeals.Domain;
+    using GoodGameDeals.Domain.Interactors;
+    using GoodGameDeals.Domain.Mappers;
+    using GoodGameDeals.Models;
+    using GoodGameDeals.Presentation.Mappers;
     using GoodGameDeals.Services.HttpServices;
     using GoodGameDeals.Services.JsonServices;
     using GoodGameDeals.ViewModels;
@@ -13,39 +26,54 @@
 
     using Windows.Web.Http;
 
-    using AutoMapper;
-
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
-    using GoodGameDeals.Data.Repositories;
-    using GoodGameDeals.Data.Repositories.Stores;
-    using GoodGameDeals.Domain;
-    using GoodGameDeals.Domain.Interactors;
-    using GoodGameDeals.Domain.Mappers;
-    using GoodGameDeals.Models;
-    using GoodGameDeals.Models.Steam;
-    using GoodGameDeals.Presentation.Mappers;
-
-    public class RootContainer {
-        private readonly IUnityContainer container;
-
+    public class RootContainer : AbstractContainerInstaller {
         public RootContainer() {
-            this.container = new UnityContainer();
             this.RegisterJsonServices();
             this.RegisterHttpServices();
-            this.RegisterViewModels();
-            this.RegisterMappings();
-            this.RegisterFactories();
-            this.RegisterRepositories();
-            this.RegisterStores();
-            this.RegisterInteractors();
         }
 
         public ViewModelLocator ViewModelLocatorInstance =>
-            this.container.Resolve<ViewModelLocator>();
+            this.Container.Resolve<ViewModelLocator>();
+
+        public FileCache ResolveFileCache(string name) {
+            return this.Container.Resolve<FileCache>(name);
+        }
+
+        protected override void RegisterCaches() {
+            this.Container.RegisterType<HttpClient>(new InjectionConstructor());
+
+            this.Container.RegisterType<FileCache>(
+                "IsThereAnyDealCache",
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(this.Container.Resolve<HttpClient>()));
+            this.Container.Resolve<FileCache>("IsThereAnyDealCache").CacheDuration
+                = TimeSpan.FromMinutes(10);
+
+            var steamClient = this.Container.Resolve<HttpClient>();
+            this.Container.RegisterType<FileCache>(
+                "SteamCache",
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(steamClient));
+            this.Container.Resolve<FileCache>("SteamCache").CacheDuration
+                = TimeSpan.FromDays(1);
+
+            this.Container.RegisterType<ImageCache>(
+                "SteamLogoCache",
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(steamClient));
+            this.Container.Resolve<ImageCache>("SteamLogoCache").CacheDuration =
+                TimeSpan.FromHours(6);
+
+            this.Container.RegisterType<InMemoryStorage<long>>(
+                "SteamAppIdCache",
+                new ContainerControlledLifetimeManager());
+            this.Container.Resolve<InMemoryStorage<long>>("SteamAppIdCache")
+                .MaxItemCount = int.MaxValue;
+        }
 
         private void RegisterJsonServices() {
             // Serialization/Deserialization
-            this.container.RegisterInstance(
+            this.Container.RegisterInstance(
                 new JsonSerializerSettings {
                     MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
                     DateParseHandling = DateParseHandling.None
@@ -53,72 +81,76 @@
                 new ContainerControlledLifetimeManager());
 
             // Is There Any Deal
-            this.container.RegisterType<JsonService<RecentDealsResponse>>(
+            this.Container.RegisterType<JsonService<RecentDealsResponse>>(
                 new ContainerControlledLifetimeManager());
-            this.container.RegisterInstance<Func<string, RecentDealsResponse>>(
-                this.container.Resolve<JsonService<RecentDealsResponse>>()
+            this.Container.RegisterInstance<Func<string, RecentDealsResponse>>(
+                this.Container.Resolve<JsonService<RecentDealsResponse>>()
                     .FromJson);
-            this.container.RegisterType<JsonService<CurrentPricesResponse>>(
+            this.Container.RegisterType<JsonService<CurrentPricesResponse>>(
                 new ContainerControlledLifetimeManager());
-            this.container.RegisterInstance<Func<string, CurrentPricesResponse>>(
-                this.container.Resolve<JsonService<CurrentPricesResponse>>()
+            this.Container.RegisterInstance<Func<string, CurrentPricesResponse>>(
+                this.Container.Resolve<JsonService<CurrentPricesResponse>>()
                     .FromJson);
 
             // Steam
-            this.container.RegisterType<JsonService<GetAppListResponse>>(
+            this.Container.RegisterType<JsonService<GetAppListResponse>>(
                 new ContainerControlledLifetimeManager());
-            this.container.RegisterInstance<Func<string, GetAppListResponse>>(
-                this.container.Resolve<JsonService<GetAppListResponse>>()
+            this.Container.RegisterInstance<Func<string, GetAppListResponse>>(
+                this.Container.Resolve<JsonService<GetAppListResponse>>()
                     .FromJson);
         }
 
-        private void RegisterInteractors() {
-            this.container.RegisterType<RecentDealsInteractor>(
+        protected override void RegisterInteractors() {
+            this.Container.RegisterType<RecentDealsInteractor>(
+                new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<GameImageInteractor>(
+                new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<GameAndRecentDealsInteractor>(
                 new ContainerControlledLifetimeManager());
         }
 
-        private void RegisterStores() {
-            this.container
-                .RegisterType<IIsThereAnyDealStore, IsThereAnyDealStore>(
-                    new ContainerControlledLifetimeManager());
-        }
-
-        private void RegisterRepositories() {
-            this.container
+        protected override void RegisterRepositories() {
+            this.Container.RegisterType<ISteamRepository, SteamRepository>(
+                new ContainerControlledLifetimeManager());
+            this.Container
                 .RegisterType<IIsThereAnyDealRepository, IsThereAnyDealRepository>(
                     new ContainerControlledLifetimeManager());
-
         }
 
-        private void RegisterMappings() {
+        protected override void RegisterMappings() {
             var config = new MapperConfiguration(
                 cfg => {
                     cfg.CreateMap<RecentDealsResponse.List, Deal>()
                         .ConvertUsing(new RecentDealsResponseListDealConverter());
                     cfg.CreateMap<Deal, DealModel>()
                         .ConvertUsing(new DealDealModelConverter());
+                    cfg.CreateMap<CurrentPricesResponse.List, Deal>()
+                        .ConvertUsing(new CurrentPricesResponseListDealConverter());
+                    cfg.CreateMap<Game, GameModel>()
+                        .ConvertUsing(new GameGameModelConverter());
                 });
             var mapper = new Mapper(config);
-            this.container.RegisterInstance<IMapper>(mapper);
+            this.Container.RegisterInstance<IMapper>(mapper);
         }
 
-        private void RegisterFactories() {
-            this.container.RegisterType<IsThereAnyDealStoreFactory>(
+        protected override void RegisterFactories() {
+            this.Container.RegisterType<SteamStoreFactory>(
+                new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IsThereAnyDealStoreFactory>(
                 new ContainerControlledLifetimeManager());
 
         }
 
         private void RegisterHttpServices() {
-            this.container.RegisterType<HttpClient>(new InjectionConstructor());
-            this.container.RegisterType<IsThereAnyDealService>(
+            this.Container.RegisterType<IsThereAnyDealService>(
                 new ContainerControlledLifetimeManager());
         }
 
-        private void RegisterViewModels() {
-            this.container.RegisterType<ViewModelLocator>(
+        protected override void RegisterViewModels() {
+            this.Container.RegisterType<ViewModelLocator>(
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(
-                    this.container.CreateChildContainer()));
+                    this.Container.CreateChildContainer()));
         }
     }
 }

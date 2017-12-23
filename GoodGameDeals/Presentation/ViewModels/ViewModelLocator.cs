@@ -11,6 +11,8 @@
     using Windows.ApplicationModel.Resources;
     using Windows.Web.Http;
 
+    using GoodGameDeals.Presentation.ViewModels.MainPage;
+
     using Unity.Injection;
 
     /// <summary>

@@ -15,6 +15,7 @@
     using Windows.ApplicationModel;
     using Windows.UI.Xaml.Navigation;
 
+    using GoodGameDeals.Presentation.ViewModels.MainPage;
     using GoodGameDeals.Services.HttpServices;
 
     using Template10.Mvvm;

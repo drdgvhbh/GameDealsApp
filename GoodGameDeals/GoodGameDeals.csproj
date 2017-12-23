@@ -95,18 +95,33 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Containers\AbstractContainerInstaller.cs" />
+    <Compile Include="Data\Cache\CacheBase.cs" />
+    <Compile Include="Data\Cache\FileCache.cs" />
+    <Compile Include="Data\Cache\ImageCache.cs" />
+    <Compile Include="Data\Cache\InMemoryStorage.cs" />
+    <Compile Include="Data\Cache\InMemoryStorageItem.cs" />
     <Compile Include="Data\Collections\ObjectModel\ObservableLinkedList.cs" />
     <Compile Include="Containers\RootContainer.cs" />
     <Compile Include="Data\Entity\Country.cs" />
     <Compile Include="Data\Repositories\IIsThereAnyDealRepository.cs" />
+    <Compile Include="Data\Repositories\ISteamRepository.cs" />
     <Compile Include="Data\Repositories\IsThereAnyDealRepository.cs" />
+    <Compile Include="Data\Repositories\SteamRepository.cs" />
+    <Compile Include="Data\Repositories\Stores\SteamStore.cs" />
+    <Compile Include="Data\Repositories\Stores\ISteamStore.cs" />
     <Compile Include="Data\Repositories\Stores\IsThereAnyDealStore.cs" />
     <Compile Include="Data\Repositories\Stores\IIsThereAnyDealStore.cs" />
     <Compile Include="Data\Repositories\Stores\IsThereAnyDealStoreFactory.cs" />
+    <Compile Include="Data\Repositories\Stores\SteamStoreFactory.cs" />
     <Compile Include="Domain\Deal.cs" />
     <Compile Include="Domain\DealUrl.cs" />
+    <Compile Include="Domain\Game.cs" />
     <Compile Include="Domain\Interactors\AbstractInteractor.cs" />
+    <Compile Include="Domain\Interactors\GameAndRecentDealsInteractor.cs" />
+    <Compile Include="Domain\Interactors\GameImageInteractor.cs" />
     <Compile Include="Domain\Interactors\RecentDealsInteractor.cs" />
+    <Compile Include="Domain\Mappers\CurrentPricesResponseListDealConverter.cs" />
     <Compile Include="Domain\Mappers\RecentDealsResponseListDealConverter.cs" />
     <Compile Include="Domain\Shop.cs" />
     <Compile Include="Presentation\Controls\DealPricingControl.xaml.cs">
@@ -121,17 +136,18 @@
     <Compile Include="Converters\DoubleToCurrency.cs" />
     <Compile Include="Converters\IntegerToPercentage.cs" />
     <Compile Include="Presentation\Mappers\DealDealModelConverter.cs" />
+    <Compile Include="Presentation\Mappers\GameGameModelConverter.cs" />
     <Compile Include="Services\HttpServices\IsThereAnyDealService.cs" />
     <Compile Include="Services\HttpServices\SteamService.cs" />
     <Compile Include="Services\JsonServices\JsonService.cs" />
     <Compile Include="Presentation\ViewModels\ViewModelLocator.cs" />
     <Compile Include="Messages\AccessToken.cs" />
     <Compile Include="Presentation\Models\DealModel.cs" />
-    <Compile Include="Presentation\Models\Game.cs" />
+    <Compile Include="Presentation\Models\GameModel.cs" />
     <Compile Include="Data\Entity\Responses\IsThereAnyDeal\CurrentPricesResponse.cs" />
     <Compile Include="Data\Entity\Responses\IsThereAnyDeal\Converters\PlainConverter.cs" />
     <Compile Include="Data\Entity\Responses\IsThereAnyDeal\RecentDealsResponse.cs" />
-    <Compile Include="Presentation\Models\Steam\GetAppListResponse.cs" />
+    <Compile Include="Data\Entity\Responses\Steam\GetAppListResponse.cs" />
     <Compile Include="Properties\Annotations.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\SettingsServices\SettingsService.cs" />
@@ -256,6 +272,9 @@
     </PackageReference>
     <PackageReference Include="NUnit">
       <Version>3.9.0</Version>
+    </PackageReference>
+    <PackageReference Include="ReactiveProperty">
+      <Version>3.3.1</Version>
     </PackageReference>
     <PackageReference Include="System.Reactive">
       <Version>3.1.1</Version>

@@ -3,8 +3,13 @@
 
     using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
 
-    public class RecentDealsResponseListDealConverter : ITypeConverter<RecentDealsResponse.List, Deal> {
-        public Deal Convert(RecentDealsResponse.List source, Deal destination, ResolutionContext context) {
+    public class
+        RecentDealsResponseListDealConverter : ITypeConverter<
+            RecentDealsResponse.List, Deal> {
+        public Deal Convert(
+                RecentDealsResponse.List source,
+                Deal destination,
+                ResolutionContext context) {
             var deal = new Deal
             {
                 DealUrl =

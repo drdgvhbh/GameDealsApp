@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GoodGameDeals.Data.Repositories {
     using GoodGameDeals.Data.Entity;
+    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
     using GoodGameDeals.Domain;
 
     public interface IIsThereAnyDealRepository {
@@ -13,5 +14,9 @@ namespace GoodGameDeals.Data.Repositories {
             Country country = Country.Cad,
             int offset = 0,
             int limit = 50);
+
+        IObservable<List<Deal>> CurrentPrices(
+            string plain,
+            Country country = Country.Cad);
     }
 }

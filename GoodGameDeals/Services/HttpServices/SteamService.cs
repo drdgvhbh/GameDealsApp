@@ -8,7 +8,7 @@ namespace GoodGameDeals.Services.HttpServices {
     using Windows.UI.Xaml.Media.Imaging;
     using Windows.Web.Http;
 
-    using GoodGameDeals.Models.Steam;
+    using GoodGameDeals.Data.Entity.Responses.Steam;
 
     public class SteamService {
         private readonly HttpClient client;
@@ -16,9 +16,9 @@ namespace GoodGameDeals.Services.HttpServices {
         private Func<string, GetAppListResponse> appListDeserializer;
 
         public SteamService(
-                HttpClient client,
+/*                HttpClient client,*/
                 Func<string, GetAppListResponse> appListDeserializer) {
-            this.client = client;
+            this.client = new HttpClient();
             this.appListDeserializer = appListDeserializer;
         }
 

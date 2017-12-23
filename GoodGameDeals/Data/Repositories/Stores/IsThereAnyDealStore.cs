@@ -1,14 +1,19 @@
 ﻿namespace GoodGameDeals.Data.Repositories.Stores {
     using System;
     using System.Collections.Generic;
+    using System.IO;
+    using System.Reactive;
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
+    using System.Reactive.Threading.Tasks;
     using System.Reactive.Windows.Foundation;
     using System.Text;
 
     using Windows.ApplicationModel.Resources;
+    using Windows.Storage;
     using Windows.Web.Http;
 
+    using GoodGameDeals.Data.Cache;
     using GoodGameDeals.Data.Entity;
     using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
     using GoodGameDeals.Services.JsonServices;
@@ -16,21 +21,53 @@
     using Newtonsoft.Json;
 
     public class IsThereAnyDealStore : IIsThereAnyDealStore {
-        private HttpClient client;
-
         private const int RecentDealsLimit = 50;
 
         private readonly string apiKey;
 
+        private FileCache cache;
+
         private JsonSerializerSettings deserializationSettings;
 
         public IsThereAnyDealStore(
-                HttpClient client,
+                FileCache cache,
                 JsonSerializerSettings deserializationSettings) {
-            this.client = client;
+            this.cache = cache;
             this.deserializationSettings = deserializationSettings;
             this.apiKey = ResourceLoader.GetForViewIndependentUse("apiKeys")
                 .GetString("ITAD");
+        }
+
+        public IObservable<CurrentPricesResponse> CurrentPrices(
+                string plain,
+                Country country = Country.Cad) {
+            var query = new StringBuilder();
+            query.AppendFormat(
+                "key={0}&plains={1}&country=CAD",
+                this.apiKey,
+                plain);
+            var uriBuilder = new UriBuilder {
+                Scheme = "https",
+                Host = "api.isthereanydeal.com",
+                Path = "v01/game/prices/ca",
+                Query = query.ToString()
+            };
+
+            var observableResponse = new Subject<CurrentPricesResponse>();
+            this.cache.GetFromCacheAsync(uriBuilder.Uri, true)
+                .AsAsyncOperation().ToObservable().Subscribe(
+                    file => {
+                        FileIO.ReadTextAsync(file).ToObservable()
+                            .Subscribe(
+                                text => {
+                                    var response =
+                                        new JsonService<CurrentPricesResponse>(
+                                                this.deserializationSettings)
+                                            .FromJson(text);
+                                    observableResponse.OnNext(response);
+                                });
+                    });
+            return observableResponse;
         }
 
         public IObservable<RecentDealsResponse> RecentDeals(
@@ -54,19 +91,30 @@
                 Path = "v01/deals/list/ca",
                 Query = query.ToString()
             };
-            this.client.GetAsync(uriBuilder.Uri).ToObservable().Subscribe();
+
             var observableResponse = new Subject<RecentDealsResponse>();
-            this.client.GetAsync(uriBuilder.Uri).ToObservable()
-                .Subscribe(
-                    response => {
-                        var recentDeals =
-                            new JsonService<RecentDealsResponse>(
-                                this.deserializationSettings).FromJson(
-                                response.Content.ToString());
-                        observableResponse.OnNext(recentDeals);
+            this.cache.GetFromCacheAsync(uriBuilder.Uri, true)
+                .AsAsyncOperation().ToObservable().Subscribe(
+                    file => {
+                        FileIO.ReadTextAsync(file).ToObservable()
+                            .Subscribe(
+                                text => {
+                                    var response =
+                                        new JsonService<RecentDealsResponse>(
+                                                this.deserializationSettings)
+                                            .FromJson(text);
+                                    observableResponse.OnNext(response);
+                                });
                     });
             return observableResponse;
+        }
 
+        public IObservable<Unit> Initialize() {
+            var subject = new Subject<Unit>();
+/*            var one = this.cache.GetFromCacheAsync()*/
+    /*        this    */
+
+            return subject;
         }
     }
 }

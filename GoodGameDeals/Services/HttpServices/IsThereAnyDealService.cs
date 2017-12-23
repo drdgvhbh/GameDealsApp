@@ -7,8 +7,14 @@
     using Windows.Web.Http;
 
     using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.Repositories.Stores;
+
+    using MetroLog;
 
     public class IsThereAnyDealService {
+        private static readonly ILogger Log = LogManagerFactory
+            .DefaultLogManager.GetLogger<IsThereAnyDealService>();
+
         private const int RecentDealsLimit = 50;
 
         private readonly HttpClient client;
@@ -20,10 +26,10 @@
         private readonly Func<string, CurrentPricesResponse> currentPricesDeserializer;
 
         public IsThereAnyDealService(
-                HttpClient client,
+/*                HttpClient client,*/
                 Func<string, RecentDealsResponse> recentDealsDeserializer,
                 Func<string, CurrentPricesResponse> currentPricesDeserializer) {
-            this.client = client;
+            this.client = new HttpClient();
             this.recentDealsDeserializer = recentDealsDeserializer;
             this.currentPricesDeserializer = currentPricesDeserializer;
             this.apiKey = ResourceLoader.GetForCurrentView("apiKeys")
@@ -48,6 +54,8 @@
                 Path = "v01/game/prices/ca",
                 Query = query.ToString()
             };
+
+            // Log.Debug(uriBuilder.Uri.ToString());
             var response = await this.client.GetAsync(uriBuilder.Uri);
             return this.currentPricesDeserializer(response.Content.ToString());
         }

@@ -5,8 +5,8 @@ namespace GoodGameDeals.Models {
 
     using Windows.UI.Xaml.Media.Imaging;
 
-    public class Game : IEquatable<Game> {
-        public Game(
+    public class GameModel : IEquatable<GameModel> {
+        public GameModel(
                 long id,
                 string gameTitle,
                 string gameSubtitle,
@@ -42,10 +42,10 @@ namespace GoodGameDeals.Models {
         public string GameTitle { get; }
 
         public override bool Equals(object obj) {
-            return this.Equals(obj as Game);
+            return this.Equals(obj as GameModel);
         }
 
-        public bool Equals(Game other) {
+        public bool Equals(GameModel other) {
             return other != null &&
                    this.Id == other.Id &&
                    EqualityComparer<ObservableCollection<DealModel>>.Default.Equals(this.DealsList, other.DealsList) &&
@@ -64,11 +64,11 @@ namespace GoodGameDeals.Models {
             return hashCode;
         }
 
-        public static bool operator ==(Game game1, Game game2) {
-            return EqualityComparer<Game>.Default.Equals(game1, game2);
+        public static bool operator ==(GameModel game1, GameModel game2) {
+            return EqualityComparer<GameModel>.Default.Equals(game1, game2);
         }
 
-        public static bool operator !=(Game game1, Game game2) {
+        public static bool operator !=(GameModel game1, GameModel game2) {
             return !(game1 == game2);
         }
     }
