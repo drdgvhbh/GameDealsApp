@@ -137,8 +137,6 @@
     <Compile Include="Converters\IntegerToPercentage.cs" />
     <Compile Include="Presentation\Mappers\DealDealModelConverter.cs" />
     <Compile Include="Presentation\Mappers\GameGameModelConverter.cs" />
-    <Compile Include="Services\HttpServices\IsThereAnyDealService.cs" />
-    <Compile Include="Services\HttpServices\SteamService.cs" />
     <Compile Include="Services\JsonServices\JsonService.cs" />
     <Compile Include="Presentation\ViewModels\ViewModelLocator.cs" />
     <Compile Include="Messages\AccessToken.cs" />

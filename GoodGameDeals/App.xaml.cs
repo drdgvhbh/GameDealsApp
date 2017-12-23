@@ -1,26 +1,8 @@
-﻿using Windows.UI.Xaml;
-using System.Threading.Tasks;
-using GoodGameDeals.Services.SettingsServices;
-using Windows.ApplicationModel.Activation;
-using Template10.Controls;
-using Template10.Common;
-using System;
-using System.Linq;
-using Windows.UI.Xaml.Data;
-using Windows.UI.Xaml.Controls;
-
-namespace GoodGameDeals {
+﻿namespace GoodGameDeals {
     using System.Reactive.Linq;
-    using System.Reactive.Subjects;
-    using System.Reactive.Threading.Tasks;
-    using System.Reactive.Windows.Foundation;
-    using System.Text;
-
-    using Windows.Storage;
+    using System.Threading.Tasks;
 
     using GoodGameDeals.Containers;
-    using GoodGameDeals.Data.Entity;
-    using GoodGameDeals.Data.Entity.Responses.Steam;
     using GoodGameDeals.Data.Repositories.Stores;
     using GoodGameDeals.Services.SettingsServices;
     using GoodGameDeals.Views;
@@ -30,7 +12,15 @@ namespace GoodGameDeals {
 
     using Reactive.Bindings;
 
+    using Template10.Common;
+    using Template10.Controls;
+
     using Unity;
+
+    using Windows.ApplicationModel.Activation;
+    using Windows.Storage;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Data;
 
     /// <summary>
     /// The app.

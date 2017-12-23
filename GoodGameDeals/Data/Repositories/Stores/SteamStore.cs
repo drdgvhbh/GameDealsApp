@@ -1,9 +1,7 @@
 ﻿namespace GoodGameDeals.Data.Repositories.Stores {
     using System;
     using System.Reactive;
-    using System.Reactive.Linq;
     using System.Reactive.Subjects;
-    using System.Reactive.Threading.Tasks;
     using System.Reactive.Windows.Foundation;
     using System.Text;
 
@@ -15,28 +13,64 @@
 
     using Newtonsoft.Json;
 
+    using Reactive.Bindings.Extensions;
+
     using Windows.Storage;
     using Windows.UI.Core;
     using Windows.UI.Xaml.Media.Imaging;
 
-    using Reactive.Bindings.Extensions;
-
     using FileCache = GoodGameDeals.Data.Cache.FileCache;
 
+    /// <summary>
+    ///     Represents a store to retrieve data from the <code>Steam</code> api.
+    /// </summary>
     public class SteamStore : ISteamStore {
+        /// <summary>
+        ///     The logger for this class.
+        /// </summary>
         private static readonly ILogger Log = LogManagerFactory
             .DefaultLogManager.GetLogger<SteamStore>();
 
+        /// <summary>
+        ///     The cache to store the api response from <see cref="AppList"/>.
+        /// </summary>
         private readonly FileCache cache;
 
+        /// <summary>
+        ///     The image cache to store game logos.
+        /// </summary>
         private readonly ImageCache imageCache;
 
+        /// <summary>
+        ///     The cache to store the id of each steam game.
+        /// </summary>
         private readonly InMemoryStorage<long> appIdCache;
 
-        private Uri appListUri;
+        /// <summary>
+        ///     The <see cref="Uri"/> to retrieve Steam's appList.
+        /// </summary>
+        private readonly Uri appListUri;
 
-        private JsonSerializerSettings deserializationSettings;
+        /// <summary>
+        ///     The JSON deserialization settings.
+        /// </summary>
+        private readonly JsonSerializerSettings deserializationSettings;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="SteamStore"/> class.
+        /// </summary>
+        /// <param name="appIdCache">
+        ///     The app id cache.
+        /// </param>
+        /// <param name="imageCache">
+        ///     The image cache.
+        /// </param>
+        /// <param name="cache">
+        ///     The file cache.
+        /// </param>
+        /// <param name="deserializationSettings">
+        ///     The JSON deserialization settings.
+        /// </param>
         public SteamStore(
                 InMemoryStorage<long> appIdCache,
                 ImageCache imageCache,
@@ -56,14 +90,29 @@
             this.appListUri = uriBuilder.Uri;
         }
 
+        /// <summary>
+        ///     Retrieves the game logo for a game.
+        /// </summary>
+        /// <param name="title">
+        ///     The title of the game.
+        /// </param>
+        /// <returns>
+        ///     The game logo if found; otherwise, a placeholder image.
+        /// </returns>
+        /// <remarks>
+        ///     The function checks if the image, if its uri is valid,
+        ///     exists in the cache first. If the image is not found,
+        ///     it is retrieved online and stored into an image cache.
+        /// </remarks>
         public IObservable<BitmapImage> GameLogo(string title) {
             var observable = new Subject<BitmapImage>();
 
-            var placeHolderUri =
+            const string PlaceHolderUri =
                 "ms-appx:///Presentation/Assets/NoPreviewAvaliable.png";
-            var uri = new Uri(placeHolderUri);
+            var uri = new Uri(PlaceHolderUri);
             var memoryItem = this.appIdCache.GetItem(title, TimeSpan.FromDays(1));
             if (memoryItem != null) {
+                // Item is not in the cache go find it online
                 var appId = memoryItem.Item;
                 var sb = new StringBuilder();
                 sb.AppendFormat("steam/apps/{0}/header.jpg", appId);
@@ -77,7 +126,7 @@
 
             try {
                 var dispatcher = CoreWindow.GetForCurrentThread().Dispatcher;
-                if (uri.OriginalString == placeHolderUri) {
+                if (uri.OriginalString == PlaceHolderUri) {
                     dispatcher
                         .RunAsync(CoreDispatcherPriority.Normal, () => { })
                         .ToObservable().Subscribe(

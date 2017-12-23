@@ -122,7 +122,7 @@ namespace GoodGameDeals.Data.Cache
         }
 
         /// <summary>
-        /// Get item from in-memory storage as long as it has not ex
+        /// Get item from in-memory storage as long as it has not expired.
         /// </summary>
         /// <param name="id">id of the in-memory storage item</param>
         /// <param name="duration">timespan denoting expiration</param>

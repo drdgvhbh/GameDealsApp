@@ -1,24 +1,19 @@
-﻿namespace GoodGameDeals.ViewModels.MainPage {
+﻿namespace GoodGameDeals.Presentation.ViewModels.MainPage {
     using System.Collections.Generic;
     using System.Linq;
     using System.Threading.Tasks;
+
+    using Windows.ApplicationModel;
+    using Windows.UI.Xaml.Navigation;
 
     using GoodGameDeals.Messages;
     using GoodGameDeals.Views;
 
     using MetroLog;
 
-
+    using Template10.Mvvm;
     using Template10.Services.NavigationService;
     using Template10.Services.SerializationService;
-
-    using Windows.ApplicationModel;
-    using Windows.UI.Xaml.Navigation;
-
-    using GoodGameDeals.Presentation.ViewModels.MainPage;
-    using GoodGameDeals.Services.HttpServices;
-
-    using Template10.Mvvm;
 
     public class MainPageViewModel : ViewModelBase {
         /// <summary>

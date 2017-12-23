@@ -1,4 +1,5 @@
-﻿namespace GoodGameDeals.Data.Repositories.Stores {
+﻿// ReSharper disable ClassNeverInstantiated.Global
+namespace GoodGameDeals.Data.Repositories.Stores {
     using System;
     using System.Reactive.Subjects;
 
@@ -12,18 +13,52 @@
 
     using FileCache = Cache.FileCache;
 
+    /// <summary>
+    ///     Represents a factory for creating stores to retrieve data from the
+    ///     <code>Steam</code> api.
+    /// </summary>
     public class SteamStoreFactory {
+        /// <summary>
+        ///     The logger for this class.
+        /// </summary>
         private static readonly ILogger Log = LogManagerFactory
             .DefaultLogManager.GetLogger<SteamStoreFactory>();
 
+        /// <summary>
+        ///     The cache to store files.
+        /// </summary>
         private readonly FileCache cache;
 
+        /// <summary>
+        ///     The cache to store images.
+        /// </summary>
         private readonly ImageCache imageCache;
 
+        /// <summary>
+        ///     The cache to store steam app ids.
+        /// </summary>
         private readonly InMemoryStorage<long> appIdCache;
 
-        private JsonSerializerSettings deserializationSettings;
+        /// <summary>
+        ///     The settings to deserialize JSON.
+        /// </summary>
+        private readonly JsonSerializerSettings deserializationSettings;
 
+        /// <summary>
+        ///     Initializes a new instance of the <see cref="SteamStoreFactory" /> class.
+        /// </summary>
+        /// <param name="appIdCache">
+        ///     The app id cache.
+        /// </param>
+        /// <param name="imageCache">
+        ///     The image cache.
+        /// </param>
+        /// <param name="cache">
+        ///     The cache.
+        /// </param>
+        /// <param name="deserializationSettings">
+        ///     The JSON deserialization settings.
+        /// </param>
         public SteamStoreFactory(
                 [Dependency("SteamAppIdCache")]InMemoryStorage<long> appIdCache,
                 [Dependency("SteamLogoCache")]ImageCache imageCache,
@@ -35,6 +70,12 @@
             this.deserializationSettings = deserializationSettings;
         }
 
+        /// <summary>
+        ///     Creates a store for retrieving <code>Steam</code> api data.
+        /// </summary>
+        /// <returns>
+        ///      A store for retrieving <code>Steam</code> api data.
+        /// </returns>
         public IObservable<ISteamStore> Create() {
             var subject = new Subject<ISteamStore>();
             var store = new SteamStore(

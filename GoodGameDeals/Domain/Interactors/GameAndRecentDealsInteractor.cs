@@ -33,7 +33,7 @@
                     foreach (var deal in deals) {
                         var game = new Game(deal.Added, deal.Title);
                         var canReturn = new ReactiveProperty<int> { Value = 2 };
-                        this.dealRepository.CurrentPrices(
+                        this.dealRepository.GameCurrentPrices(
                             deal.Plain,
                             parameters.country).Subscribe(
                             gameDeals => {

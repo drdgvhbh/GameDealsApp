@@ -14,7 +14,6 @@
     using GoodGameDeals.Domain.Mappers;
     using GoodGameDeals.Models;
     using GoodGameDeals.Presentation.Mappers;
-    using GoodGameDeals.Services.HttpServices;
     using GoodGameDeals.Services.JsonServices;
     using GoodGameDeals.ViewModels;
 
@@ -29,7 +28,6 @@
     public class RootContainer : AbstractContainerInstaller {
         public RootContainer() {
             this.RegisterJsonServices();
-            this.RegisterHttpServices();
         }
 
         public ViewModelLocator ViewModelLocatorInstance =>
@@ -46,8 +44,8 @@
                 "IsThereAnyDealCache",
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(this.Container.Resolve<HttpClient>()));
-            this.Container.Resolve<FileCache>("IsThereAnyDealCache").CacheDuration
-                = TimeSpan.FromMinutes(10);
+            this.Container.Resolve<FileCache>("IsThereAnyDealCache")
+                .CacheDuration = TimeSpan.FromDays(1);
 
             var steamClient = this.Container.Resolve<HttpClient>();
             this.Container.RegisterType<FileCache>(
@@ -139,11 +137,6 @@
             this.Container.RegisterType<IsThereAnyDealStoreFactory>(
                 new ContainerControlledLifetimeManager());
 
-        }
-
-        private void RegisterHttpServices() {
-            this.Container.RegisterType<IsThereAnyDealService>(
-                new ContainerControlledLifetimeManager());
         }
 
         protected override void RegisterViewModels() {
