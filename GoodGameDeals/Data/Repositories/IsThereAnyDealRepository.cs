@@ -62,9 +62,9 @@ namespace GoodGameDeals.Data.Repositories {
         ///      api request.
         /// </remarks>
         public IObservable<List<Deal>> RecentDeals(
-                Country country = Country.Cad,
-                int offset = 0,
-                int limit = 50) {
+                Country country,
+                int offset,
+                int limit) {
             return this.factory.Create().RecentDeals(country, offset, limit)
                 .Select(
                     deal => {

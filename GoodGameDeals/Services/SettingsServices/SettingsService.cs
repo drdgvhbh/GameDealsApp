@@ -1,10 +1,12 @@
-﻿using System;
-using Template10.Common;
-using Template10.Utils;
-using Windows.UI.Xaml;
+﻿namespace GoodGameDeals.Services.SettingsServices {
+    using System;
 
-namespace GoodGameDeals.Services.SettingsServices {
-    public class SettingsService {
+    using Template10.Common;
+    using Template10.Utils;
+
+    using Windows.UI.Xaml;
+
+    public class SettingsService : ISettingsService {
         public static SettingsService Instance { get; } = new SettingsService();
         Template10.Services.SettingsService.ISettingsHelper _helper;
         private SettingsService() {
@@ -22,6 +24,7 @@ namespace GoodGameDeals.Services.SettingsServices {
             }
         }
 
+        /// <inheritdoc />
         public ApplicationTheme AppTheme {
             get {
                 var theme = ApplicationTheme.Light;

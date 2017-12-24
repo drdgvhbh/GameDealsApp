@@ -8,6 +8,8 @@
              xmlns:Controls="using:GoodGameDeals.Controls"
              xmlns:Converters="using:GoodGameDeals.Converters"
              xmlns:converters="using:Template10.Converters"
+             xmlns:isAcrylicBrushPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypePresent(Windows.UI.Xaml.Media.AcrylicBrush)"
+             xmlns:isAcrylicBrushNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypeNotPresent(Windows.UI.Xaml.Media.AcrylicBrush)"
              mc:Ignorable="d">
     <UserControl.Resources>
         <Converters:DoubleToCurrency x:Key="DoubleToCurrencyConverter" />
@@ -779,7 +781,8 @@
             </Setter>
         </Style>
     </UserControl.Resources>
-    <Grid x:Name="grid" Margin="0" Background="{ThemeResource SystemControlBackgroundListMediumBrush }">
+
+    <Grid x:Name="grid" Margin="0" isAcrylicBrushPresent:Background="{ThemeResource SystemControlBackgroundListMediumBrush }" isAcrylicBrushNotPresent:Background="#686868">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Normal"/>

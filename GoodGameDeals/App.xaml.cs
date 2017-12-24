@@ -22,6 +22,8 @@
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Data;
 
+    using MainPage = GoodGameDeals.Presentation.Views.MainPage;
+
     /// <summary>
     /// The app.
     /// </summary>
@@ -30,14 +32,20 @@
         private static readonly ILogger Log = LogManagerFactory
             .DefaultLogManager.GetLogger<App>();
 
+        private RootContainer root;
+
+        private SettingsContainer settingsContainer;
+
         /// <summary>
         /// Initializes a new instance of the <see cref="App"/> class.
         /// </summary>
         public App() {
             this.InitializeComponent();
+            this.settingsContainer = new SettingsContainer();
+
             this.SplashFactory = (e) => new Views.Splash(e);
 
-            var settings = SettingsService.Instance;
+            var settings = this.settingsContainer.ISettingsServiceInstance;
             this.RequestedTheme = settings.AppTheme;
             this.CacheMaxDuration = settings.CacheMaxDuration;
             this.ShowShellBackButton = settings.UseShellBackButton;
@@ -59,29 +67,35 @@
             };
         }
 
+        public override async Task OnInitializeAsync(IActivatedEventArgs args) {
+            await Task.CompletedTask;
+        }
+
         public override async Task OnStartAsync(
-            StartKind startKind,
-            IActivatedEventArgs args) {
+                StartKind startKind,
+                IActivatedEventArgs args) {
+            this.root = (RootContainer)this.Resources["Root"];
             UIDispatcherScheduler.Initialize();
+
             // TODO: add your long-running task here
-            var root = (RootContainer)this.Resources["Root"];
-            await root.ResolveFileCache("SteamCache").InitializeAsync(
+            await this.root.ResolveFileCache("SteamCache").InitializeAsync(
                 ApplicationData.Current.LocalCacheFolder,
                 "SteamCache");
 
-            await root.ResolveFileCache("SteamLogoCache").InitializeAsync(
+            await this.root.ResolveFileCache("SteamLogoCache").InitializeAsync(
                 ApplicationData.Current.LocalCacheFolder,
                 "SteamLogoCache");
 
-            await root.ResolveFileCache("SteamAppIdCache").InitializeAsync(
+            await this.root.ResolveFileCache("SteamAppIdCache").InitializeAsync(
                 ApplicationData.Current.LocalCacheFolder,
                 "SteamAppIdCache");
 
-            await root.ResolveFileCache("IsThereAnyDealCache").InitializeAsync(
+            await this.root.ResolveFileCache("IsThereAnyDealCache").InitializeAsync(
                 ApplicationData.Current.TemporaryFolder,
                 "IsThereAnyDealCache");
 
-            await root.Container.Resolve<SteamStoreFactory>().Create().FirstAsync();
+            await this.root.Container.Resolve<SteamStoreFactory>().Create().FirstAsync();
+
             await this.NavigationService.NavigateAsync(typeof(MainPage));
         }
     }

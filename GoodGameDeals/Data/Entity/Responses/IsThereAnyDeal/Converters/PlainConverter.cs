@@ -1,13 +1,14 @@
 ﻿namespace GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal.Converters {
     using System;
     using System.Linq;
+    using System.Reflection;
 
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using IsThereAnyDeal;
 
     using Newtonsoft.Json;
     using Newtonsoft.Json.Linq;
 
-    using TypeExtensions = NUnit.Compatibility.TypeExtensions;
+
 
     public class PlainConverter : JsonConverter {
         public override bool CanConvert(Type objectType) =>

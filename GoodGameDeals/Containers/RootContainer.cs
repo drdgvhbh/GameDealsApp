@@ -1,12 +1,10 @@
 ﻿namespace GoodGameDeals.Containers {
     using System;
-    using System.Collections.Generic;
 
     using AutoMapper;
 
     using GoodGameDeals.Data.Cache;
     using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
-    using GoodGameDeals.Data.Entity.Responses.Steam;
     using GoodGameDeals.Data.Repositories;
     using GoodGameDeals.Data.Repositories.Stores;
     using GoodGameDeals.Domain;
@@ -14,8 +12,7 @@
     using GoodGameDeals.Domain.Mappers;
     using GoodGameDeals.Models;
     using GoodGameDeals.Presentation.Mappers;
-    using GoodGameDeals.Services.JsonServices;
-    using GoodGameDeals.ViewModels;
+    using GoodGameDeals.Presentation.ViewModels;
 
     using Newtonsoft.Json;
 
@@ -45,7 +42,7 @@
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(this.Container.Resolve<HttpClient>()));
             this.Container.Resolve<FileCache>("IsThereAnyDealCache")
-                .CacheDuration = TimeSpan.FromDays(1);
+                .CacheDuration = TimeSpan.FromMinutes(10);
 
             var steamClient = this.Container.Resolve<HttpClient>();
             this.Container.RegisterType<FileCache>(
@@ -77,25 +74,6 @@
                     DateParseHandling = DateParseHandling.None
                 },
                 new ContainerControlledLifetimeManager());
-
-            // Is There Any Deal
-            this.Container.RegisterType<JsonService<RecentDealsResponse>>(
-                new ContainerControlledLifetimeManager());
-            this.Container.RegisterInstance<Func<string, RecentDealsResponse>>(
-                this.Container.Resolve<JsonService<RecentDealsResponse>>()
-                    .FromJson);
-            this.Container.RegisterType<JsonService<CurrentPricesResponse>>(
-                new ContainerControlledLifetimeManager());
-            this.Container.RegisterInstance<Func<string, CurrentPricesResponse>>(
-                this.Container.Resolve<JsonService<CurrentPricesResponse>>()
-                    .FromJson);
-
-            // Steam
-            this.Container.RegisterType<JsonService<GetAppListResponse>>(
-                new ContainerControlledLifetimeManager());
-            this.Container.RegisterInstance<Func<string, GetAppListResponse>>(
-                this.Container.Resolve<JsonService<GetAppListResponse>>()
-                    .FromJson);
         }
 
         protected override void RegisterInteractors() {

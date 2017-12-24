@@ -1,10 +1,6 @@
 ﻿namespace GoodGameDeals.Domain {
     using System.Collections.Generic;
-    using System.Collections.ObjectModel;
-
     using Windows.UI.Xaml.Media.Imaging;
-
-    using GoodGameDeals.Models;
 
     public class Game {
         public Game(

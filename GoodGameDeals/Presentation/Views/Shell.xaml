@@ -9,12 +9,13 @@
       xmlns:local="using:GoodGameDeals.Views"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:views="using:GoodGameDeals.Views"
+      xmlns:views1="using:GoodGameDeals.Presentation.Views"
       mc:Ignorable="d">
 
     <Controls:HamburgerMenu x:Name="MyHamburgerMenu">
         <Controls:HamburgerMenu.PrimaryButtons>
             <!--  mainpage button  -->
-            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views:MainPage">
+            <Controls:HamburgerButtonInfo ClearHistory="True" PageType="views1:MainPage">
                 <StackPanel Orientation="Horizontal">
                     <SymbolIcon Width="48"
                                 Height="48"

@@ -10,11 +10,12 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     x:Name="LoginPage"
     xmlns:vm="using:GoodGameDeals.ViewModels"
+    xmlns:viewModels="using:GoodGameDeals.Presentation.ViewModels"
     x:Class="GoodGameDeals.Views.Login"
     mc:Ignorable="d">
 
     <Page.DataContext>
-        <vm:LoginPageViewModel x:Name="ViewModel"/>
+        <viewModels:LoginPageViewModel x:Name="ViewModel"/>
     </Page.DataContext>
 
     <Page.Resources>

@@ -8,9 +8,9 @@
 
     public interface IIsThereAnyDealStore {
         IObservable<RecentDealsResponse> RecentDeals(
-            Country country = Country.Cad,
-            int offset = 0,
-            int limit = 50);
+            Country country,
+            int offset,
+            int limit);
 
         IObservable<CurrentPricesResponse> CurrentPrices(
             string plain,

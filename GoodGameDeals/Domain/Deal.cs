@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace GoodGameDeals.Domain {
+﻿namespace GoodGameDeals.Domain {
     public class Deal {
         public long Added { get; set; }
 

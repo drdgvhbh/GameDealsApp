@@ -26,16 +26,16 @@
         public override IObservable<Game> UseCaseObservable(Params parameters) {
             var subject = new Subject<Game>();
             this.dealRepository.RecentDeals(
-                    parameters.country,
-                    parameters.offset,
-                    parameters.limit).Subscribe(
+                    parameters.Country,
+                    parameters.Offset,
+                    parameters.Limit).Subscribe(
                 deals => {
                     foreach (var deal in deals) {
                         var game = new Game(deal.Added, deal.Title);
                         var canReturn = new ReactiveProperty<int> { Value = 2 };
                         this.dealRepository.GameCurrentPrices(
                             deal.Plain,
-                            parameters.country).Subscribe(
+                            parameters.Country).Subscribe(
                             gameDeals => {
                                 foreach (var gameDeal in gameDeals) {
                                     gameDeal.Plain = deal.Plain;
@@ -61,19 +61,19 @@
         }
 
         public class Params {
-            internal readonly Country country;
+            internal readonly Country Country;
 
-            internal readonly int offset;
+            internal readonly int Offset;
 
-            internal readonly int limit;
+            internal readonly int Limit;
 
             public Params(
-                    Country country = Country.Cad,
-                    int limit = 50,
-                    int offset = 0) {
-                this.country = country;
-                this.limit = 50;
-                this.offset = 0;
+                Country country = Country.Cad,
+                int limit = 25,
+                int offset = 0) {
+                this.Country = country;
+                this.Limit = limit;
+                this.Offset = offset;
             }
         }
     }

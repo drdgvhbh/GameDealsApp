@@ -26,9 +26,9 @@
         ///     The recent deals.
         /// </returns>
         IObservable<List<Deal>> RecentDeals(
-            Country country = Country.Cad,
-            int offset = 0,
-            int limit = 50);
+            Country country,
+            int offset,
+            int limit);
 
         /// <summary>
         ///     Retrieves the current deals for a particular game.

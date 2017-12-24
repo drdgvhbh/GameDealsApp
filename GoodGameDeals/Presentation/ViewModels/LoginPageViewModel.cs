@@ -1,12 +1,12 @@
-﻿namespace GoodGameDeals.ViewModels {
+﻿namespace GoodGameDeals.Presentation.ViewModels {
     using System;
-    using System.Text.RegularExpressions;
-
-    using MetroLog;
 
     using Windows.Security.Authentication.Web;
 
     using GoodGameDeals.Messages;
+    using GoodGameDeals.Presentation.Views;
+
+    using MetroLog;
 
     using Template10.Mvvm;
     using Template10.Services.SerializationService;
@@ -51,7 +51,7 @@
                                 .Fragment.Split('&')[0].Split('=')[1];
 
                         this.NavigationService.Navigate(
-                            typeof(Views.MainPage),
+                            typeof(MainPage),
                             SerializationService.Json.Serialize(
                                 new AccessToken(responseToken)));
                         break;
