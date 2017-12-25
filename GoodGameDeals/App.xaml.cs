@@ -4,8 +4,6 @@
 
     using GoodGameDeals.Containers;
     using GoodGameDeals.Data.Repositories.Stores;
-    using GoodGameDeals.Services.SettingsServices;
-    using GoodGameDeals.Views;
 
     using MetroLog;
     using MetroLog.Targets;

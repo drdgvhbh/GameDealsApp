@@ -125,6 +125,11 @@
     <Compile Include="Domain\Mappers\CurrentPricesResponseListDealConverter.cs" />
     <Compile Include="Domain\Mappers\RecentDealsResponseListDealConverter.cs" />
     <Compile Include="Domain\Shop.cs" />
+    <Compile Include="Gateways\Contracts\IIsThereAnyDealStore.cs" />
+    <Compile Include="Gateways\Repositories\GameRepository.cs" />
+    <Compile Include="Gateways\Contracts\ISteamStore.cs" />
+    <Compile Include="Gateways\Stores\IsThereAnyDealStore.cs" />
+    <Compile Include="Gateways\Stores\SteamStore.cs" />
     <Compile Include="Presentation\Controls\DealPricingControl.xaml.cs">
       <DependentUpon>DealPricingControl.xaml</DependentUpon>
     </Compile>
@@ -138,6 +143,7 @@
     <Compile Include="Converters\IntegerToPercentage.cs" />
     <Compile Include="Presentation\Mappers\DealDealModelConverter.cs" />
     <Compile Include="Presentation\Mappers\GameGameModelConverter.cs" />
+    <Compile Include="Properties\SimpleStubs.generated.cs" />
     <Compile Include="Services\JsonServices\JsonService.cs" />
     <Compile Include="Presentation\ViewModels\ViewModelLocator.cs" />
     <Compile Include="Messages\AccessToken.cs" />
@@ -186,7 +192,9 @@
   <ItemGroup>
     <Content Include="Presentation\Assets\NoPreviewAvaliable.png" />
     <Content Include="Presentation\Assets\Placeholder.png" />
-    <Content Include="Properties\Default.rd.xml" />
+    <Content Include="Properties\Default.rd.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Presentation\Assets\LockScreenLogo.scale-200.png" />
     <Content Include="Presentation\Assets\SplashScreen.scale-200.png" />
     <Content Include="Presentation\Assets\Square150x150Logo.scale-200.png" />
@@ -258,11 +266,14 @@
     <PackageReference Include="Bogus">
       <Version>22.0.1</Version>
     </PackageReference>
+    <PackageReference Include="Etg.SimpleStubs">
+      <Version>2.3.4</Version>
+    </PackageReference>
     <PackageReference Include="MetroLog">
       <Version>1.0.1</Version>
     </PackageReference>
-    <PackageReference Include="Microsoft.EntityFrameworkCore">
-      <Version>2.0.1</Version>
+    <PackageReference Include="Microsoft.NETCore.Runtime.CoreCLR">
+      <Version>2.0.4</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
@@ -285,12 +296,18 @@
     <PackageReference Include="Microsoft.Xaml.Behaviors.Uwp.Managed">
       <Version>2.0.0</Version>
     </PackageReference>
-    <PackageReference Include="Newtonsoft.Json">
-      <Version>10.0.3</Version>
-    </PackageReference>
     <PackageReference Include="Unity">
       <Version>5.5.0</Version>
     </PackageReference>
+    <PackageReference Include="xunit">
+      <Version>2.3.1</Version>
+    </PackageReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\GoodGameDeals.Core\GoodGameDeals.Core.csproj">
+      <Project>{B1E029E1-5149-4EE8-ACBF-AAA5DDA7A2EF}</Project>
+      <Name>GoodGameDeals.Core</Name>
+    </ProjectReference>
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

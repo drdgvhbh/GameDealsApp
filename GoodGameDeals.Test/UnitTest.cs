@@ -1,14 +1,15 @@
-﻿using Xunit;
+﻿
+using System;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace MyFirstUWPTests {
-    public class UnitTest {
-        [Fact]
-        public void PassingTest() {
-            Assert.Equal(4, Add(2, 2));
-        }
-
-        int Add(int x, int y) {
-            return x + y;
+namespace GoodGameDeals.Test
+{
+    [TestClass]
+    public class UnitTest1
+    {
+        [TestMethod]
+        public void TestMethod1()
+        {
         }
     }
 }

@@ -1,6 +1,8 @@
 ﻿namespace GoodGameDeals.Containers {
     using System;
 
+    using Windows.UI.Xaml.Data;
+
     using AutoMapper;
 
     using GoodGameDeals.Data.Cache;
@@ -22,6 +24,7 @@
 
     using Windows.Web.Http;
 
+    [Bindable]
     public class RootContainer : AbstractContainerInstaller {
         public RootContainer() {
             this.RegisterJsonServices();
