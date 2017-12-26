@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodGameDeals.Core.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodGameDeals.Test", "GoodGameDeals.Test\GoodGameDeals.Test.csproj", "{2B72CB3F-0F13-4785-ACB5-756595D1D289}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GoodGameDeals.Threading", "GoodGameDeals.Threading\GoodGameDeals.Threading.csproj", "{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +101,22 @@ Global
 		{2B72CB3F-0F13-4785-ACB5-756595D1D289}.Release|x86.ActiveCfg = Release|x86
 		{2B72CB3F-0F13-4785-ACB5-756595D1D289}.Release|x86.Build.0 = Release|x86
 		{2B72CB3F-0F13-4785-ACB5-756595D1D289}.Release|x86.Deploy.0 = Release|x86
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|ARM.ActiveCfg = Debug|ARM
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|ARM.Build.0 = Debug|ARM
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|x64.ActiveCfg = Debug|x64
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|x64.Build.0 = Debug|x64
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|x86.ActiveCfg = Debug|x86
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Debug|x86.Build.0 = Debug|x86
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|ARM.ActiveCfg = Release|ARM
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|ARM.Build.0 = Release|ARM
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|x64.ActiveCfg = Release|x64
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|x64.Build.0 = Release|x64
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|x86.ActiveCfg = Release|x86
+		{579AFC45-584F-4ED2-BD77-E88B97C9CEE9}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

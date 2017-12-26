@@ -4,7 +4,7 @@
 
     using Windows.UI.Xaml.Media.Imaging;
 
-    using GoodGameDeals.Data.Entity.Responses.Steam;
+    using GoodGameDeals.Data.ApiResponses.Steam;
 
     public interface ISteamStore {
         IObservable<BitmapImage> GameLogo(string title);

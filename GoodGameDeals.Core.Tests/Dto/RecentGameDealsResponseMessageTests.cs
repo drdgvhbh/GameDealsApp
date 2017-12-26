@@ -5,22 +5,23 @@
     using GoodGameDeals.Core.Dto;
     using GoodGameDeals.Core.Entities;
 
-    using Xunit;
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+    [TestClass]
     public class RecentGameDealsResponseMessageTests {
 
-        [Fact]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void
                 RecentGameDealsResponseMessage_MessageIsNull_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(
-                () => new RecentGameDealsResponseMessage(true, new List<Game>(), null));
+            new RecentGameDealsResponseMessage(true, new List<Game>(), null);
         }
 
-        [Fact]
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
         public void
             RecentGameDealsResponseMessage_GameIsNull_ThrowsArgumentNullException() {
-            Assert.Throws<ArgumentNullException>(
-                () => new RecentGameDealsResponseMessage(true, null, string.Empty));
+            new RecentGameDealsResponseMessage(true, null, string.Empty);
         }
     }
 }

@@ -6,7 +6,6 @@
     using AutoMapper;
 
     using GoodGameDeals.Data.Cache;
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
     using GoodGameDeals.Data.Repositories;
     using GoodGameDeals.Data.Repositories.Stores;
     using GoodGameDeals.Domain;
@@ -23,6 +22,8 @@
     using Unity.Lifetime;
 
     using Windows.Web.Http;
+
+    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
 
     [Bindable]
     public class RootContainer : AbstractContainerInstaller {
@@ -74,7 +75,8 @@
             this.Container.RegisterInstance(
                 new JsonSerializerSettings {
                     MetadataPropertyHandling = MetadataPropertyHandling.Ignore,
-                    DateParseHandling = DateParseHandling.None
+                    DateParseHandling = DateParseHandling.None,
+                    ConstructorHandling = ConstructorHandling.AllowNonPublicDefaultConstructor
                 },
                 new ContainerControlledLifetimeManager());
         }
@@ -99,7 +101,7 @@
         protected override void RegisterMappings() {
             var config = new MapperConfiguration(
                 cfg => {
-                    cfg.CreateMap<RecentDealsResponse.List, Deal>()
+                    cfg.CreateMap<RecentDealsResponse.Deal, Deal>()
                         .ConvertUsing(new RecentDealsResponseListDealConverter());
                     cfg.CreateMap<Deal, DealModel>()
                         .ConvertUsing(new DealDealModelConverter());

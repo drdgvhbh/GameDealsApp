@@ -1,10 +1,9 @@
 ﻿namespace GoodGameDeals.Data.Repositories.Stores {
     using System;
-    using System.Collections.Generic;
     using System.Reactive;
 
-    using GoodGameDeals.Data.Entity;
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
+    using GoodGameDeals.Data.Localization;
 
     public interface IIsThereAnyDealStore {
         IObservable<RecentDealsResponse> RecentDeals(

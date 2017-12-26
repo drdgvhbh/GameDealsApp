@@ -1,9 +1,9 @@
 ﻿namespace GoodGameDeals.Data.Repositories {
     using System;
 
-    using GoodGameDeals.Data.Entity.Responses.Steam;
-
     using Windows.UI.Xaml.Media.Imaging;
+
+    using GoodGameDeals.Data.ApiResponses.Steam;
 
     /// <summary>
     ///     Defines a repository for retrieving data from the

@@ -5,7 +5,7 @@
     using System.Reactive.Linq;
     using System.Reactive.Subjects;
 
-    using GoodGameDeals.Data.Entity;
+    using GoodGameDeals.Data.Localization;
     using GoodGameDeals.Data.Repositories;
 
     using Reactive.Bindings;

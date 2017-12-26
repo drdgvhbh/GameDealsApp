@@ -3,7 +3,7 @@
 
     using AutoMapper;
 
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
 
     public class
         CurrentPricesResponseListDealConverter : ITypeConverter<

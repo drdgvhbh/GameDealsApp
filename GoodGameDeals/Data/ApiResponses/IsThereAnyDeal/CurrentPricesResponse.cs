@@ -1,5 +1,5 @@
-﻿namespace GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal {
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal.Converters;
+﻿namespace GoodGameDeals.Data.ApiResponses.IsThereAnyDeal {
+    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.Converters;
 
     using Newtonsoft.Json;
 

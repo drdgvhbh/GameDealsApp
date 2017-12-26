@@ -1,13 +1,13 @@
 ﻿namespace GoodGameDeals.Domain.Mappers {
     using AutoMapper;
 
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
 
     public class
         RecentDealsResponseListDealConverter : ITypeConverter<
-            RecentDealsResponse.List, Deal> {
+            RecentDealsResponse.Deal, Deal> {
         public Deal Convert(
-                RecentDealsResponse.List source,
+                RecentDealsResponse.Deal source,
                 Deal destination,
                 ResolutionContext context) {
             var deal = new Deal

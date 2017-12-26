@@ -13,9 +13,9 @@
     using Windows.Storage;
     using Windows.Web.Http;
 
+    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
     using GoodGameDeals.Data.Cache;
-    using GoodGameDeals.Data.Entity;
-    using GoodGameDeals.Data.Entity.Responses.IsThereAnyDeal;
+    using GoodGameDeals.Data.Localization;
     using GoodGameDeals.Services.JsonServices;
 
     using Newtonsoft.Json;

@@ -1,4 +1,4 @@
-﻿namespace GoodGameDeals.Data.Entity.Responses.Steam {
+﻿namespace GoodGameDeals.Data.ApiResponses.Steam {
     using Newtonsoft.Json;
 
     public class GetAppListResponse {

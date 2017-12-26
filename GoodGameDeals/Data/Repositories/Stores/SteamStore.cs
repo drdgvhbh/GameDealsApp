@@ -6,7 +6,6 @@
     using System.Text;
 
     using GoodGameDeals.Data.Cache;
-    using GoodGameDeals.Data.Entity.Responses.Steam;
     using GoodGameDeals.Services.JsonServices;
 
     using MetroLog;
@@ -18,6 +17,8 @@
     using Windows.Storage;
     using Windows.UI.Core;
     using Windows.UI.Xaml.Media.Imaging;
+
+    using GoodGameDeals.Data.ApiResponses.Steam;
 
     using FileCache = GoodGameDeals.Data.Cache.FileCache;
 

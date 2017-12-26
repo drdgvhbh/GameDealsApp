@@ -5,7 +5,6 @@ namespace GoodGameDeals.Data.Repositories {
 
     using AutoMapper;
 
-    using GoodGameDeals.Data.Entity.Responses.Steam;
     using GoodGameDeals.Data.Repositories.Stores;
 
     using MetroLog;
@@ -13,6 +12,8 @@ namespace GoodGameDeals.Data.Repositories {
     using Reactive.Bindings.Extensions;
 
     using Windows.UI.Xaml.Media.Imaging;
+
+    using GoodGameDeals.Data.ApiResponses.Steam;
 
     /// <inheritdoc />
     /// <summary>

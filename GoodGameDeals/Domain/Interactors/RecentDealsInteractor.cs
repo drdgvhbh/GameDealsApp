@@ -2,7 +2,7 @@
     using System;
     using System.Collections.Generic;
 
-    using GoodGameDeals.Data.Entity;
+    using GoodGameDeals.Data.Localization;
     using GoodGameDeals.Data.Repositories;
 
     public class RecentDealsInteractor : AbstractInteractor<List<Deal>, RecentDealsInteractor.Params> {

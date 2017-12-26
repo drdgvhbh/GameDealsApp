@@ -7,7 +7,7 @@ namespace GoodGameDeals.Data.Repositories {
 
     using AutoMapper;
 
-    using GoodGameDeals.Data.Entity;
+    using GoodGameDeals.Data.Localization;
     using GoodGameDeals.Data.Repositories.Stores;
     using GoodGameDeals.Domain;
 
@@ -68,7 +68,7 @@ namespace GoodGameDeals.Data.Repositories {
             return this.factory.Create().RecentDeals(country, offset, limit)
                 .Select(
                     deal => {
-                        var list = deal.Data.List;
+                        var list = deal.Data.DealsList;
                         var deals = list.Select(
                                 dealItem => this.mapper.Map<Deal>(dealItem))
                             .ToList();
