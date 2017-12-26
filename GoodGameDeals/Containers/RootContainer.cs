@@ -6,11 +6,6 @@
     using AutoMapper;
 
     using GoodGameDeals.Data.Cache;
-    using GoodGameDeals.Data.Repositories;
-    using GoodGameDeals.Data.Repositories.Stores;
-    using GoodGameDeals.Domain;
-    using GoodGameDeals.Domain.Interactors;
-    using GoodGameDeals.Domain.Mappers;
     using GoodGameDeals.Models;
     using GoodGameDeals.Presentation.Mappers;
     using GoodGameDeals.Presentation.ViewModels;
@@ -23,12 +18,24 @@
 
     using Windows.Web.Http;
 
+    using GoodGameDeals.Core.Contracts.Repositories;
+    using GoodGameDeals.Core.UseCases;
     using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
+    using GoodGameDeals.Gateways.Contracts;
+    using GoodGameDeals.Gateways.Repositories;
+    using GoodGameDeals.Gateways.Stores;
+    using GoodGameDeals.Threading;
+    using GoodGameDeals.Threading.Tasks;
+
+    using Game = GoodGameDeals.Core.Entities.Game;
 
     [Bindable]
     public class RootContainer : AbstractContainerInstaller {
         public RootContainer() {
+            this.Container.RegisterType<ITaskDelay, ProductionTaskDelay>(
+                new ContainerControlledLifetimeManager());
             this.RegisterJsonServices();
+            this.RegisterStores();
         }
 
         public ViewModelLocator ViewModelLocatorInstance =>
@@ -56,17 +63,18 @@
             this.Container.Resolve<FileCache>("SteamCache").CacheDuration
                 = TimeSpan.FromDays(1);
 
-            this.Container.RegisterType<ImageCache>(
+            this.Container.RegisterType<Microsoft.Toolkit.Uwp.UI.ImageCache>(
                 "SteamLogoCache",
                 new ContainerControlledLifetimeManager(),
-                new InjectionConstructor(steamClient));
-            this.Container.Resolve<ImageCache>("SteamLogoCache").CacheDuration =
-                TimeSpan.FromHours(6);
+                new InjectionConstructor());
+            this.Container
+                .Resolve<Microsoft.Toolkit.Uwp.UI.ImageCache>("SteamLogoCache")
+                .CacheDuration = TimeSpan.FromHours(6);
 
-            this.Container.RegisterType<InMemoryStorage<long>>(
+            this.Container.RegisterType<Microsoft.Toolkit.Uwp.UI.InMemoryStorage<long>>(
                 "SteamAppIdCache",
                 new ContainerControlledLifetimeManager());
-            this.Container.Resolve<InMemoryStorage<long>>("SteamAppIdCache")
+            this.Container.Resolve<Microsoft.Toolkit.Uwp.UI.InMemoryStorage<long>>("SteamAppIdCache")
                 .MaxItemCount = int.MaxValue;
         }
 
@@ -82,31 +90,18 @@
         }
 
         protected override void RegisterInteractors() {
-            this.Container.RegisterType<RecentDealsInteractor>(
-                new ContainerControlledLifetimeManager());
-            this.Container.RegisterType<GameImageInteractor>(
-                new ContainerControlledLifetimeManager());
-            this.Container.RegisterType<GameAndRecentDealsInteractor>(
+            this.Container.RegisterType<RequestRecentGameDealsInteractor>(
                 new ContainerControlledLifetimeManager());
         }
 
         protected override void RegisterRepositories() {
-            this.Container.RegisterType<ISteamRepository, SteamRepository>(
+            this.Container.RegisterType<IGamesRepository, GameRepository>(
                 new ContainerControlledLifetimeManager());
-            this.Container
-                .RegisterType<IIsThereAnyDealRepository, IsThereAnyDealRepository>(
-                    new ContainerControlledLifetimeManager());
         }
 
         protected override void RegisterMappings() {
             var config = new MapperConfiguration(
                 cfg => {
-                    cfg.CreateMap<RecentDealsResponse.Deal, Deal>()
-                        .ConvertUsing(new RecentDealsResponseListDealConverter());
-                    cfg.CreateMap<Deal, DealModel>()
-                        .ConvertUsing(new DealDealModelConverter());
-                    cfg.CreateMap<CurrentPricesResponse.List, Deal>()
-                        .ConvertUsing(new CurrentPricesResponseListDealConverter());
                     cfg.CreateMap<Game, GameModel>()
                         .ConvertUsing(new GameGameModelConverter());
                 });
@@ -115,12 +110,18 @@
         }
 
         protected override void RegisterFactories() {
-            this.Container.RegisterType<SteamStoreFactory>(
-                new ContainerControlledLifetimeManager());
-            this.Container.RegisterType<IsThereAnyDealStoreFactory>(
-                new ContainerControlledLifetimeManager());
-
         }
+
+        private void RegisterStores() {
+            this.Container
+                .RegisterType<IIsThereAnyDealStore, IsThereAnyDealStore>(
+                    new ContainerControlledLifetimeManager());
+            this.Container
+                .RegisterType<ISteamStore, SteamStore>(
+                    new ContainerControlledLifetimeManager());
+        }
+
+
 
         protected override void RegisterViewModels() {
             this.Container.RegisterType<ViewModelLocator>(

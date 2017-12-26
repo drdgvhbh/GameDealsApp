@@ -4,23 +4,9 @@
     using NullGuard;
 
     public class RecentDealsResponse {
-        public RecentDealsResponse([AllowNull]object obj) {
+        public RecentDealsResponse() {
             this.Data = new DataC();
             this.Meta = new MetaData();
-            this.Data.MaxNumDeals = 0;
-            this.Data.DealsList = new Deal[0];
-            this.Data.ITADWebsite = new ITADWebsite();
-        }
-
-        /// <summary>
-        ///     Prevents a default instance of the
-        ///     <see cref="RecentDealsResponse" /> class from being created.
-        /// </summary>
-        /// <remarks>
-        ///     This constructor is used for deserialization.
-        /// </remarks>
-        [JsonConstructor]
-        private RecentDealsResponse() {
         }
 
         [JsonProperty("data")]
@@ -36,6 +22,11 @@
         }
 
         public class DataC {
+            public DataC() {
+                this.DealsList = new Deal[0];
+                this.ITADWebsite = new ITADWebsite();
+            }
+
             [JsonProperty("count")]
             public long MaxNumDeals { get; set; }
 
@@ -48,11 +39,20 @@
         }
 
         internal class ITADWebsite {
+            public ITADWebsite() {
+            }
+
             [JsonProperty("deals")]
             public string Site { get; set; }
         }
 
         public class Deal {
+            public Deal() {
+                this.Drm = new string[0];
+                this.Shop = new Shop();
+                this.Urls = new DealUrl();
+            }
+
             [JsonProperty("added")]
             public long Added { get; set; }
 

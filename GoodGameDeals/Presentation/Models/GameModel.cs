@@ -7,7 +7,7 @@ namespace GoodGameDeals.Models {
 
     public class GameModel : IEquatable<GameModel> {
         public GameModel(
-                long id,
+                DateTime id,
                 string gameTitle,
                 string gameSubtitle,
                 BitmapImage image,
@@ -19,7 +19,7 @@ namespace GoodGameDeals.Models {
             this.DealsList = dealsList;
         }
 
-        public long Id { get; }
+        public DateTime Id { get; }
 
         /// <summary>
         ///     Gets the deals list.

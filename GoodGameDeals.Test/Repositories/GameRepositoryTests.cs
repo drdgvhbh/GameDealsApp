@@ -145,7 +145,7 @@
             var isThereAnyDealStoreMock = new StubIIsThereAnyDealStore();
             isThereAnyDealStoreMock.RecentDeals(
                 async (quantity, offset) =>
-                    await Task.FromResult(new RecentDealsResponse(null)));
+                    await Task.FromResult(new RecentDealsResponse()));
             isThereAnyDealStoreMock.CurrentPrices(
                 async plain =>
                     await Task.FromResult(new CurrentPricesResponse()));

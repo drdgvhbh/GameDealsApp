@@ -9,8 +9,6 @@
     using System.Threading.Tasks;
 
     using AutoMapper;
-
-    using GoodGameDeals.Domain.Interactors;
     using GoodGameDeals.Messages;
     using GoodGameDeals.Models;
     using GoodGameDeals.Views;
@@ -25,6 +23,11 @@
 
     using Windows.UI.Xaml.Navigation;
 
+    using GoodGameDeals.Core.Dto;
+    using GoodGameDeals.Core.UseCases;
+
+    using NullGuard;
+
     public class MainPageViewModel : ViewModelBase {
         /// <summary>
         ///     The log.
@@ -36,19 +39,19 @@
 
         private bool isFirstLoad;
 
-        private readonly GameAndRecentDealsInteractor gameAndRecentDealsInteractor;
+        private readonly RequestRecentGameDealsInteractor recentGameDealsInteractor;
 
         private readonly IMapper mapper;
 
         public MainPageViewModel(
                 IMapper mapper,
                 ObservableCollection<GameModel> gamesList,
-                GameAndRecentDealsInteractor gameAndRecentDealsInteractor) {
+                RequestRecentGameDealsInteractor recentGameDealsInteractor) {
             this.isFirstLoad = true;
 
             this.GamesCollectionView =
                 new AdvancedCollectionView(gamesList, true);
-            this.gameAndRecentDealsInteractor = gameAndRecentDealsInteractor;
+            this.recentGameDealsInteractor = recentGameDealsInteractor;
             this.mapper = mapper;
 
             this.GamesCollectionView.SortDescriptions.Add(
@@ -83,7 +86,7 @@
         }
 
         public override async Task OnNavigatedToAsync(
-            object parameter,
+            [AllowNull]object parameter,
             NavigationMode mode,
             IDictionary<string, object> suspensionState) {
             if (suspensionState.Any()) {
@@ -98,7 +101,7 @@
             }
 
             if (mode == NavigationMode.New || mode == NavigationMode.Refresh) {
-                await this.PopulateGamesList().FirstAsync();
+                await this.PopulateGamesList();
             }
             else {
                 this.GamesCollectionView.Refresh();
@@ -107,29 +110,24 @@
         }
 
         public override async Task OnNavigatingFromAsync(
-            NavigatingEventArgs args) {
+                NavigatingEventArgs args) {
             args.Cancel = false;
             await Task.CompletedTask;
         }
 
-        public IObservable<Unit> PopulateGamesList() {
-            var subject = new Subject<Unit>();
+        public async Task PopulateGamesList() {
             this.GamesCollectionView.Clear();
-            this.gameAndRecentDealsInteractor
-                .UseCaseObservable(new GameAndRecentDealsInteractor.Params())
-                .Subscribe(
-                    game => {
-                        this.AddGameToView(this.mapper.Map<GameModel>(game));
-                    },
-                    () => {
-                        subject.OnNext(new Unit());
-                    });
-            return subject;
+            var response =
+                    await this.recentGameDealsInteractor.Handle(
+                        new RecentGameDealsRequestMessage(50));
+            foreach (var game in response.Games) {
+                this.GamesCollectionView.Add(this.mapper.Map<GameModel>(game));
+            }
         }
 
         private void AddGameToView(GameModel game) {
             try {
-                this.GamesCollectionView.Add(this.mapper.Map<GameModel>(game));
+                this.GamesCollectionView.Add(game);
             }
             catch (InvalidOperationException e) {
                 Log.Warn(

@@ -25,10 +25,13 @@ namespace GoodGameDeals.Data.Cache
 
     using Microsoft.Toolkit.Uwp.UI;
 
+    using NullGuard;
+
     /// <summary>
     /// Provides methods and tools to cache files in a folder
     /// </summary>
     /// <typeparam name="T">Generic type as supplied by consumer of the class</typeparam>
+    [NullGuard(ValidationFlags.None)]
     public abstract class CacheBase<T>
     {
         /// <summary>

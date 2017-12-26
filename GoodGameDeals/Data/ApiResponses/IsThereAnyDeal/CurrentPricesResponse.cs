@@ -4,6 +4,11 @@
     using Newtonsoft.Json;
 
     public partial class CurrentPricesResponse {
+        public CurrentPricesResponse() {
+            this.Data = new DataC();
+            this.Meta = new MetaC();
+        }
+
         [JsonProperty("data")]
         public DataC Data { get; set; }
 
@@ -18,6 +23,10 @@
 
         [JsonConverter(typeof(PlainConverter))]
         public class DataC {
+            public DataC() {
+                this.Plain = new Plain();
+            }
+
             [JsonProperty("plain")]
             public Plain
                 Plain { get; set; }
@@ -25,6 +34,11 @@
         }
 
         public class Plain {
+            public Plain() {
+                this.List = new List[0];
+                this.Urls = new Urls();;
+            }
+
             [JsonProperty("list")]
             public List[] List { get; set; }
 
@@ -39,6 +53,11 @@
         }
 
         public class List {
+            public List() {
+                this.Drm = new string[0];
+                this.Shop = new Shop();
+            }
+
             [JsonProperty("drm")]
             public string[] Drm { get; set; }
 

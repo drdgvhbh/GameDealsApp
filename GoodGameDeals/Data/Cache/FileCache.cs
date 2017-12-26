@@ -21,9 +21,12 @@ namespace GoodGameDeals.Data.Cache
 
     using Microsoft.Toolkit.Uwp.UI;
 
+    using NullGuard;
+
     /// <summary>
     /// Provides methods and tools to cache files in a folder
     /// </summary>
+    [NullGuard(ValidationFlags.None)]
     public class FileCache : CacheBase<StorageFile>
     {
         /// <summary>

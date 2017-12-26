@@ -11,5 +11,7 @@
         Task<GetAppListResponse> AppList();
 
         long GetAppId(string title);
+
+        Task Initialize();
     }
 }

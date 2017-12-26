@@ -3,8 +3,6 @@
     using System.Threading.Tasks;
 
     using GoodGameDeals.Containers;
-    using GoodGameDeals.Data.Repositories.Stores;
-
     using MetroLog;
     using MetroLog.Targets;
 
@@ -16,9 +14,12 @@
     using Unity;
 
     using Windows.ApplicationModel.Activation;
+    using Windows.ApplicationModel.Core;
     using Windows.Storage;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Data;
+
+    using GoodGameDeals.Gateways.Contracts;
 
     using MainPage = GoodGameDeals.Presentation.Views.MainPage;
 
@@ -75,6 +76,8 @@
             this.root = (RootContainer)this.Resources["Root"];
             UIDispatcherScheduler.Initialize();
 
+            await this.root.Container.Resolve<ISteamStore>().Initialize();
+
             // TODO: add your long-running task here
             await this.root.ResolveFileCache("SteamCache").InitializeAsync(
                 ApplicationData.Current.LocalCacheFolder,
@@ -91,8 +94,6 @@
             await this.root.ResolveFileCache("IsThereAnyDealCache").InitializeAsync(
                 ApplicationData.Current.TemporaryFolder,
                 "IsThereAnyDealCache");
-
-            await this.root.Container.Resolve<SteamStoreFactory>().Create().FirstAsync();
 
             await this.NavigationService.NavigateAsync(typeof(MainPage));
         }

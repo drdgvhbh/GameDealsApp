@@ -3,6 +3,10 @@
     using System.Collections.Concurrent;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Reactive.Concurrency;
+    using System.Reactive.Linq;
+    using System.Reactive.Subjects;
+    using System.Threading;
     using System.Threading.Tasks;
 
     using GoodGameDeals.Core.Contracts.Repositories;
@@ -16,6 +20,8 @@
     using Windows.ApplicationModel.Core;
     using Windows.UI.Core;
     using Windows.UI.Xaml.Media.Imaging;
+
+    using Reactive.Bindings.Extensions;
 
     using IIsThereAnyDealStore = GoodGameDeals.Gateways.Contracts.IIsThereAnyDealStore;
 
@@ -84,7 +90,7 @@
                 int quantity,
                 int offset,
                 TimeSpan timeout,
-                TimeSpan delay){
+                TimeSpan delay) {
             if (quantity < 0) {
                 throw new ArgumentOutOfRangeException(
                     nameof(quantity),
@@ -108,56 +114,58 @@
             catch (NullReferenceException e) {
                 const string Message =
                     nameof(this.isThereAnyDealStore.RecentDeals)
-                    + "returned null";
+                    + " returned null.";
                 Log.Error(Message, e);
                 throw new NullReferenceException(Message);
             }
             var games = new ConcurrentBag<Game>();
 
             foreach (var deal in recentDeals.Data.DealsList) {
-                // Not using await because we want to add games asynchronously
-                // and in parallel
-                var addAsync = Task.Run(
+                var addAsync = Task.Factory.StartNew(
                     async () =>
                         {
-                            var gameLogoId = this.steamStore.GetAppId(deal.Title);
-                            var gamePrices = await
-                                this.isThereAnyDealStore.CurrentPrices(
-                                    deal.Plain);
-                            var deals = gamePrices.Data.Plain.List.Select(
-                                priceDeal => new Deal(
-                                    DateTime.MinValue
-                                    + TimeSpan.FromMilliseconds(deal.Added),
-                                    priceDeal.Drm.ToList(),
-                                    deal.Title,
-                                    new Discount(
-                                        (float)priceDeal.PriceNew,
-                                        (float)priceDeal.PriceOld),
-                                    new Store(
-                                        priceDeal.Shop.Id,
-                                        priceDeal.Shop.Name),
-                                    priceDeal.Url)).ToList();
-                            var view = CoreApplication.GetCurrentView();
-                            var dispatcher = view == null
-                                ? CoreApplication.CreateNewView().Dispatcher
-                                : view.Dispatcher;
+                            try {
+                                var gamePrices =
+                                    await this.isThereAnyDealStore
+                                        .CurrentPrices(deal.Plain);
+                                var deals = new List<Deal>();
+                                foreach (var priceDeal in gamePrices.Data.Plain.List) {
+                                    if (priceDeal.PriceNew < priceDeal.PriceOld                                    ) {
+                                        deals.Add(new Deal(
+                                            DateTime.MinValue
+                                            + TimeSpan.FromMilliseconds(
+                                                deal.Added),
+                                            priceDeal.Drm.ToList(),
+                                            deal.Title,
+                                            new Discount(
+                                                (float)priceDeal.PriceNew,
+                                                (float)priceDeal.PriceOld),
+                                            new Store(
+                                                priceDeal.Shop.Id,
+                                                priceDeal.Shop.Name),
+                                            priceDeal.Url));
+                                    }
+                                }
 
-                            BitmapImage image = null;
-                            await dispatcher.RunAsync(
-                                CoreDispatcherPriority.High,
-                                () => { image = new BitmapImage(); });
-                            games.Add(
-                                new Game(
-                                    deal.Plain,
-                                    deal.Title,
-                                    image,
-                                    deals));
+                                var image =
+                                    await this.steamStore.GameLogo(deal.Title);
+                                games.Add(
+                                    new Game(
+                                        deal.Plain,
+                                        deal.Title,
+                                        image,
+                                        deals));
+                            }
+                            catch (Exception e) {
+                                Log.Error(e.Message, e);
+                               // Environment.FailFast(e.Message, e);
+                            }
                         });
             }
 
             var time = new TimeSpan();
             while (games.Count != quantity
-                   && time.Duration().Milliseconds <= timeout.Milliseconds) {
+                   && time.Duration().TotalMilliseconds <= timeout.TotalMilliseconds) {
                 await Task.Delay(delay);
                 time = time.Add(delay);
             }
@@ -165,8 +173,18 @@
             if (games.Count != quantity) {
                 Log.Warn("Unable to retrieve the requested quantity of games.");
             }
-
             return games;
+        }
+
+        private void HandleError(Task task) {
+
+            if (!task.IsFaulted) {
+                throw new ArgumentException("Task is not faulted.");
+            }
+            foreach (var e in task.Exception.InnerExceptions) {
+                    Log.Error(e.Message, e);
+                    throw e;
+            }
         }
     }
 }

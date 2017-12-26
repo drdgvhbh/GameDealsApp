@@ -6,6 +6,7 @@
     xmlns:isAcrylicBrushPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypePresent(Windows.UI.Xaml.Media.AcrylicBrush)"
     xmlns:isAcrylicBrushNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation?IsTypeNotPresent(Windows.UI.Xaml.Media.AcrylicBrush)"
     xmlns:controls="using:GoodGameDeals.Controls"
+    xmlns:diag="clr-namespace:System.Diagnostics;assembly=WindowsBase"
     x:Class="GoodGameDeals.Presentation.Views.MainPage"
     mc:Ignorable="d">
 

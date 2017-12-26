@@ -155,355 +155,6 @@ namespace GoodGameDeals.Threading
     }
 }
 
-namespace GoodGameDeals.Data.Repositories
-{
-    using System;
-    using System.Collections.Generic;
-
-    using GoodGameDeals.Data.Localization;
-    using GoodGameDeals.Domain;
-
-    [CompilerGenerated]
-    public class StubIIsThereAnyDealRepository : IIsThereAnyDealRepository
-    {
-        private readonly StubContainer<StubIIsThereAnyDealRepository> _stubs = new StubContainer<StubIIsThereAnyDealRepository>();
-
-        public MockBehavior MockBehavior { get; set; }
-
-        global::System.IObservable<global::System.Collections.Generic.List<global::GoodGameDeals.Domain.Deal>> global::GoodGameDeals.Data.Repositories.IIsThereAnyDealRepository.RecentDeals(global::GoodGameDeals.Data.Localization.Country country, int offset, int limit)
-        {
-            RecentDeals_Country_Int32_Int32_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<RecentDeals_Country_Int32_Int32_Delegate>("RecentDeals");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<RecentDeals_Country_Int32_Int32_Delegate>("RecentDeals", out del))
-                {
-                    return default(global::System.IObservable<global::System.Collections.Generic.List<global::GoodGameDeals.Domain.Deal>>);
-                }
-            }
-
-            return del.Invoke(country, offset, limit);
-        }
-
-        public delegate global::System.IObservable<global::System.Collections.Generic.List<global::GoodGameDeals.Domain.Deal>> RecentDeals_Country_Int32_Int32_Delegate(global::GoodGameDeals.Data.Localization.Country country, int offset, int limit);
-
-        public StubIIsThereAnyDealRepository RecentDeals(RecentDeals_Country_Int32_Int32_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        global::System.IObservable<global::System.Collections.Generic.List<global::GoodGameDeals.Domain.Deal>> global::GoodGameDeals.Data.Repositories.IIsThereAnyDealRepository.GameCurrentPrices(string plain, global::GoodGameDeals.Data.Localization.Country country)
-        {
-            GameCurrentPrices_String_CountryCountryCad_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<GameCurrentPrices_String_CountryCountryCad_Delegate>("GameCurrentPrices");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<GameCurrentPrices_String_CountryCountryCad_Delegate>("GameCurrentPrices", out del))
-                {
-                    return default(global::System.IObservable<global::System.Collections.Generic.List<global::GoodGameDeals.Domain.Deal>>);
-                }
-            }
-
-            return del.Invoke(plain, country);
-        }
-
-        public delegate global::System.IObservable<global::System.Collections.Generic.List<global::GoodGameDeals.Domain.Deal>> GameCurrentPrices_String_CountryCountryCad_Delegate(string plain, global::GoodGameDeals.Data.Localization.Country country);
-
-        public StubIIsThereAnyDealRepository GameCurrentPrices(GameCurrentPrices_String_CountryCountryCad_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        public StubIIsThereAnyDealRepository(MockBehavior mockBehavior = MockBehavior.Loose)
-        {
-            MockBehavior = mockBehavior;
-        }
-    }
-}
-
-namespace GoodGameDeals.Data.Repositories
-{
-    using System;
-
-    using Windows.UI.Xaml.Media.Imaging;
-
-    using GoodGameDeals.Data.ApiResponses.Steam;
-
-    [CompilerGenerated]
-    public class StubISteamRepository : ISteamRepository
-    {
-        private readonly StubContainer<StubISteamRepository> _stubs = new StubContainer<StubISteamRepository>();
-
-        public MockBehavior MockBehavior { get; set; }
-
-        global::System.IObservable<global::Windows.UI.Xaml.Media.Imaging.BitmapImage> global::GoodGameDeals.Data.Repositories.ISteamRepository.GameLogo(string title)
-        {
-            GameLogo_String_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<GameLogo_String_Delegate>("GameLogo");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<GameLogo_String_Delegate>("GameLogo", out del))
-                {
-                    return default(global::System.IObservable<global::Windows.UI.Xaml.Media.Imaging.BitmapImage>);
-                }
-            }
-
-            return del.Invoke(title);
-        }
-
-        public delegate global::System.IObservable<global::Windows.UI.Xaml.Media.Imaging.BitmapImage> GameLogo_String_Delegate(string title);
-
-        public StubISteamRepository GameLogo(GameLogo_String_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.Steam.GetAppListResponse> global::GoodGameDeals.Data.Repositories.ISteamRepository.AppList()
-        {
-            AppList_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<AppList_Delegate>("AppList");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<AppList_Delegate>("AppList", out del))
-                {
-                    return default(global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.Steam.GetAppListResponse>);
-                }
-            }
-
-            return del.Invoke();
-        }
-
-        public delegate global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.Steam.GetAppListResponse> AppList_Delegate();
-
-        public StubISteamRepository AppList(AppList_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        public StubISteamRepository(MockBehavior mockBehavior = MockBehavior.Loose)
-        {
-            MockBehavior = mockBehavior;
-        }
-    }
-}
-
-namespace GoodGameDeals.Data.Repositories.Stores
-{
-    using System;
-    using System.Reactive;
-
-    using Windows.UI.Xaml.Media.Imaging;
-
-    using GoodGameDeals.Data.ApiResponses.Steam;
-
-    [CompilerGenerated]
-    public class StubISteamStore : ISteamStore
-    {
-        private readonly StubContainer<StubISteamStore> _stubs = new StubContainer<StubISteamStore>();
-
-        public MockBehavior MockBehavior { get; set; }
-
-        global::System.IObservable<global::Windows.UI.Xaml.Media.Imaging.BitmapImage> global::GoodGameDeals.Data.Repositories.Stores.ISteamStore.GameLogo(string title)
-        {
-            GameLogo_String_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<GameLogo_String_Delegate>("GameLogo");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<GameLogo_String_Delegate>("GameLogo", out del))
-                {
-                    return default(global::System.IObservable<global::Windows.UI.Xaml.Media.Imaging.BitmapImage>);
-                }
-            }
-
-            return del.Invoke(title);
-        }
-
-        public delegate global::System.IObservable<global::Windows.UI.Xaml.Media.Imaging.BitmapImage> GameLogo_String_Delegate(string title);
-
-        public StubISteamStore GameLogo(GameLogo_String_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.Steam.GetAppListResponse> global::GoodGameDeals.Data.Repositories.Stores.ISteamStore.AppList()
-        {
-            AppList_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<AppList_Delegate>("AppList");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<AppList_Delegate>("AppList", out del))
-                {
-                    return default(global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.Steam.GetAppListResponse>);
-                }
-            }
-
-            return del.Invoke();
-        }
-
-        public delegate global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.Steam.GetAppListResponse> AppList_Delegate();
-
-        public StubISteamStore AppList(AppList_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        global::System.IObservable<global::System.Reactive.Unit> global::GoodGameDeals.Data.Repositories.Stores.ISteamStore.Initialize()
-        {
-            Initialize_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<Initialize_Delegate>("Initialize");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<Initialize_Delegate>("Initialize", out del))
-                {
-                    return default(global::System.IObservable<global::System.Reactive.Unit>);
-                }
-            }
-
-            return del.Invoke();
-        }
-
-        public delegate global::System.IObservable<global::System.Reactive.Unit> Initialize_Delegate();
-
-        public StubISteamStore Initialize(Initialize_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        public StubISteamStore(MockBehavior mockBehavior = MockBehavior.Loose)
-        {
-            MockBehavior = mockBehavior;
-        }
-    }
-}
-
-namespace GoodGameDeals.Data.Repositories.Stores
-{
-    using System;
-    using System.Reactive;
-
-    using GoodGameDeals.Data.ApiResponses.IsThereAnyDeal;
-    using GoodGameDeals.Data.Localization;
-
-    [CompilerGenerated]
-    public class StubIIsThereAnyDealStore : IIsThereAnyDealStore
-    {
-        private readonly StubContainer<StubIIsThereAnyDealStore> _stubs = new StubContainer<StubIIsThereAnyDealStore>();
-
-        public MockBehavior MockBehavior { get; set; }
-
-        global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.RecentDealsResponse> global::GoodGameDeals.Data.Repositories.Stores.IIsThereAnyDealStore.RecentDeals(global::GoodGameDeals.Data.Localization.Country country, int offset, int limit)
-        {
-            RecentDeals_Country_Int32_Int32_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<RecentDeals_Country_Int32_Int32_Delegate>("RecentDeals");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<RecentDeals_Country_Int32_Int32_Delegate>("RecentDeals", out del))
-                {
-                    return default(global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.RecentDealsResponse>);
-                }
-            }
-
-            return del.Invoke(country, offset, limit);
-        }
-
-        public delegate global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.RecentDealsResponse> RecentDeals_Country_Int32_Int32_Delegate(global::GoodGameDeals.Data.Localization.Country country, int offset, int limit);
-
-        public StubIIsThereAnyDealStore RecentDeals(RecentDeals_Country_Int32_Int32_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.CurrentPricesResponse> global::GoodGameDeals.Data.Repositories.Stores.IIsThereAnyDealStore.CurrentPrices(string plain, global::GoodGameDeals.Data.Localization.Country country)
-        {
-            CurrentPrices_String_CountryCountryCad_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<CurrentPrices_String_CountryCountryCad_Delegate>("CurrentPrices");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<CurrentPrices_String_CountryCountryCad_Delegate>("CurrentPrices", out del))
-                {
-                    return default(global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.CurrentPricesResponse>);
-                }
-            }
-
-            return del.Invoke(plain, country);
-        }
-
-        public delegate global::System.IObservable<global::GoodGameDeals.Data.ApiResponses.IsThereAnyDeal.CurrentPricesResponse> CurrentPrices_String_CountryCountryCad_Delegate(string plain, global::GoodGameDeals.Data.Localization.Country country);
-
-        public StubIIsThereAnyDealStore CurrentPrices(CurrentPrices_String_CountryCountryCad_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        global::System.IObservable<global::System.Reactive.Unit> global::GoodGameDeals.Data.Repositories.Stores.IIsThereAnyDealStore.Initialize()
-        {
-            Initialize_Delegate del;
-            if (MockBehavior == MockBehavior.Strict)
-            {
-                del = _stubs.GetMethodStub<Initialize_Delegate>("Initialize");
-            }
-            else
-            {
-                if (!_stubs.TryGetMethodStub<Initialize_Delegate>("Initialize", out del))
-                {
-                    return default(global::System.IObservable<global::System.Reactive.Unit>);
-                }
-            }
-
-            return del.Invoke();
-        }
-
-        public delegate global::System.IObservable<global::System.Reactive.Unit> Initialize_Delegate();
-
-        public StubIIsThereAnyDealStore Initialize(Initialize_Delegate del, int count = Times.Forever, bool overwrite = false)
-        {
-            _stubs.SetMethodStub(del, count, overwrite);
-            return this;
-        }
-
-        public StubIIsThereAnyDealStore(MockBehavior mockBehavior = MockBehavior.Loose)
-        {
-            MockBehavior = mockBehavior;
-        }
-    }
-}
-
 namespace GoodGameDeals.Gateways.Contracts
 {
     using System;
@@ -666,6 +317,32 @@ namespace GoodGameDeals.Gateways.Contracts
         public delegate long GetAppId_String_Delegate(string title);
 
         public StubISteamStore GetAppId(GetAppId_String_Delegate del, int count = Times.Forever, bool overwrite = false)
+        {
+            _stubs.SetMethodStub(del, count, overwrite);
+            return this;
+        }
+
+        global::System.Threading.Tasks.Task global::GoodGameDeals.Gateways.Contracts.ISteamStore.Initialize()
+        {
+            Initialize_Delegate del;
+            if (MockBehavior == MockBehavior.Strict)
+            {
+                del = _stubs.GetMethodStub<Initialize_Delegate>("Initialize");
+            }
+            else
+            {
+                if (!_stubs.TryGetMethodStub<Initialize_Delegate>("Initialize", out del))
+                {
+                    return Task.FromResult(true);
+                }
+            }
+
+            return del.Invoke();
+        }
+
+        public delegate global::System.Threading.Tasks.Task Initialize_Delegate();
+
+        public StubISteamStore Initialize(Initialize_Delegate del, int count = Times.Forever, bool overwrite = false)
         {
             _stubs.SetMethodStub(del, count, overwrite);
             return this;

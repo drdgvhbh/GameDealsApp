@@ -4,12 +4,15 @@
 
     using AutoMapper;
 
-    using GoodGameDeals.Domain;
+    using GoodGameDeals.Core.Entities;
     using GoodGameDeals.Models;
+
+    using NullGuard;
+
     public class GameGameModelConverter : ITypeConverter<Game, GameModel> {
         public GameModel Convert(
                 Game source,
-                GameModel destination,
+                [AllowNull]GameModel destination,
                 ResolutionContext context) {
             var regex = new Regex(@":|-");
             var gameHeader = regex.Split(source.GameTitle, 2);
@@ -18,24 +21,24 @@
                                : string.Empty;
             var deals = new ObservableCollection<DealModel>();
             var counter = 0;
-            foreach (var deal in source.DealsList) {
+            foreach (var deal in source.Deals) {
                 if (counter > 2) {
                     break;
                 }
                 deals.Add(
                     new DealModel(
-                        deal.DealUrl.Buy,
-                        deal.PriceCut,
-                        deal.PriceOld,
-                        deal.PriceNew,
-                        deal.Shop.Name));
+                        deal.Url,
+                        (long)(deal.Discount.PriceDiscountPercentage * 100),
+                        deal.Discount.PriceOld,
+                        deal.Discount.PriceNew,
+                        deal.Store.Name));
                 counter++;
             }
             return new GameModel(
-                    source.Id,
+                    source.Deals[0].DateAdded,
                     gameHeader[0].Trim(),
                     subtitle,
-                    source.GameImage,
+                    source.GameLogo,
                     deals);
         }
     }
