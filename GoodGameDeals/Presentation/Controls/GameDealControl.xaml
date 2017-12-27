@@ -803,7 +803,7 @@
             <RowDefinition Height="1*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="214*" />
+            <ColumnDefinition Width="214" />
             <ColumnDefinition Width="10" />
             <ColumnDefinition Width="320*" />
             <ColumnDefinition Width="1*" />

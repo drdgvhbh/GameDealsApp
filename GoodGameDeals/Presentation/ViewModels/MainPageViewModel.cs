@@ -8,6 +8,8 @@
     using System.Reactive.Subjects;
     using System.Threading.Tasks;
 
+    using Windows.UI.Xaml.Media.Imaging;
+
     using AutoMapper;
     using GoodGameDeals.Messages;
     using GoodGameDeals.Models;
@@ -22,6 +24,8 @@
     using Template10.Services.SerializationService;
 
     using Windows.UI.Xaml.Navigation;
+
+    using Bogus;
 
     using GoodGameDeals.Core.Dto;
     using GoodGameDeals.Core.UseCases;

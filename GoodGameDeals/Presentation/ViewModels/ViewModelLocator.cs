@@ -10,7 +10,10 @@ namespace GoodGameDeals.Presentation.ViewModels {
     using Unity.Lifetime;
 
     using Windows.ApplicationModel;
+    using Windows.Globalization.DateTimeFormatting;
     using Windows.UI.Xaml.Media.Imaging;
+
+    using Bogus;
 
     using Template10.Utils;
 
@@ -22,8 +25,14 @@ namespace GoodGameDeals.Presentation.ViewModels {
     public class ViewModelLocator : IDisposable {
         private readonly IUnityContainer container;
 
+        private readonly Randomizer random;
+
+        private readonly Faker faker;
+
         public ViewModelLocator(IUnityContainer container) {
             this.container = container;
+            this.random = new Randomizer();
+            this.faker = new Faker();
 
             this.container.RegisterType<ObservableCollection<GameModel>>(
                 new ContainerControlledLifetimeManager(),
@@ -32,16 +41,15 @@ namespace GoodGameDeals.Presentation.ViewModels {
             if (DesignMode.DesignModeEnabled) {
                 var list
                     = this.container.Resolve<ObservableCollection<GameModel>>();
-
-/*                for (var i = 0; i < 8; i++) {
-                    list.Add(
-                        new GameModel(
-                            0,
-                            Company.Name(),
-                            Company.BS(),
-                            new BitmapImage(),
-                            this.FakeDealModels(3)));
-                }*/
+                for (var i = 0; i < 8; i++) {
+                    var fakeGame = new GameModel(
+                        this.faker.Date.Past(),
+                        this.faker.Name.JobTitle(),
+                        this.faker.Finance.EthereumAddress(),
+                        new BitmapImage(new Uri(/*this.faker.Image.Nature(460, 215, true)*/"ms-appx:///Presentation/Assets/NoPreviewAvaliable.png")),
+                        this.FakeDealModels(3));
+                    list.Add(fakeGame);
+                }
             }
 
             this.container.RegisterType<MainPageViewModel>(
@@ -67,18 +75,10 @@ namespace GoodGameDeals.Presentation.ViewModels {
         }
 
         private DealModel FakeDealModel() {
-            throw new NotImplementedException();
-/*            var fakeDeal
-            var random = new Random();
-            var minPrice = random.NextDouble() * (100.0 - 0.01) + 0.01;
-            var maxPrice = random.NextDouble() * (100.0 - minPrice) + minPrice;
-            var discount = (int)(1 - minPrice / maxPrice);
-            return new DealModel(
-                Internet.DomainName(),
-                discount,
-                maxPrice,
-                minPrice,
-                Company.Name());*/
+            var minPrice = this.random.Double(0, 100);
+            var maxPrice = this.random.Double(minPrice, 100);
+            var fakeDeal = new DealModel(this.faker.Internet.UrlWithPath(), 60, maxPrice, minPrice, this.faker.Company.CompanyName());
+            return fakeDeal;
         }
     }
 }

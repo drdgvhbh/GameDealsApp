@@ -57,7 +57,7 @@
             return await this.GetGamesByMostRecentDeals(
                        quantity,
                        offset,
-                       TimeSpan.FromSeconds(10));
+                       TimeSpan.FromSeconds(20));
         }
 
         public async Task<IEnumerable<Game>> GetGamesByMostRecentDeals(
@@ -130,7 +130,7 @@
                                         .CurrentPrices(deal.Plain);
                                 var deals = new List<Deal>();
                                 foreach (var priceDeal in gamePrices.Data.Plain.List) {
-                                    if (priceDeal.PriceNew < priceDeal.PriceOld                                    ) {
+                                    if (priceDeal.PriceNew < priceDeal.PriceOld) {
                                         deals.Add(new Deal(
                                             DateTime.MinValue
                                             + TimeSpan.FromMilliseconds(
@@ -158,7 +158,7 @@
                             }
                             catch (Exception e) {
                                 Log.Error(e.Message, e);
-                               // Environment.FailFast(e.Message, e);
+                                Environment.FailFast(e.Message, e);
                             }
                         });
             }
