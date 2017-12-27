@@ -11,6 +11,7 @@
                 <ResourceDictionary Source="Presentation\Styles\Custom.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <containers:RootContainer x:Key="Root"/>
+            <x:Double x:Key="NarrowWidth">640</x:Double>
             <!--  custom resources  -->
 
         </ResourceDictionary>

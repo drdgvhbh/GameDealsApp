@@ -120,6 +120,7 @@
     <Compile Include="Converters\DoubleToCurrency.cs" />
     <Compile Include="Converters\IntegerToPercentage.cs" />
     <Compile Include="Presentation\Mappers\GameGameModelConverter.cs" />
+    <Compile Include="Presentation\ViewModels\GameDealControlViewModel.cs" />
     <Compile Include="Services\ILocalizationService.cs" />
     <Compile Include="Services\JsonServices\JsonService.cs" />
     <Compile Include="Presentation\ViewModels\ViewModelLocator.cs" />

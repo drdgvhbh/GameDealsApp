@@ -54,6 +54,7 @@ namespace GoodGameDeals.Presentation.ViewModels {
 
             this.container.RegisterType<MainPageViewModel>(
                 new ContainerControlledLifetimeManager());
+            this.container.RegisterType<GameDealControlViewModel>();
         }
 
         /// <summary>
@@ -61,6 +62,9 @@ namespace GoodGameDeals.Presentation.ViewModels {
         /// </summary>
         public MainPageViewModel MainPageViewModelInstance =>
             this.container.Resolve<MainPageViewModel>();
+
+        public GameDealControlViewModel GameDealControlViewModelInstance =>
+            this.container.Resolve<GameDealControlViewModel>();
 
         public void Dispose() {
             this.container?.Dispose();

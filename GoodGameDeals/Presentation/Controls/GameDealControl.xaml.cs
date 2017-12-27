@@ -11,8 +11,9 @@ namespace GoodGameDeals.Controls {
 
     using GoodGameDeals.Models;
 
+    using NullGuard;
+
     public sealed partial class GameDealControl : UserControl {
-        // Using a DependencyProperty as the backing store for MyProperty.  This enables animation, styling, binding, etc...
         public static readonly DependencyProperty GameTitleProperty =
             DependencyProperty.Register(
                 "GameTitle",
@@ -41,8 +42,12 @@ namespace GoodGameDeals.Controls {
                 typeof(GameDealControl),
                 new PropertyMetadata(new ObservableCollection<DealModel>()));
 
+
+        private VisualState defaultState;
+
         public GameDealControl() {
             this.InitializeComponent();
+         //   this.defaultState = this.;
             this.grid.PointerEntered += (sender, args) => {
                 VisualStateManager.GoToState(this, "PointerOver", true);
             };
@@ -50,6 +55,27 @@ namespace GoodGameDeals.Controls {
                 VisualStateManager.GoToState(this, "Normal", true);
             };
         }
+
+        private void AdaptiveStatesCurrentStateChanged(
+                object sender,
+                VisualStateChangedEventArgs e) {
+            this.UpdateForVisualState(e.NewState, e.OldState);
+
+        }
+
+        private void UpdateForVisualState(
+            VisualState newState,
+            [AllowNull]VisualState oldState = null) {
+/*            if (newState == this.Narrow) {
+                this.GameBarView.Visibility = Visibility.Visible;
+            }
+
+            if (newState == this.DefaultState) {
+                this.GameBarView.Visibility = Visibility.Collapsed;
+            }*/
+        }
+
+
 
         public string GameTitle {
             get {

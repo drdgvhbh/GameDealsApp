@@ -1,19 +1,20 @@
 ﻿<UserControl
-             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-             xmlns:local="using:GoodGameDeals.Controls"
-             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:Controls="using:GoodGameDeals.Controls"
-             xmlns:Converters="using:GoodGameDeals.Converters"
-             xmlns:converters="using:Template10.Converters"
-             xmlns:isAcrylicBrushPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             xmlns:isAcrylicBrushNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-             x:Name="userControl"
-             x:Class="GoodGameDeals.Controls.GameDealControl"
-             mc:Ignorable="d"
-             d:DesignHeight="100"
-             d:DesignWidth="614">
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoodGameDeals.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:Controls="using:GoodGameDeals.Controls"
+    xmlns:Converters="using:GoodGameDeals.Converters"
+    xmlns:converters="using:Template10.Converters"
+    xmlns:isAcrylicBrushPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:isAcrylicBrushNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    x:Name="userControl"
+    x:Class="GoodGameDeals.Controls.GameDealControl"
+    mc:Ignorable="d"
+    d:DesignHeight="100"
+    d:DesignWidth="614"
+    >
     <UserControl.Resources>
         <Converters:DoubleToCurrency x:Key="DoubleToCurrencyConverter" />
         <Converters:IntegerToPercentage x:Key="IntegerToPercentageConverter" />
@@ -788,7 +789,14 @@
     <Grid x:Name="grid" Margin="0" Background="#686868">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="Normal"/>
+                <VisualState x:Name="Narrow">
+                    <VisualState.Setters>
+
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NotNarrow">
+
+                </VisualState>
                 <VisualState x:Name="PointerOver">
                     <VisualState.Setters>
                         <Setter Target="grid.(Panel.Background)" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}"/>
