@@ -14,8 +14,20 @@
         private void AdaptiveStatesCurrentStateChanged(
                 object sender,
                 VisualStateChangedEventArgs e) {
-            System.Diagnostics.Debug.WriteLine("Hello World!");
+            this.UpdateForVisualState(e.NewState, e.OldState);
 
+        }
+
+        private void UpdateForVisualState(
+                VisualState newState,
+                [AllowNull]VisualState oldState = null) {
+            if (newState == this.NarrowState) {
+                this.GameBarView.Visibility = Visibility.Visible;
+            }
+
+            if (newState == this.DefaultState) {
+                this.GameBarView.Visibility = Visibility.Collapsed;
+            }
         }
 
     }

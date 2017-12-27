@@ -7,7 +7,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d"
     d:DesignHeight="74"
-    d:DesignWidth="366" Height="74" Width="390">
+    d:DesignWidth="390">
     <UserControl.Resources>
         <Style x:Key="TextBoxStyle1" TargetType="TextBox">
             <Setter Property="MinWidth" Value="{ThemeResource TextControlThemeMinWidth}"/>
@@ -175,7 +175,7 @@
             <ColumnDefinition Width="24*"/>
         </Grid.ColumnDefinitions>
         <TextBox x:Name="DiscountView" FontSize="15" Margin="0" TextWrapping="Wrap" IsReadOnly="True" BorderThickness="0" Height="21" Padding="4,0" TextAlignment="Center" VerticalAlignment="Stretch" MinWidth="0" MinHeight="0" Background="{ThemeResource DiscountGreen}" PlaceholderText="-10%" HorizontalAlignment="Right" Text="{Binding Discount, ElementName=userControl}" Style="{StaticResource TextBoxStyle1}" Grid.RowSpan="2"/>
-        <TextBlock x:Name="GamePriceViewOld" Style="{StaticResource CaptionTextBlockStyle}" Margin="0" TextWrapping="Wrap" TextAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding GamePriceOld, ElementName=userControl}" Grid.Column="1" />
-        <TextBlock x:Name="GamePriceView"  Style="{StaticResource BodyTextBlockStyle}" Margin="0" TextWrapping="Wrap" TextAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" Text="{Binding GamePrice, ElementName=userControl}" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" />
+        <TextBlock x:Name="GamePriceViewOld" Style="{StaticResource CaptionTextBlockStyle}" Margin="0" TextWrapping="Wrap" TextAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" VerticalAlignment="Bottom" HorizontalAlignment="Right" Text="{Binding GamePriceOld, ElementName=userControl}" Grid.Column="1" Grid.ColumnSpan="2" />
+        <TextBlock x:Name="GamePriceView"  Style="{StaticResource BodyTextBlockStyle}" Margin="0" TextWrapping="Wrap" TextAlignment="Right" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" Text="{Binding GamePrice, ElementName=userControl}" VerticalAlignment="Top" HorizontalAlignment="Right" Grid.Column="1" Grid.Row="1" Grid.ColumnSpan="2" />
     </Grid>
 </UserControl>
