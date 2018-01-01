@@ -1,6 +1,6 @@
 # Good Game Deals
 
-`Good Game Deals` is a Universal Windows Platform application for finding the best deals on the market for video games. 
+`Good Game Deals` is a Universal Windows Platform application for finding the best deals on the market for video games. The application is still in heavy development and can only display the latest deals at the moment. Additionality functionality to view the details of each game and adapting the application to different resolutions will be added soon.
 
 ## Getting Started
 
