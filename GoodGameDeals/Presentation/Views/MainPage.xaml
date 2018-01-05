@@ -39,7 +39,7 @@
                     <VisualState.Setters>
                         <Setter Target="MasterColumn.Width" Value="*" />
                         <Setter Target="DetailColumn.Width" Value="0" />
-                        <isAcrylicBrushNotPresent:Setter Target="GameListView.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Collapsed"/>
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Center" />
                     </VisualState.Setters>
                 </VisualState>
@@ -64,7 +64,7 @@
                    FontWeight="Light" Margin="24,0,0,0" />
         <Rectangle HorizontalAlignment="Stretch" Height="1" VerticalAlignment="Bottom"
                    Fill="{StaticResource AccentColor}" Margin="24,0,24,0" />
-        <ScrollViewer x:Name="GameBarView" Margin="24,24,0,24" Grid.Row="1" HorizontalAlignment="Left" Visibility="Visible">
+        <ScrollViewer x:Name="GameBarView" Margin="24,24,0,24" Grid.Row="1" HorizontalAlignment="Left" Visibility="Collapsed">
             <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top"
                           ItemsSource="{Binding GamesCollectionView}" Margin="0,0,16,0">
                 <ItemsControl.Resources>
@@ -87,9 +87,9 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <GridView  x:Name="GameListView"
+        <GridView  x:Name="GameListView" SelectionMode="None"
                   ItemsSource="{Binding GamesCollectionView}"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Margin="24,24,0,24" Visibility="Collapsed">
+                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Margin="24,24,0,24" Visibility="Collapsed" IsItemClickEnabled="True" >
             <GridView.ItemTemplate>
                 <DataTemplate>
                     <controls:GameDealBoxControl Image="{Binding GameImage}" GameTitle="{Binding GameTitle}" GameSubtitle="{Binding GameSubtitle}" DealsList="{Binding DealsList}" />
