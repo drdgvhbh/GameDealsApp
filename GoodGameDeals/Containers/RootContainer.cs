@@ -55,7 +55,7 @@
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(this.Container.Resolve<HttpClient>()));
             this.Container.Resolve<FileCache>("IsThereAnyDealCache")
-                .CacheDuration = TimeSpan.FromDays(10);
+                .CacheDuration = TimeSpan.FromMinutes(10);
 
             var steamClient = this.Container.Resolve<HttpClient>();
             this.Container.RegisterType<FileCache>(

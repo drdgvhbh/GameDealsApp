@@ -834,13 +834,13 @@
                 </DataTemplate>
             </Pivot.ItemTemplate>
         </Pivot>
-        <RelativePanel HorizontalAlignment="Left" Grid.RowSpan="4" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="4" Width="Auto" Height="Auto">
+        <RelativePanel HorizontalAlignment="Left" Grid.RowSpan="4" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="2" Width="Auto" Height="Auto">
             <TextBlock x:Name="GameTitleView" Style="{StaticResource BaseTextBlockStyle}" Text="{Binding GameTitle, ElementName=userControl}"
                    IsHitTestVisible="False"
                    VerticalAlignment="Top" TextTrimming="CharacterEllipsis"/>
             <TextBlock x:Name="GameSubTitleView" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 IsHitTestVisible="False"
-                VerticalAlignment="Top" TextTrimming="CharacterEllipsis" RelativePanel.Below="GameTitleView" Text="{Binding GameSubtitle, ElementName=userControl}" MaxWidth="175" />
+                VerticalAlignment="Top" TextTrimming="CharacterEllipsis" RelativePanel.Below="GameTitleView" Text="{Binding GameSubtitle, ElementName=userControl}" MaxWidth="150" />
         </RelativePanel>
     </Grid>
 </UserControl>
