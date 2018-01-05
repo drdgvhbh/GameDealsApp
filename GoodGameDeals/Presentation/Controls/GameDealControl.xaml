@@ -789,13 +789,7 @@
     <Grid x:Name="grid" Margin="0" Background="#686868">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
-                <VisualState x:Name="Narrow">
-                    <VisualState.Setters>
-
-                    </VisualState.Setters>
-                </VisualState>
-                <VisualState x:Name="NotNarrow">
-
+                <VisualState x:Name="Normal">
                 </VisualState>
                 <VisualState x:Name="PointerOver">
                     <VisualState.Setters>

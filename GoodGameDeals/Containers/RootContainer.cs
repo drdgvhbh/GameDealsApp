@@ -5,7 +5,6 @@
 
     using AutoMapper;
 
-    using GoodGameDeals.Data.Cache;
     using GoodGameDeals.Models;
     using GoodGameDeals.Presentation.Mappers;
     using GoodGameDeals.Presentation.ViewModels;
@@ -27,6 +26,9 @@
     using GoodGameDeals.Threading;
     using GoodGameDeals.Threading.Tasks;
 
+    using Microsoft.Toolkit.Uwp.UI;
+
+    using FileCache = GoodGameDeals.Data.Cache.FileCache;
     using Game = GoodGameDeals.Core.Entities.Game;
 
     [Bindable]
@@ -63,12 +65,12 @@
             this.Container.Resolve<FileCache>("SteamCache").CacheDuration
                 = TimeSpan.FromDays(1);
 
-            this.Container.RegisterType<Microsoft.Toolkit.Uwp.UI.ImageCache>(
+            this.Container.RegisterType<ImageCache>(
                 "SteamLogoCache",
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor());
             this.Container
-                .Resolve<Microsoft.Toolkit.Uwp.UI.ImageCache>("SteamLogoCache")
+                .Resolve<ImageCache>("SteamLogoCache")
                 .CacheDuration = TimeSpan.FromHours(6);
 
             this.Container.RegisterType<Microsoft.Toolkit.Uwp.UI.InMemoryStorage<long>>(

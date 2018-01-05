@@ -20,6 +20,7 @@
 
     using Unity.Attributes;
 
+
     /// <summary>
     ///     Represents a store to retrieve data from the <code>Steam</code> api.
     /// </summary>
@@ -38,7 +39,7 @@
         /// <summary>
         ///     The image cache to store game logos.
         /// </summary>
-        private readonly Microsoft.Toolkit.Uwp.UI.ImageCache imageCache;
+        private readonly ImageCache imageCache;
 
         /// <summary>
         ///     The cache to store the id of each steam game.
@@ -129,16 +130,19 @@
                 BitmapImage image = null;
                 await dispatcher.RunAsync(
                     CoreDispatcherPriority.High,
-                    async () =>
-                        {
+                    async () => {
                             if (uri.OriginalString == PlaceHolderUri) {
                                 image = new BitmapImage(uri);
                             }
                             else {
                                 image = new BitmapImage(uri);
                                 // TODO: Create Cache that actually works
-              /*                  image = await this.imageCache.GetFromCacheAsync(
+                     /*           image = await this.imageCache.GetFromCacheAsync(
                                             uri);*/
+/*                                if (image == null) {
+                                    image = await this.imageCache.GetFromCacheAsync(
+                                                uri);
+                                }*/
                             }
                         });
                 return image;

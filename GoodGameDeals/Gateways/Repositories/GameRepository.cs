@@ -121,46 +121,36 @@
             var games = new ConcurrentBag<Game>();
 
             foreach (var deal in recentDeals.Data.DealsList) {
-                var addAsync = Task.Factory.StartNew(
-                    async () =>
-                        {
-                            try {
-                                var gamePrices =
-                                    await this.isThereAnyDealStore
-                                        .CurrentPrices(deal.Plain);
-                                var deals = new List<Deal>();
-                                foreach (var priceDeal in gamePrices.Data.Plain.List) {
-                                    if (priceDeal.PriceNew < priceDeal.PriceOld) {
-                                        deals.Add(new Deal(
-                                            DateTime.MinValue
-                                            + TimeSpan.FromMilliseconds(
-                                                deal.Added),
-                                            priceDeal.Drm.ToList(),
-                                            deal.Title,
-                                            new Discount(
-                                                (float)priceDeal.PriceNew,
-                                                (float)priceDeal.PriceOld),
-                                            new Store(
-                                                priceDeal.Shop.Id,
-                                                priceDeal.Shop.Name),
-                                            priceDeal.Url));
-                                    }
-                                }
+                try {
+                    var gamePrices =
+                        await this.isThereAnyDealStore
+                            .CurrentPrices(deal.Plain);
+                    var deals = new List<Deal>();
+                    foreach (var priceDeal in gamePrices.Data.Plain.List) {
+                        if (priceDeal.PriceNew < priceDeal.PriceOld) {
+                            deals.Add(
+                                new Deal(
+                                    DateTime.MinValue
+                                    + TimeSpan.FromMilliseconds(deal.Added),
+                                    priceDeal.Drm.ToList(),
+                                    deal.Title,
+                                    new Discount(
+                                        (float)priceDeal.PriceNew,
+                                        (float)priceDeal.PriceOld),
+                                    new Store(
+                                        priceDeal.Shop.Id,
+                                        priceDeal.Shop.Name),
+                                    priceDeal.Url));
+                        }
+                    }
 
-                                var image =
-                                    await this.steamStore.GameLogo(deal.Title);
-                                games.Add(
-                                    new Game(
-                                        deal.Plain,
-                                        deal.Title,
-                                        image,
-                                        deals));
-                            }
-                            catch (Exception e) {
-                                Log.Error(e.Message, e);
-                                Environment.FailFast(e.Message, e);
-                            }
-                        });
+                    var image = await this.steamStore.GameLogo(deal.Title);
+                    games.Add(new Game(deal.Plain, deal.Title, image, deals));
+                }
+                catch (Exception e) {
+                    Log.Error(e.Message, e);
+                    Environment.FailFast(e.Message, e);
+                }
             }
 
             var time = new TimeSpan();
