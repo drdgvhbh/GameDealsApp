@@ -111,6 +111,9 @@
     <Compile Include="Presentation\Controls\DealPricingControl.xaml.cs">
       <DependentUpon>DealPricingControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Presentation\Controls\GameDealBoxControl.xaml.cs">
+      <DependentUpon>GameDealBoxControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Presentation\Controls\GameDealControl.xaml.cs">
       <DependentUpon>GameDealControl.xaml</DependentUpon>
     </Compile>
@@ -192,6 +195,10 @@
     <Page Include="Presentation\Controls\DealPricingControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Presentation\Controls\GameDealBoxControl.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
     </Page>
     <Page Include="Presentation\Controls\GameDealControl.xaml">
       <SubType>Designer</SubType>

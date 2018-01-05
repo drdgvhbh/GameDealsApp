@@ -1,4 +1,5 @@
 ﻿<UserControl
+    x:Name="userControl"
     x:Class="GoodGameDeals.Presentation.Controls.GameDealBoxControl"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -9,11 +10,15 @@
     d:DesignHeight="217"
     d:DesignWidth="187">
 
-    <Grid>
+    <Grid Width="187" Height="217">
         <Grid.RowDefinitions>
             <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+            <TextBlock x:Name="GameTitleView" Style="{StaticResource BaseTextBlockStyle}" Text="{Binding GameTitle, ElementName=userControl}"
+                   IsHitTestVisible="False"
+                   VerticalAlignment="Top" TextTrimming="CharacterEllipsis" Grid.Row="1"/>
 
     </Grid>
 </UserControl>

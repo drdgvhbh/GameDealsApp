@@ -1,4 +1,5 @@
 ﻿namespace GoodGameDeals.Gateways.Contracts {
+    using System;
     using System.Threading.Tasks;
 
     using Windows.UI.Xaml.Media.Imaging;
@@ -6,7 +7,7 @@
     using GoodGameDeals.Data.ApiResponses.Steam;
 
     public interface ISteamStore {
-        Task<BitmapImage> GameLogo(string title);
+        Task<Uri> GameLogo(string title);
 
         Task<GetAppListResponse> AppList();
 

@@ -107,7 +107,7 @@
         [ExpectedException(typeof(NullReferenceException))]
         public async Task
             GetGamesByMostRecentDeals_IsThereAnyDealStoreRecentDealsIsNull_ThrowsNullReferenceException() {
-            var steamStoreMock = await this.GetFullSteamStoreMock();
+            var steamStoreMock = this.GetFullSteamStoreMock();
             var isThereAnyDealStoreMock = new StubIIsThereAnyDealStore();
             isThereAnyDealStoreMock.RecentDeals(
                 async (quantity, offset) =>
@@ -126,8 +126,8 @@
         }
 
         private async Task<GameRepository> GetFullMock(ITaskDelay delay) {
-            var steamStoreMock = await this.GetFullSteamStoreMock();
-            var isThereAnyDealStoreMock = await this.GetFullIsThereAnyDealStoreMock();
+            var steamStoreMock = this.GetFullSteamStoreMock();
+            var isThereAnyDealStoreMock = this.GetFullIsThereAnyDealStoreMock();
             var gameRepo = new GameRepository(
                 steamStoreMock,
                 isThereAnyDealStoreMock,
@@ -140,7 +140,7 @@
         }
 
 
-        private async Task<StubIIsThereAnyDealStore>
+        private StubIIsThereAnyDealStore
                 GetFullIsThereAnyDealStoreMock() {
             var isThereAnyDealStoreMock = new StubIIsThereAnyDealStore();
             isThereAnyDealStoreMock.RecentDeals(
@@ -152,18 +152,18 @@
             return isThereAnyDealStoreMock;
         }
 
-        private async Task<StubISteamStore> GetFullSteamStoreMock() {
+        private StubISteamStore GetFullSteamStoreMock() {
             var steamStoreMock = new StubISteamStore();
             steamStoreMock.GetAppId(
                 key => 0);
             steamStoreMock.AppList(
                 async () => await Task.FromResult(new GetAppListResponse()));
             var dispatcher = CoreApplication.CreateNewView().Dispatcher;
-            BitmapImage image = null;
-            await dispatcher.RunAsync(
-                CoreDispatcherPriority.High,
-                () => { image = new BitmapImage(); });
-            steamStoreMock.GameLogo(async title => await Task.FromResult(image));
+            /*            BitmapImage image = null;
+                        await dispatcher.RunAsync(
+                            CoreDispatcherPriority.High,
+                            () => { image = new BitmapImage(); });*/
+            steamStoreMock.GameLogo(async title => new Uri(string.Empty));
             return steamStoreMock;
         }
     }

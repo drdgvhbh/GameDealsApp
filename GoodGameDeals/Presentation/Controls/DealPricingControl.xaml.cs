@@ -1,7 +1,4 @@
-﻿
-
-// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-namespace GoodGameDeals.Controls {
+﻿namespace GoodGameDeals.Presentation.Controls {
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
 

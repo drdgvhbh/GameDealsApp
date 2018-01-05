@@ -123,7 +123,7 @@
             this.GamesCollectionView.Clear();
             var response =
                     await this.recentGameDealsInteractor.Handle(
-                        new RecentGameDealsRequestMessage(10));
+                        new RecentGameDealsRequestMessage(25));
             foreach (var game in response.Games) {
                 this.GamesCollectionView.Add(this.mapper.Map<GameModel>(game));
             }

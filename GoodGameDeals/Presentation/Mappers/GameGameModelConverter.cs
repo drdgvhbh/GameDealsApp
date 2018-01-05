@@ -2,6 +2,8 @@
     using System.Collections.ObjectModel;
     using System.Text.RegularExpressions;
 
+    using Windows.UI.Xaml.Media.Imaging;
+
     using AutoMapper;
 
     using GoodGameDeals.Core.Entities;
@@ -38,7 +40,7 @@
                     source.Deals[0].DateAdded,
                     gameHeader[0].Trim(),
                     subtitle,
-                    source.GameLogo,
+                    new BitmapImage(source.GameLogo),
                     deals);
         }
     }

@@ -111,7 +111,7 @@
                                 new Game(
                                     string.Empty,
                                     string.Empty,
-                                    new BitmapImage(),
+                                    new Uri(string.Empty),
                                     new List<Deal>()));
                         });
             }

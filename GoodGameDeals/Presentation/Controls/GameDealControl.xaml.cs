@@ -1,12 +1,8 @@
-﻿// The User Control item template is documented at https://go.microsoft.com/fwlink/?LinkId=234236
-namespace GoodGameDeals.Controls {
-    using System;
+﻿namespace GoodGameDeals.Presentation.Controls {
     using System.Collections.ObjectModel;
 
-    using Windows.UI;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
-    using Windows.UI.Xaml.Media;
     using Windows.UI.Xaml.Media.Imaging;
 
     using GoodGameDeals.Models;
@@ -78,13 +74,9 @@ namespace GoodGameDeals.Controls {
 
 
         public string GameTitle {
-            get {
-                return (string)this.GetValue(GameTitleProperty);
-            }
+            get => (string)this.GetValue(GameTitleProperty);
 
-            set {
-                this.SetValue(GameTitleProperty, value);
-            }
+            set => this.SetValue(GameTitleProperty, value);
         }
 
         public string GameSubtitle {

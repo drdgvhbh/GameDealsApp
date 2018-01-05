@@ -117,7 +117,9 @@
     <None Include="GoodGameDeals.Core.Tests_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="FodyWeavers.xml" />
+    <Content Include="FodyWeavers.xml">
+      <SubType>Designer</SubType>
+    </Content>
     <Content Include="Properties\UnitTestApp.rd.xml">
       <SubType>Designer</SubType>
     </Content>

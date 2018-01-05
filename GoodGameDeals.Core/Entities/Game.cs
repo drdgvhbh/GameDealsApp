@@ -1,10 +1,11 @@
 ﻿namespace GoodGameDeals.Core.Entities {
+    using System;
     using System.Collections.Generic;
 
     using Windows.UI.Xaml.Media.Imaging;
 
     public class Game {
-        public Game(string id, string gameTitle, BitmapImage gameLogo, IList<Deal> deals) {
+        public Game(string id, string gameTitle, Uri gameLogo, IList<Deal> deals) {
             this.Id = id;
             this.GameTitle = gameTitle;
             this.GameLogo = gameLogo;
@@ -12,7 +13,7 @@
 
         }
 
-        public Game(string id, string gameTitle, BitmapImage gameLogo) : this(
+        public Game(string id, string gameTitle, Uri gameLogo) : this(
             id,
             gameTitle,
             gameLogo,
@@ -23,7 +24,7 @@
 
         public string GameTitle { get; }
 
-        public BitmapImage GameLogo { get; }
+        public Uri GameLogo { get; }
 
         public IList<Deal> Deals { get; }
     }

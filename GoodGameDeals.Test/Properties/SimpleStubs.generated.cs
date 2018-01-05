@@ -231,6 +231,7 @@ namespace GoodGameDeals.Gateways.Contracts
 
 namespace GoodGameDeals.Gateways.Contracts
 {
+    using System;
     using System.Threading.Tasks;
 
     using Windows.UI.Xaml.Media.Imaging;
@@ -244,7 +245,7 @@ namespace GoodGameDeals.Gateways.Contracts
 
         public MockBehavior MockBehavior { get; set; }
 
-        global::System.Threading.Tasks.Task<global::Windows.UI.Xaml.Media.Imaging.BitmapImage> global::GoodGameDeals.Gateways.Contracts.ISteamStore.GameLogo(string title)
+        global::System.Threading.Tasks.Task<global::System.Uri> global::GoodGameDeals.Gateways.Contracts.ISteamStore.GameLogo(string title)
         {
             GameLogo_String_Delegate del;
             if (MockBehavior == MockBehavior.Strict)
@@ -255,14 +256,14 @@ namespace GoodGameDeals.Gateways.Contracts
             {
                 if (!_stubs.TryGetMethodStub<GameLogo_String_Delegate>("GameLogo", out del))
                 {
-                    return Task.FromResult(default(global::Windows.UI.Xaml.Media.Imaging.BitmapImage));
+                    return Task.FromResult(default(global::System.Uri));
                 }
             }
 
             return del.Invoke(title);
         }
 
-        public delegate global::System.Threading.Tasks.Task<global::Windows.UI.Xaml.Media.Imaging.BitmapImage> GameLogo_String_Delegate(string title);
+        public delegate global::System.Threading.Tasks.Task<global::System.Uri> GameLogo_String_Delegate(string title);
 
         public StubISteamStore GameLogo(GameLogo_String_Delegate del, int count = Times.Forever, bool overwrite = false)
         {

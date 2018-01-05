@@ -104,7 +104,7 @@
         ///     exists in the cache first. If the image is not found,
         ///     it is retrieved online and stored into an image cache.
         /// </remarks>
-        public async Task<BitmapImage> GameLogo(string title) {
+        public async Task<Uri> GameLogo(string title) {
                 const string PlaceHolderUri =
                     "ms-appx:///Presentation/Assets/NoPreviewAvaliable.png";
                 var uri = new Uri(PlaceHolderUri);
@@ -126,26 +126,28 @@
                     uri = uriBuilder.Uri;
                 }
 
-                var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
-                BitmapImage image = null;
-                await dispatcher.RunAsync(
-                    CoreDispatcherPriority.High,
-                    async () => {
-                            if (uri.OriginalString == PlaceHolderUri) {
-                                image = new BitmapImage(uri);
-                            }
-                            else {
-                                image = new BitmapImage(uri);
-                                // TODO: Create Cache that actually works
-                     /*           image = await this.imageCache.GetFromCacheAsync(
-                                            uri);*/
-/*                                if (image == null) {
-                                    image = await this.imageCache.GetFromCacheAsync(
-                                                uri);
-                                }*/
-                            }
-                        });
-                return image;
+                return uri;
+
+            /*                var dispatcher = CoreApplication.MainView.CoreWindow.Dispatcher;
+                            BitmapImage image = null;
+                            await dispatcher.RunAsync(
+                                CoreDispatcherPriority.High,
+                                async () => {
+                                        if (uri.OriginalString == PlaceHolderUri) {
+                                            image = new BitmapImage(uri);
+                                        }
+                                        else {
+                                            image = new BitmapImage(uri);
+                                            // TODO: Create Cache that actually works
+                                 /*           image = await this.imageCache.GetFromCacheAsync(
+                                                        uri);#1#
+            /*                                if (image == null) {
+                                                image = await this.imageCache.GetFromCacheAsync(
+                                                            uri);
+                                            }#1#
+                                        }
+                                    });
+                            return image;*/
         }
 
         public async Task<GetAppListResponse> AppList() {

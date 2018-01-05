@@ -9,8 +9,9 @@
     xmlns:converters="using:Template10.Converters"
     xmlns:isAcrylicBrushPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:isAcrylicBrushNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:controls="using:GoodGameDeals.Presentation.Controls"
     x:Name="userControl"
-    x:Class="GoodGameDeals.Controls.GameDealControl"
+    x:Class="GoodGameDeals.Presentation.Controls.GameDealControl"
     mc:Ignorable="d"
     d:DesignHeight="100"
     d:DesignWidth="614"
@@ -826,7 +827,7 @@
             </Pivot.HeaderTemplate>
             <Pivot.ItemTemplate>
                 <DataTemplate>
-                    <Controls:DealPricingControl
+                    <controls:DealPricingControl
                         GamePrice="{Binding GamePrice, Converter={StaticResource DoubleToCurrencyConverter}}"
                         GamePriceOld="{Binding GamePriceOld, Converter={StaticResource DoubleToCurrencyConverter}}"
                         Discount="{Binding Discount, Converter={StaticResource IntegerToPercentageConverter}, ConverterParameter=true}" />
