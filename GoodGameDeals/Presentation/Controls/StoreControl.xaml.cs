@@ -1,4 +1,6 @@
 ﻿namespace GoodGameDeals.Presentation.Controls {
+    using System;
+
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
 
@@ -10,6 +12,8 @@
                 typeof(StoreControl),
                 new PropertyMetadata("Store"));
 
+        public event RoutedEventHandler StoreButtonClick;
+
         public StoreControl() {
             this.InitializeComponent();
         }
@@ -18,6 +22,10 @@
             get => (string)this.GetValue(StoreProperty);
 
             set => this.SetValue(StoreProperty, value);
+        }
+
+        private void StoreButton_OnClick(object sender, RoutedEventArgs e) {
+            this.StoreButtonClick?.Invoke(this, e);
         }
     }
 }

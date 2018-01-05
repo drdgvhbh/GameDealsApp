@@ -127,14 +127,13 @@
                 <ItemsControl ItemsSource="{Binding DealsList, ElementName=userControl}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
-                            <controls:StoreControl Store="{Binding Store}" />
+                            <controls:StoreControl Store="{Binding Store}" StoreButtonClick="StoreControl_OnStoreButtonClick" />
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
-            <Button Style="{StaticResource ButtonStyle1}" RelativePanel.Below="" FontSize="10" Padding="0,0,0,0" Width="58" Height="14" HorizontalContentAlignment="Stretch" HorizontalAlignment="Center" RelativePanel.AlignBottomWithPanel="True">
-                <TextBlock Text="1111" TextAlignment="Left" FontSize="10" HorizontalAlignment="Right" VerticalAlignment="Center"/>
-            </Button>
+            <TextBlock x:Name="GamePriceViewOld" Style="{StaticResource CaptionTextBlockStyle}" Margin="0" TextWrapping="Wrap" Foreground="{ThemeResource SystemControlForegroundBaseMediumLowBrush}" Text="{Binding GamePriceOld, ElementName=userControl}" RelativePanel.AlignLeftWithPanel="False" RelativePanel.AlignBottomWithPanel="False" RelativePanel.Above="GamePriceView" />
+            <TextBlock x:Name="GamePriceView"  Style="{StaticResource BodyTextBlockStyle}" Margin="0" TextWrapping="Wrap" Foreground="{ThemeResource SystemControlForegroundBaseHighBrush}" Text="{Binding GamePrice, ElementName=userControl}" RelativePanel.AlignLeftWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.Below="" />
         </RelativePanel>
 
     </Grid>

@@ -67,7 +67,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Button Padding="2,2,2,2" Width="Auto" Height="Auto" HorizontalContentAlignment="Stretch" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}">
+    <Button x:Name="StoreButton" Padding="2,2,2,2" Width="Auto" Height="Auto" HorizontalContentAlignment="Stretch" HorizontalAlignment="Right" Style="{StaticResource ButtonStyle1}" Click="StoreButton_OnClick">
         <TextBlock Text="{Binding Store, ElementName=userControl}" TextAlignment="Right" FontSize="10.5" HorizontalAlignment="Right" VerticalAlignment="Center"/>
     </Button>
 

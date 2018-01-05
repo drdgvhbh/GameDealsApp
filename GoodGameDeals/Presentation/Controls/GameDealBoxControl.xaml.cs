@@ -29,6 +29,20 @@
                 typeof(GameDealBoxControl),
                 new PropertyMetadata(new BitmapImage()));
 
+        public static readonly DependencyProperty GamePriceOldProperty =
+            DependencyProperty.Register(
+                "GamePriceOld",
+                typeof(string),
+                typeof(GameDealBoxControl),
+                new PropertyMetadata("$0.00"));
+
+        public static readonly DependencyProperty GamePriceProperty =
+            DependencyProperty.Register(
+                "GamePrice",
+                typeof(string),
+                typeof(GameDealBoxControl),
+                new PropertyMetadata("$0.00"));
+
         public static readonly DependencyProperty DealsListProperty =
             DependencyProperty.Register(
                 "DealsList",
@@ -38,6 +52,16 @@
 
         public GameDealBoxControl() {
             this.InitializeComponent();
+            this.RegisterPropertyChangedCallback(
+                DealsListProperty,
+                (sender, dp) =>
+                    {
+                        var prop =
+                            ((ObservableCollection<DealModel>)this.GetValue(dp))
+                            [0];
+                        this.GamePrice = prop.GamePrice.ToString("C");
+                        this.GamePriceOld = prop.GamePriceOld.ToString("C");
+                    });
         }
 
         public string GameTitle {
@@ -53,6 +77,26 @@
 
             set {
                 this.SetValue(GameSubtitleProperty, value);
+            }
+        }
+
+        public string GamePrice {
+            get {
+                return (string)this.GetValue(GamePriceProperty);
+            }
+
+            set {
+                this.SetValue(GamePriceProperty, value);
+            }
+        }
+
+        public string GamePriceOld {
+            get {
+                return (string)this.GetValue(GamePriceOldProperty);
+            }
+
+            set {
+                this.SetValue(GamePriceOldProperty, value);
             }
         }
 
@@ -74,6 +118,13 @@
             set {
                 this.SetValue(DealsListProperty, value);
             }
+        }
+
+        private void StoreControl_OnStoreButtonClick(object sender, RoutedEventArgs e) {
+            var storeControl = sender as StoreControl;
+            var dealModel = storeControl?.DataContext as DealModel;
+            this.GamePrice = dealModel?.GamePrice.ToString("C");
+            this.GamePriceOld = dealModel?.GamePriceOld.ToString("C");
         }
     }
 }
