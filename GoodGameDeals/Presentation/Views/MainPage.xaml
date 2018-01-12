@@ -10,7 +10,54 @@
     x:Class="GoodGameDeals.Presentation.Views.MainPage"
     mc:Ignorable="d"
     d:DesignHeight="1080"
-    d:DesignWidth="1920" DataContext="{Binding ViewModelLocatorInstance.MainPageViewModelInstance, Source={StaticResource Root}}">
+    d:DesignWidth="1920"
+    DataContext="{Binding ViewModelLocatorInstance.MainPageViewModelInstance, Source={StaticResource Root}}">
+
+    <Page.Resources>
+        <Style TargetType="GridViewItem">
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="Background" Value="{ThemeResource   SystemControlBaseHighAcrylicElementBrush  }" />
+            <Setter Property="Foreground" Value="{ThemeResource SystemControlForegroundBaseHighBrush}" />
+            <Setter Property="TabNavigation" Value="Local" />
+            <Setter Property="IsHoldingEnabled" Value="True" />
+            <Setter Property="HorizontalContentAlignment" Value="Center" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,0,4,4" />
+            <Setter Property="MinWidth" Value="{ThemeResource GridViewItemMinWidth}" />
+            <Setter Property="MinHeight" Value="{ThemeResource GridViewItemMinHeight}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewItem">
+                        <ListViewItemPresenter
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            SelectionCheckMarkVisualEnabled="True"
+                            CheckBrush="{ThemeResource SystemControlForegroundBaseMediumHighBrush}"
+                            CheckBoxBrush="{ThemeResource SystemControlBackgroundChromeMediumBrush}"
+                            DragBackground="{ThemeResource ListViewItemDragBackgroundThemeBrush}"
+                            DragForeground="{ThemeResource ListViewItemDragForegroundThemeBrush}"
+                            FocusBorderBrush="{ThemeResource SystemControlForegroundAltHighBrush}"
+                            FocusSecondaryBorderBrush="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                            PlaceholderBackground="{ThemeResource ListViewItemPlaceholderBackgroundThemeBrush}"
+                            PointerOverBackground="{ThemeResource SystemControlHighlightListAccentLowBrush}"
+                            PointerOverForeground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                            SelectedBackground="{ThemeResource SystemControlHighlightAccentBrush}"
+                            SelectedForeground="{ThemeResource SystemControlForegroundBaseHighBrush}"
+                            SelectedPointerOverBackground="{ThemeResource SystemControlHighlightListAccentMediumBrush}"
+                            PressedBackground="{ThemeResource SystemControlHighlightListMediumBrush}"
+                            SelectedPressedBackground="{ThemeResource SystemControlHighlightListAccentHighBrush}"
+                            DisabledOpacity="{ThemeResource ListViewItemDisabledThemeOpacity}"
+                            DragOpacity="{ThemeResource ListViewItemDragThemeOpacity}"
+                            ReorderHintOffset="{ThemeResource GridViewItemReorderHintThemeOffset}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            ContentMargin="{TemplateBinding Padding}"
+                            CheckMode="Overlay" />
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Page.Resources>
 
     <Page.Transitions>
         <TransitionCollection>
@@ -19,13 +66,14 @@
     </Page.Transitions>
 
     <Grid x:Name="RootGrid"
-          Background="#373737">
+          Background="{ThemeResource SystemControlAcrylicWindowBrush}">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates"
                               CurrentStateChanged="AdaptiveStatesCurrentStateChanged">
                 <VisualState x:Name="DefaultState">
                     <VisualState.Setters>
-                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible"/>
+                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Left" />
                     </VisualState.Setters>
                     <VisualState.StateTriggers>
@@ -39,7 +87,8 @@
                     <VisualState.Setters>
                         <Setter Target="MasterColumn.Width" Value="*" />
                         <Setter Target="DetailColumn.Width" Value="0" />
-                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Collapsed"/>
+                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Collapsed" />
+                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Collapsed" />
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Center" />
                     </VisualState.Setters>
                 </VisualState>
@@ -47,7 +96,7 @@
         </VisualStateManager.VisualStateGroups>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="MasterColumn" Width="640"/>
+            <ColumnDefinition x:Name="MasterColumn" Width="640" />
             <ColumnDefinition x:Name="DetailColumn" Width="*" />
         </Grid.ColumnDefinitions>
 
@@ -59,12 +108,13 @@
         <TextBlock
             x:Name="Header"
             Style="{StaticResource HeaderTextBlockStyle}" Text="Latest Deals"
-                   Foreground="White"
-                   FontFamily="Segoe UI"
-                   FontWeight="Light" Margin="24,0,0,0" />
+            Foreground="{ThemeResource  SystemControlBackgroundBaseHighBrush }"
+            FontFamily="Segoe UI"
+            FontWeight="Light" Margin="24,0,0,0" />
         <Rectangle HorizontalAlignment="Stretch" Height="1" VerticalAlignment="Bottom"
                    Fill="{StaticResource AccentColor}" Margin="24,0,24,0" />
-        <ScrollViewer x:Name="GameBarView" Margin="24,24,0,24" Grid.Row="1" HorizontalAlignment="Left" Visibility="Collapsed">
+        <ScrollViewer x:Name="GameBarView" Margin="24,24,0,24" Grid.Row="1" HorizontalAlignment="Left"
+                      Visibility="Collapsed">
             <ItemsControl HorizontalAlignment="Left" VerticalAlignment="Top"
                           ItemsSource="{Binding GamesCollectionView}" Margin="0,0,16,0">
                 <ItemsControl.Resources>
@@ -87,30 +137,36 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <GridView  x:Name="GameListView" SelectionMode="None"
-                  ItemsSource="{Binding GamesCollectionView}"
-                  HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Margin="24,24,0,24" Visibility="Collapsed" IsItemClickEnabled="True" >
-            <GridView.ItemTemplate>
-                <DataTemplate>
-                    <controls:GameDealBoxControl Image="{Binding GameImage}" GameTitle="{Binding GameTitle}" GameSubtitle="{Binding GameSubtitle}" DealsList="{Binding DealsList}" />
-                </DataTemplate>
-            </GridView.ItemTemplate>
-<!--            <GridView.ItemContainerStyle>
-                <Style TargetType="GridViewItem">
-                    <Setter Property="HorizontalContentAlignment"
-                            Value="Stretch" />
-                    <Setter Property="VerticalContentAlignment"
-                            Value="Stretch" />
-                </Style>
-            </GridView.ItemContainerStyle>-->
-            <GridView.ItemsPanel>
-                <ItemsPanelTemplate>
-                    <ItemsWrapGrid MaximumRowsOrColumns="3" Orientation="Horizontal"/>
-                </ItemsPanelTemplate>
-            </GridView.ItemsPanel>
-        </GridView>
-
-        <WebView x:Name="ArticleWebView"
-                 Visibility="Visible" Grid.Row="1" Grid.Column="1" />
+        <isAcrylicBrushNotPresent:RelativePanel isAcrylicBrushNotPresent:Grid.RowSpan="1"
+                                                isAcrylicBrushNotPresent:Grid.ColumnSpan="2"
+                                                isAcrylicBrushNotPresent:Grid.Row="1" Width="Auto" Height="Auto">
+            <isAcrylicBrushNotPresent:GridView x:Name="GameListView" SelectionMode="None"
+                                               ItemsSource="{isAcrylicBrushNotPresent:Binding GamesCollectionView}"
+                                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                                               Margin="24,24,0,24"
+                                               Visibility="Collapsed" IsItemClickEnabled="True"
+                                               ItemClick="GameListView_OnItemClick">
+                <isAcrylicBrushNotPresent:GridView.ItemTemplate>
+                    <isAcrylicBrushNotPresent:DataTemplate>
+                        <!--                    "{Binding ViewModelLocatorInstance.MainPageViewModelInstance, Source={StaticResource Root}-->
+                        <controls:GameDealBoxControl Image="{isAcrylicBrushNotPresent:Binding GameImage}"
+                                                     GameTitle="{isAcrylicBrushNotPresent:Binding GameTitle}"
+                                                     GameSubtitle="{isAcrylicBrushNotPresent:Binding GameSubtitle}"
+                                                     DealsList="{isAcrylicBrushNotPresent:Binding DealsList}" />
+                    </isAcrylicBrushNotPresent:DataTemplate>
+                </isAcrylicBrushNotPresent:GridView.ItemTemplate>
+                <isAcrylicBrushNotPresent:GridView.ItemsPanel>
+                    <isAcrylicBrushNotPresent:ItemsPanelTemplate>
+                        <isAcrylicBrushNotPresent:ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal" />
+                    </isAcrylicBrushNotPresent:ItemsPanelTemplate>
+                </isAcrylicBrushNotPresent:GridView.ItemsPanel>
+            </isAcrylicBrushNotPresent:GridView>
+            <controls:GameDetailControl x:Name="GameDetailControl"
+                                        Visibility="Collapsed" isAcrylicBrushNotPresent:Grid.Column="1"
+                                        DealsList="{isAcrylicBrushNotPresent:Binding SelectedDealsCollectionView.Source}"
+                                        GameTitle="{isAcrylicBrushNotPresent:Binding SelectedGameName}"
+                                        isAcrylicBrushNotPresent:Grid.RowSpan="2" RelativePanel.RightOf="GameListView"
+                                        RelativePanel.AlignRightWithPanel="True" />
+        </isAcrylicBrushNotPresent:RelativePanel>
     </Grid>
 </Page>

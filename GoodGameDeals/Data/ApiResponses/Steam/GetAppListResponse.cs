@@ -1,7 +1,7 @@
 ﻿namespace GoodGameDeals.Data.ApiResponses.Steam {
     using Newtonsoft.Json;
 
-    using NullGuard;
+    
 
     public class GetAppListResponse {
         public GetAppListResponse() {

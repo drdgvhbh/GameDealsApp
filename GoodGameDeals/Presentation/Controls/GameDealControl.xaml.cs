@@ -7,7 +7,7 @@
 
     using GoodGameDeals.Models;
 
-    using NullGuard;
+
 
     public sealed partial class GameDealControl : UserControl {
         public static readonly DependencyProperty GameTitleProperty =
@@ -61,7 +61,7 @@
 
         private void UpdateForVisualState(
             VisualState newState,
-            [AllowNull]VisualState oldState = null) {
+            VisualState oldState = null) {
 /*            if (newState == this.Narrow) {
                 this.GameBarView.Visibility = Visibility.Visible;
             }
@@ -100,13 +100,9 @@
         }
 
         public ObservableCollection<DealModel> DealsList {
-            get {
-                return (ObservableCollection<DealModel>)this.GetValue(DealsListProperty);
-            }
+            get => (ObservableCollection<DealModel>)this.GetValue(DealsListProperty);
 
-            set {
-                this.SetValue(DealsListProperty, value);
-            }
+            set => this.SetValue(DealsListProperty, value);
         }
 
     }

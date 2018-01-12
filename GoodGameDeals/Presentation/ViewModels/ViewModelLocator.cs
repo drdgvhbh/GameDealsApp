@@ -81,7 +81,7 @@ namespace GoodGameDeals.Presentation.ViewModels {
         private DealModel FakeDealModel() {
             var minPrice = this.random.Double(0, 100);
             var maxPrice = this.random.Double(minPrice, 100);
-            var fakeDeal = new DealModel(this.faker.Internet.UrlWithPath(), 60, maxPrice, minPrice, this.faker.Company.CompanyName());
+            var fakeDeal = new DealModel(this.faker.Internet.UrlWithPath(), 60, maxPrice, minPrice, this.faker.Company.CompanyName(), true);
             return fakeDeal;
         }
     }

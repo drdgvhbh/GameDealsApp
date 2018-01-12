@@ -787,7 +787,7 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid x:Name="grid" Margin="0" Background="#686868">
+    <Grid x:Name="grid" Margin="0" Background="{ThemeResource   SystemControlBaseHighAcrylicElementBrush   }">
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
                 <VisualState x:Name="Normal">

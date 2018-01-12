@@ -116,15 +116,15 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         <Image HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Source="{Binding Image, ElementName=userControl}" />
-        <RelativePanel HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1">
+        <RelativePanel HorizontalAlignment="Left" VerticalAlignment="Stretch" Grid.Row="1" Margin="2,2,2,2">
             <TextBlock x:Name="GameTitleView" Text="{Binding GameTitle, ElementName=userControl}"
                    IsHitTestVisible="False"
                    VerticalAlignment="Top" TextTrimming="CharacterEllipsis" Width="187"/>
             <TextBlock x:Name="GameSubTitleView" Style="{StaticResource CaptionTextBlockStyle}" Foreground="{ThemeResource SystemControlBackgroundBaseMediumBrush}"
                 IsHitTestVisible="False"
                 VerticalAlignment="Stretch" TextTrimming="CharacterEllipsis"  Text="{Binding GameSubtitle, ElementName=userControl}" Width="187" RelativePanel.Below="GameTitleView" HorizontalAlignment="Stretch" />
-            <StackPanel RelativePanel.Below="" HorizontalAlignment="Right" VerticalAlignment="Stretch" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True">
-                <ItemsControl ItemsSource="{Binding DealsList, ElementName=userControl}">
+            <StackPanel RelativePanel.Below="" HorizontalAlignment="Right" VerticalAlignment="Stretch" RelativePanel.AlignRightWithPanel="True" RelativePanel.AlignBottomWithPanel="True" RelativePanel.AlignLeftWithPanel="True" Name="Stores" >
+                <ItemsControl ItemsSource="{Binding DealsList, ElementName=userControl}" >
                     <ItemsControl.ItemTemplate>
                         <DataTemplate>
                             <controls:StoreControl Store="{Binding Store}" StoreButtonClick="StoreControl_OnStoreButtonClick" />

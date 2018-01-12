@@ -12,11 +12,16 @@
     using GoodGameDeals.Gateways.Contracts;
     using GoodGameDeals.Services.JsonServices;
 
+    using MetroLog;
+
     using Newtonsoft.Json;
 
     using Unity.Attributes;
 
     public class IsThereAnyDealStore : IIsThereAnyDealStore {
+        private static readonly ILogger Log = LogManagerFactory
+            .DefaultLogManager.GetLogger<IsThereAnyDealStore>();
+
          private const int RecentDealsLimit = 50;
 
         private readonly string apiKey;
@@ -79,13 +84,20 @@
                 Query = query.ToString()
             };
 
-            var observableResponse = new Subject<RecentDealsResponse>();
-            var file = await this.cache.GetFromCacheAsync(uriBuilder.Uri, true);
-            var text = await FileIO.ReadTextAsync(file);
-            var response =
-                new JsonService<RecentDealsResponse>(
-                    this.deserializationSettings).FromJson(text);
-            return response;
+            try {
+                var file =
+                    await this.cache.GetFromCacheAsync(uriBuilder.Uri, true);
+                var text = await FileIO.ReadTextAsync(file);
+                var response =
+                    new JsonService<RecentDealsResponse>(
+                        this.deserializationSettings).FromJson(text);
+                return response;
+            }
+            catch (Exception e) {
+                Log.Error(e.Message);
+            }
+            return new RecentDealsResponse();
+
         }
 
         public async Task Initialize() {

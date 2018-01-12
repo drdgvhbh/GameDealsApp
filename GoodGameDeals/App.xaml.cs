@@ -1,8 +1,9 @@
 ﻿namespace GoodGameDeals {
-    using System.Reactive.Linq;
     using System.Threading.Tasks;
 
     using GoodGameDeals.Containers;
+    using GoodGameDeals.Gateways.Contracts;
+
     using MetroLog;
     using MetroLog.Targets;
 
@@ -14,14 +15,11 @@
     using Unity;
 
     using Windows.ApplicationModel.Activation;
-    using Windows.ApplicationModel.Core;
     using Windows.Storage;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Data;
 
-    using GoodGameDeals.Gateways.Contracts;
-
-    using MainPage = GoodGameDeals.Presentation.Views.MainPage;
+    using MainPage = Presentation.Views.MainPage;
 
     /// <summary>
     /// The app.

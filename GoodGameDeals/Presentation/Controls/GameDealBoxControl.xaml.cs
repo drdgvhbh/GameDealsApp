@@ -1,11 +1,13 @@
 ﻿namespace GoodGameDeals.Presentation.Controls {
     using System.Collections.ObjectModel;
 
+    using GoodGameDeals.Models;
+
+    using Template10.Utils;
+
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Media.Imaging;
-
-    using GoodGameDeals.Models;
 
     public sealed partial class GameDealBoxControl : UserControl {
         public static readonly DependencyProperty GameTitleProperty =
@@ -120,11 +122,31 @@
             }
         }
 
+/*        public event RoutedEventHandler StoreButtonClick;*/
+
         private void StoreControl_OnStoreButtonClick(object sender, RoutedEventArgs e) {
-            var storeControl = sender as StoreControl;
+            this.DeactivateText();
+
+            if (!(sender is StoreControl storeControl)) {
+                return;
+            }
+
+            storeControl.IsActive = true;
             var dealModel = storeControl?.DataContext as DealModel;
             this.GamePrice = dealModel?.GamePrice.ToString("C");
             this.GamePriceOld = dealModel?.GamePriceOld.ToString("C");
+/*            this.StoreButtonClick?.Invoke(this, e);*/
+        }
+
+        private void DeactivateText() {
+            var itemCollection = this.Stores.Children[0].AllChildren();
+            if (itemCollection != null) {
+                foreach (var storeObject in itemCollection) {
+                    if (storeObject is StoreControl store) {
+                        store.IsActive = false;
+                    }
+                }
+            }
         }
     }
 }

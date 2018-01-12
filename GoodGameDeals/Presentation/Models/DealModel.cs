@@ -8,12 +8,14 @@
                 long discount,
                 double gamePriceOld,
                 double gamePrice,
-                string store) {
+                string store,
+                bool isActive) {
             this.Url = url;
             this.Discount = discount;
             this.GamePriceOld = gamePriceOld;
             this.GamePrice = gamePrice;
             this.Store = store;
+            this.IsActive = isActive;
         }
 
         public long Discount { get; }
@@ -25,6 +27,8 @@
         public string Store { get; }
 
         public string Url { get; }
+
+        public bool IsActive { get; }
 
         public static bool operator ==(DealModel deal1, DealModel deal2) =>
             EqualityComparer<DealModel>.Default.Equals(deal1, deal2);

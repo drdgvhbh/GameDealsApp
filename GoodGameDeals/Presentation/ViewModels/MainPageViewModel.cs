@@ -3,14 +3,16 @@
     using System.Collections.Generic;
     using System.Collections.ObjectModel;
     using System.Linq;
-    using System.Reactive;
-    using System.Reactive.Linq;
-    using System.Reactive.Subjects;
     using System.Threading.Tasks;
+    using System.Windows.Input;
 
-    using Windows.UI.Xaml.Media.Imaging;
+    using Windows.UI.Xaml;
+    using Windows.UI.Xaml.Controls;
 
     using AutoMapper;
+
+    using GoodGameDeals.Core.Dto;
+    using GoodGameDeals.Core.UseCases;
     using GoodGameDeals.Messages;
     using GoodGameDeals.Models;
     using GoodGameDeals.Views;
@@ -25,13 +27,6 @@
 
     using Windows.UI.Xaml.Navigation;
 
-    using Bogus;
-
-    using GoodGameDeals.Core.Dto;
-    using GoodGameDeals.Core.UseCases;
-
-    using NullGuard;
-
     public class MainPageViewModel : ViewModelBase {
         /// <summary>
         ///     The log.
@@ -42,6 +37,8 @@
         private AccessToken accessToken;
 
         private bool isFirstLoad;
+
+        private string selectedGameTitle;
 
         private readonly RequestRecentGameDealsInteractor recentGameDealsInteractor;
 
@@ -55,14 +52,35 @@
 
             this.GamesCollectionView =
                 new AdvancedCollectionView(gamesList, true);
+
+            var dealsList = gamesList.Count > 0
+                                ? gamesList[0].DealsList
+                                : new ObservableCollection<DealModel>();
+            this.SelectedDealsCollectionView = new AdvancedCollectionView(
+                dealsList,
+                true);
             this.recentGameDealsInteractor = recentGameDealsInteractor;
             this.mapper = mapper;
 
             this.GamesCollectionView.SortDescriptions.Add(
                 new SortDescription("Id", SortDirection.Descending));
+            System.Diagnostics.Debug.WriteLine("TRASH");
+            System.Diagnostics.Debug.WriteLine(this.SelectedDealsCollectionView.Source.GetHashCode());
         }
 
         public AdvancedCollectionView GamesCollectionView { get; }
+
+        public AdvancedCollectionView SelectedDealsCollectionView { get; }
+
+        public string SelectedGameName {
+            get {
+                return this.selectedGameTitle;
+            }
+            private set {
+                this.Set(ref this.selectedGameTitle, value);
+                //    this.Set
+            }
+        }
 
         public void GotoAbout() =>
             this.NavigationService.Navigate(typeof(SettingsPage), 2);
@@ -73,11 +91,24 @@
         public void GotoSettings() =>
             this.NavigationService.Navigate(typeof(SettingsPage), 0);
 
-/*        /// <summary>
-        ///     The nav to details page.
-        /// </summary>
-        public void NavToDetailsPage() =>
-            this.NavigationService.Navigate(typeof(DetailPage), this.Value);*/
+        public void OnDealButtonPressed(object sender, RoutedEventArgs e) {
+            Log.Debug("Hello world!");
+            var gameModel = (e as ItemClickEventArgs)?.ClickedItem as GameModel;
+            this.SelectedGameName = gameModel?.GameTitle;
+            this.SelectedDealsCollectionView.Clear();
+            System.Diagnostics.Debug.WriteLine(this.SelectedDealsCollectionView.Source.GetHashCode());
+            if (gameModel?.DealsList != null) {
+                foreach (var deal in gameModel?.DealsList) {
+                    this.SelectedDealsCollectionView.Add(deal);
+                }
+            }
+        }
+
+        /*        /// <summary>
+                ///     The nav to details page.
+                /// </summary>
+                public void NavToDetailsPage() =>
+                    this.NavigationService.Navigate(typeof(DetailPage), this.Value);*/
 
         public override async Task OnNavigatedFromAsync(
                 IDictionary<string, object> suspensionState,
@@ -90,7 +121,7 @@
         }
 
         public override async Task OnNavigatedToAsync(
-            [AllowNull]object parameter,
+            object parameter,
             NavigationMode mode,
             IDictionary<string, object> suspensionState) {
             if (suspensionState.Any()) {

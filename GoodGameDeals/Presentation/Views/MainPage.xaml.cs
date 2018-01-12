@@ -3,7 +3,7 @@
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
 
-    using NullGuard;
+    using GoodGameDeals.Presentation.ViewModels;
 
     public sealed partial class MainPage : Page {
         public MainPage() {
@@ -20,7 +20,7 @@
 
         private void UpdateForVisualState(
                 VisualState newState,
-                [AllowNull]VisualState oldState = null) {
+                VisualState oldState = null) {
             if (newState == this.NarrowState) {
                 this.GameBarView.Visibility = Visibility.Visible;
             }
@@ -30,5 +30,8 @@
             }
         }
 
+        private void GameListView_OnItemClick(object sender, ItemClickEventArgs e) {
+            (this.DataContext as MainPageViewModel)?.OnDealButtonPressed(sender, e);
+        }
     }
 }

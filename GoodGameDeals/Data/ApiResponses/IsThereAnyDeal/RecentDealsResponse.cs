@@ -1,7 +1,7 @@
 ﻿namespace GoodGameDeals.Data.ApiResponses.IsThereAnyDeal {
     using Newtonsoft.Json;
 
-    using NullGuard;
+
 
     public class RecentDealsResponse {
         public RecentDealsResponse() {

@@ -116,9 +116,6 @@
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.0.5</Version>
     </PackageReference>
-    <PackageReference Include="NullGuard.Fody">
-      <Version>1.6.3</Version>
-    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />

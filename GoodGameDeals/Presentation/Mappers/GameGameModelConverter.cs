@@ -9,12 +9,12 @@
     using GoodGameDeals.Core.Entities;
     using GoodGameDeals.Models;
 
-    using NullGuard;
+
 
     public class GameGameModelConverter : ITypeConverter<Game, GameModel> {
         public GameModel Convert(
                 Game source,
-                [AllowNull]GameModel destination,
+                GameModel destination,
                 ResolutionContext context) {
             var regex = new Regex(@":|-");
             var gameHeader = regex.Split(source.GameTitle, 2);
@@ -33,7 +33,8 @@
                         (long)(deal.Discount.PriceDiscountPercentage * 100),
                         deal.Discount.PriceOld,
                         deal.Discount.PriceNew,
-                        deal.Store.Name));
+                        deal.Store.Name,
+                        counter == 0));
                 counter++;
             }
             return new GameModel(

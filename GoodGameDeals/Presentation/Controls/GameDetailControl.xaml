@@ -1,0 +1,290 @@
+﻿<UserControl
+    x:Class="GoodGameDeals.Presentation.Controls.GameDetailControl"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:GoodGameDeals.Presentation.Controls"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:controls="using:WinRTXamlToolkit.Controls"
+    xmlns:charting="using:WinRTXamlToolkit.Controls.DataVisualization.Charting"
+    xmlns:datavis="using:WinRTXamlToolkit.Controls.DataVisualization"
+    mc:Ignorable="d"
+    d:DesignHeight="1080"
+    d:DesignWidth="641"
+    xmlns:Custom="using:WinRTXamlToolkit.Controls.DataVisualization">
+    <Grid Margin="24,0,24,0">
+        <Grid.ColumnDefinitions>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <charting:Chart
+            x:Name="GameDealChart"
+            MinWidth="400"
+            MinHeight="350"
+            Title="Stacked Column Chart"
+            Margin="0,0">
+            <charting:Chart.Palette>
+                <charting:ResourceDictionaryCollection>
+                    <!-- Blue -->
+                    <ResourceDictionary>
+                        <SolidColorBrush
+                            x:Key="Background"
+                            Color="#476CA6" />
+                        <Style
+                            x:Key="DataPointStyle"
+                            TargetType="Control">
+                            <Setter
+                                Property="Background"
+                                Value="{StaticResource Background}" />
+                        </Style>
+                        <Style
+                            x:Key="DataShapeStyle"
+                            TargetType="Shape">
+                            <Setter
+                                Property="Stroke"
+                                Value="{StaticResource Background}" />
+                            <Setter
+                                Property="StrokeThickness"
+                                Value="2" />
+                            <Setter
+                                Property="StrokeMiterLimit"
+                                Value="1" />
+                            <Setter
+                                Property="Fill"
+                                Value="{StaticResource Background}" />
+                        </Style>
+                    </ResourceDictionary>
+                    <!-- Hazy Yellow -->
+                    <ResourceDictionary>
+                        <SolidColorBrush
+                            x:Key="Background"
+                            Color="#F2CC7F" />
+                        <Style
+                            x:Key="DataPointStyle"
+                            TargetType="Control">
+                            <Setter
+                                Property="Background"
+                                Value="{StaticResource Background}" />
+                        </Style>
+                        <Style
+                            x:Key="DataShapeStyle"
+                            TargetType="Shape">
+                            <Setter
+                                Property="Stroke"
+                                Value="{StaticResource Background}" />
+                            <Setter
+                                Property="StrokeThickness"
+                                Value="2" />
+                            <Setter
+                                Property="StrokeMiterLimit"
+                                Value="1" />
+                            <Setter
+                                Property="Fill"
+                                Value="{StaticResource Background}" />
+                        </Style>
+                    </ResourceDictionary>
+                </charting:ResourceDictionaryCollection>
+            </charting:Chart.Palette>
+            <charting:Chart.TitleStyle>
+                <Style
+                    TargetType="datavis:Title">
+                    <Setter Property="FontWeight" Value="SemiLight" />
+                    <Setter Property="FontSize" Value="24" />
+                    <Setter
+                        Property="HorizontalContentAlignment"
+                        Value="Center" />
+                    <Setter
+                        Property="VerticalContentAlignment"
+                        Value="Top" />
+                    <Setter
+                        Property="IsTabStop"
+                        Value="False" />
+                    <Setter
+                        Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate
+                                TargetType="datavis:Title">
+                                <Border
+                                    CornerRadius="10"
+                                    Background="{TemplateBinding Background}">
+                                    <ContentPresenter
+                                        FontSize="{TemplateBinding FontSize}"
+                                        FontWeight="{TemplateBinding FontWeight}"
+                                        Content="{TemplateBinding Content}"
+                                        ContentTemplate="{TemplateBinding ContentTemplate}"
+                                        Margin="{TemplateBinding Padding}"
+                                        HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
+                                        VerticalAlignment="{TemplateBinding VerticalContentAlignment}" />
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </charting:Chart.TitleStyle>
+            <!--        <charting:Chart.LegendStyle>
+                <Style
+                        TargetType="datavis:Legend">
+                    <Setter
+                            Property="VerticalAlignment"
+                            Value="Stretch" />
+                    <Setter
+                            Property="Background"
+                            Value="#444" />
+                    <Setter
+                            Property="ItemsPanel">
+                        <Setter.Value>
+                            <ItemsPanelTemplate>
+                                <controls:UniformGrid
+                                        Columns="1"
+                                        Rows="5" />
+                            </ItemsPanelTemplate>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter
+                            Property="TitleStyle">
+                        <Setter.Value>
+                            <Style
+                                    TargetType="datavis:Title">
+                                <Setter
+                                        Property="Margin"
+                                        Value="0,5,0,10" />
+                                <Setter
+                                        Property="FontWeight"
+                                        Value="Bold" />
+                                <Setter
+                                        Property="HorizontalAlignment"
+                                        Value="Center" />
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter
+                            Property="ItemContainerStyle"
+                            xmlns:series="using:WinRTXamlToolkit.Controls.DataVisualization.Charting">
+                        <Setter.Value>
+                            <Style
+                                    TargetType="series:LegendItem">
+                                <Setter
+                                        Property="Template">
+                                    <Setter.Value>
+                                        <ControlTemplate
+                                                TargetType="series:LegendItem">
+                                            <Border
+                                                    MinWidth="200"
+                                                    Margin="20,10"
+                                                    CornerRadius="10"
+                                                    VerticalAlignment="Stretch"
+                                                    HorizontalAlignment="Stretch"
+                                                    Background="{Binding Background}">
+                                                <datavis:Title
+                                                        HorizontalAlignment="Center"
+                                                        VerticalAlignment="Center"
+                                                        FontSize="24"
+                                                        FontWeight="Bold"
+                                                        Content="{TemplateBinding Content}" />
+                                            </Border>
+                                        </ControlTemplate>
+                                    </Setter.Value>
+                                </Setter>
+                            </Style>
+                        </Setter.Value>
+                    </Setter>
+                    <Setter
+                            Property="Template">
+                        <Setter.Value>
+                            <ControlTemplate
+                                    TargetType="datavis:Legend">
+                                <Border
+                                        CornerRadius="10"
+                                        Background="{TemplateBinding Background}"
+                                        BorderBrush="{TemplateBinding BorderBrush}"
+                                        BorderThickness="{TemplateBinding BorderThickness}"
+                                        Padding="2">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition
+                                                    Height="Auto" />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+                                        <datavis:Title
+                                                Grid.Row="0"
+                                                x:Name="HeaderContent"
+                                                Content="{TemplateBinding Header}"
+                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
+                                                Style="{TemplateBinding TitleStyle}" />
+                                        <ScrollViewer
+                                                Grid.Row="1"
+                                                VerticalScrollBarVisibility="Auto"
+                                                BorderThickness="0"
+                                                Padding="0"
+                                                IsTabStop="False">
+                                            <ItemsPresenter
+                                                    x:Name="Items"
+                                                    Margin="10,0,10,10" />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </Border>
+                            </ControlTemplate>
+                        </Setter.Value>
+                    </Setter>
+                </Style>
+            </charting:Chart.LegendStyle>-->
+            <charting:StackedColumnSeries>
+                <charting:SeriesDefinition
+                    DependentValuePath="Value"
+                    IndependentValuePath="Name"
+                    IsTapEnabled="True"
+                    Title="New Price" />
+                <charting:SeriesDefinition
+                    DependentValuePath="Value"
+                    IndependentValuePath="Name"
+                    IsTapEnabled="True"
+                    Title="Old Price" />
+            </charting:StackedColumnSeries>
+        </charting:Chart>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="110" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Ellipse x:Name="UserScoreBackground" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="110"
+                     Fill="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush	}" Height="110"
+                     Grid.Row="1" Grid.Column="1" />
+            <Ellipse x:Name="HistoricalLowBackground" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="110"
+                     Fill="{ThemeResource SystemControlForegroundBaseMediumHighBrush }" Height="110"
+                     Grid.Row="1" Grid.Column="3" />
+            <TextBlock x:Name="UserScore" HorizontalAlignment="Center" Text="86" TextWrapping="Wrap"
+                       VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center"
+                       Grid.Row="1" Grid.Column="1" FontFamily="Segoe UI" />
+            <TextBlock x:Name="UserScoreTitle" HorizontalAlignment="Center" Text="User Score" TextWrapping="Wrap"
+                       VerticalAlignment="Center" Grid.Column="1" TextAlignment="Center"
+                       Style="{StaticResource TitleTextBlockStyle}" Padding="10,10,10,10" />
+            <TextBlock x:Name="HistoricalLowTitle" HorizontalAlignment="Center" Text="Historical Low" TextWrapping="Wrap"
+                       VerticalAlignment="Center" Grid.Column="3" TextAlignment="Center"
+                       Style="{StaticResource TitleTextBlockStyle}" Padding="10,10,10,10" />
+            <TextBlock x:Name="UserScoreSubtitle" HorizontalAlignment="Center" Text="37000 Reviews" TextWrapping="Wrap"
+                       VerticalAlignment="Center" Grid.Column="1" TextAlignment="Center"
+                       Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,10,10,10" Grid.Row="2" />
+            <Path Stretch="Fill" Fill="{ThemeResource SystemControlForegroundAltMediumHighBrush }" 
+          Data="M 0,110 70,110 45,90 75,90 120,120 75,150 45,150 70,130 0,130 Z"
+          HorizontalAlignment="Center"  Width="30" Height="24" Margin="0,0,2,0"
+          RenderTransformOrigin=".5,.5" Grid.Column="3" VerticalAlignment="Center" Grid.Row="1">
+                <Path.RenderTransform>
+                    <CompositeTransform Rotation="90"/>
+                </Path.RenderTransform>
+            </Path>
+
+        </Grid>
+
+    </Grid>
+</UserControl>
