@@ -81,6 +81,10 @@
                 ApplicationData.Current.LocalCacheFolder,
                 "SteamCache");
 
+            await this.root.ResolveFileCache("IGDBCache").InitializeAsync(
+                ApplicationData.Current.LocalCacheFolder,
+                "IGDBCache");
+
             await this.root.ResolveFileCache("SteamLogoCache").InitializeAsync(
                 ApplicationData.Current.LocalCacheFolder,
                 "SteamLogoCache");

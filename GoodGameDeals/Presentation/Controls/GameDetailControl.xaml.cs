@@ -42,7 +42,6 @@ namespace GoodGameDeals.Presentation.Controls {
             this.Loading += (sender, args) =>
                 {
                     var rand = new Random();
-                    System.Diagnostics.Debug.WriteLine(this.DealsList.GetHashCode());
                     this.DealsList.CollectionChanged += (sender2, args2) =>
                         {
                             var records = new List<Records>();
@@ -58,10 +57,6 @@ namespace GoodGameDeals.Presentation.Controls {
                             ((StackedColumnSeries)this.GameDealChart.Series[0])
                                 .SeriesDefinitions[1].ItemsSource = oldPrice;
                             this.GameDealChart.Title = this.GameTitle;
-                            var woop = this.GameDealChart.Axes;
-                            //this.GameDealChart.Axes[0].
-                            var squinf = this.GameDealChart.TitleStyle;
-                            //squinf.Setters.
                         };
                 };
         }

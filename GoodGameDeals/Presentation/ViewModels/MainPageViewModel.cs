@@ -64,8 +64,6 @@
 
             this.GamesCollectionView.SortDescriptions.Add(
                 new SortDescription("Id", SortDirection.Descending));
-            System.Diagnostics.Debug.WriteLine("TRASH");
-            System.Diagnostics.Debug.WriteLine(this.SelectedDealsCollectionView.Source.GetHashCode());
         }
 
         public AdvancedCollectionView GamesCollectionView { get; }
@@ -73,13 +71,8 @@
         public AdvancedCollectionView SelectedDealsCollectionView { get; }
 
         public string SelectedGameName {
-            get {
-                return this.selectedGameTitle;
-            }
-            private set {
-                this.Set(ref this.selectedGameTitle, value);
-                //    this.Set
-            }
+            get => this.selectedGameTitle;
+            private set => this.Set(ref this.selectedGameTitle, value);
         }
 
         public void GotoAbout() =>
@@ -92,11 +85,14 @@
             this.NavigationService.Navigate(typeof(SettingsPage), 0);
 
         public void OnDealButtonPressed(object sender, RoutedEventArgs e) {
-            Log.Debug("Hello world!");
             var gameModel = (e as ItemClickEventArgs)?.ClickedItem as GameModel;
+            this.SetSelectedDeal(gameModel);
+
+        }
+
+        private void SetSelectedDeal(GameModel gameModel) {
             this.SelectedGameName = gameModel?.GameTitle;
             this.SelectedDealsCollectionView.Clear();
-            System.Diagnostics.Debug.WriteLine(this.SelectedDealsCollectionView.Source.GetHashCode());
             if (gameModel?.DealsList != null) {
                 foreach (var deal in gameModel?.DealsList) {
                     this.SelectedDealsCollectionView.Add(deal);
@@ -157,6 +153,10 @@
                         new RecentGameDealsRequestMessage(25));
             foreach (var game in response.Games) {
                 this.GamesCollectionView.Add(this.mapper.Map<GameModel>(game));
+            }
+
+            if (this.GamesCollectionView.Count > 0) {
+                this.SetSelectedDeal(this.GamesCollectionView[0] as GameModel);
             }
         }
 

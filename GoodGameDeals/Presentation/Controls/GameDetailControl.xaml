@@ -17,8 +17,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
         <charting:Chart
             x:Name="GameDealChart"
@@ -275,7 +277,10 @@
             <TextBlock x:Name="UserScoreSubtitle" HorizontalAlignment="Center" Text="37000 Reviews" TextWrapping="Wrap"
                        VerticalAlignment="Center" Grid.Column="1" TextAlignment="Center"
                        Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,10,10,10" Grid.Row="2" />
-            <Path Stretch="Fill" Fill="{ThemeResource SystemControlForegroundAltMediumHighBrush }" 
+            <TextBlock x:Name="HistoricalLowSubtitle" HorizontalAlignment="Center" Text="$39.99" TextWrapping="Wrap"
+                       VerticalAlignment="Center" Grid.Column="3" TextAlignment="Center"
+                       Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,10,10,10" Grid.Row="2" />
+            <Path Stretch="Fill" Fill="{ThemeResource SystemControlForegroundAltMediumHighBrush }"
           Data="M 0,110 70,110 45,90 75,90 120,120 75,150 45,150 70,130 0,130 Z"
           HorizontalAlignment="Center"  Width="30" Height="24" Margin="0,0,2,0"
           RenderTransformOrigin=".5,.5" Grid.Column="3" VerticalAlignment="Center" Grid.Row="1">
@@ -284,6 +289,28 @@
                 </Path.RenderTransform>
             </Path>
 
+        </Grid>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Name="BestDeal" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" Text="Best Deal" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="2" />
+            <TextBlock x:Name="BestPrice" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="$25.99" TextWrapping="Wrap" VerticalAlignment="Center"  TextAlignment="Center" Grid.Column="2" Grid.Row="1" />
+            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Column="1" Source="ms-appx:///Presentation/Assets/Square150x150Logo.png" Margin="10,10,10,10" Grid.Row="1"/>
+            <RelativePanel HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100">
+                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Null}" Background="{x:Null}" Margin="0,0,20,20">
+                    <Image Stretch="UniformToFill" Source="ms-appx:///Presentation/Assets/109-External-512.png" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                </Button>
+                <TextBlock HorizontalAlignment="Left" Height="20" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Width="62"/>
+            </RelativePanel>
         </Grid>
 
     </Grid>

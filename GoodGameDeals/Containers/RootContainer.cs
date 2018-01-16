@@ -1,6 +1,7 @@
 ﻿namespace GoodGameDeals.Containers {
     using System;
 
+    using Windows.ApplicationModel.Resources;
     using Windows.UI.Xaml.Data;
 
     using AutoMapper;
@@ -16,6 +17,7 @@
     using Unity.Lifetime;
 
     using Windows.Web.Http;
+    using Windows.Web.Http.Filters;
 
     using GoodGameDeals.Core.Contracts.Repositories;
     using GoodGameDeals.Core.UseCases;
@@ -50,12 +52,24 @@
         protected override void RegisterCaches() {
             this.Container.RegisterType<HttpClient>(new InjectionConstructor());
 
+            var igdbApiKey = ResourceLoader
+                .GetForViewIndependentUse("apiKeys").GetString("IGDB");
+            var igdbClient = new HttpClient();
+            igdbClient.DefaultRequestHeaders.Add("user-key", igdbApiKey);
+            igdbClient.DefaultRequestHeaders.Add("Accept", "application/json");
+            this.Container.RegisterType<FileCache>(
+                "IGDBCache",
+                new ContainerControlledLifetimeManager(),
+                new InjectionConstructor(igdbClient));
+            this.Container.Resolve<FileCache>("IGDBCache").CacheDuration =
+                TimeSpan.FromDays(1);
+
             this.Container.RegisterType<FileCache>(
                 "IsThereAnyDealCache",
                 new ContainerControlledLifetimeManager(),
                 new InjectionConstructor(this.Container.Resolve<HttpClient>()));
             this.Container.Resolve<FileCache>("IsThereAnyDealCache")
-                .CacheDuration = TimeSpan.FromDays(10);
+                .CacheDuration = TimeSpan.FromDays(1);
 
             var steamClient = this.Container.Resolve<HttpClient>();
             this.Container.RegisterType<FileCache>(
@@ -121,6 +135,8 @@
             this.Container
                 .RegisterType<ISteamStore, SteamStore>(
                     new ContainerControlledLifetimeManager());
+            this.Container.RegisterType<IIGDBStore, IGDBStore>(
+                new ContainerControlledLifetimeManager());
         }
 
 

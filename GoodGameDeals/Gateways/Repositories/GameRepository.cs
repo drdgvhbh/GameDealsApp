@@ -38,11 +38,24 @@
 
         private readonly ITaskDelay taskDelay;
 
+        private readonly IIGDBStore igdbStore;
+
+        public GameRepository(
+            ISteamStore steamStore,
+            IIsThereAnyDealStore dealStore,
+            ITaskDelay taskDelay) {
+            this.taskDelay = taskDelay;
+            this.isThereAnyDealStore = dealStore;
+            this.steamStore = steamStore;
+        }
+
         public GameRepository(
                 ISteamStore steamStore,
                 IIsThereAnyDealStore dealStore,
+                IIGDBStore igdbStore,
                 ITaskDelay taskDelay) {
             this.taskDelay = taskDelay;
+            this.igdbStore = igdbStore;
             this.isThereAnyDealStore = dealStore;
             this.steamStore = steamStore;
         }
@@ -103,7 +116,6 @@
                     nameof(offset) + " must be positive.");
             }
 
-
             RecentDealsResponse recentDeals;
             try {
                 recentDeals =
@@ -118,6 +130,8 @@
                 Log.Error(Message, e);
                 throw new NullReferenceException(Message);
             }
+
+            var derp = await this.igdbStore.SearchForGame("Europa Universalis 4");
             var games = new ConcurrentBag<Game>();
 
             foreach (var deal in recentDeals.Data.DealsList) {
@@ -144,8 +158,35 @@
                         }
                     }
 
-                    var image = await this.steamStore.GameLogo(deal.Title);
-                    games.Add(new Game(deal.Plain, deal.Title, image, deals));
+                    var imageId = await this.igdbStore.SearchForGame(deal.Title);
+                    if (imageId.Length == 0) {
+                        continue;
+                    }
+
+                    var imageResponse =
+                        await this.igdbStore.CoverImage(imageId[0].Id);
+                    if (imageResponse.Length == 0) {
+                        continue;
+                    }
+
+                    var imageUrl = "ms-appx:///Presentation/Assets/NoPreviewAvaliable.png";
+                    for (var i = 0; i < imageResponse.Length; i++) {
+                        if (imageResponse[i].CoverDetail != null
+                                && imageResponse[i].CoverDetail.Url != null) {
+                            imageUrl = imageResponse[i].CoverDetail.Url;
+                            imageUrl = imageUrl.Replace("thumb", "cover_big");
+                            imageUrl = "https:" + imageUrl;
+                        }
+                    }
+
+                    games.Add(
+                        new Game(
+                            deal.Plain,
+                            deal.Title,
+                            new Uri(imageUrl),
+                            deals));
+
+
                 }
                 catch (Exception e) {
                     Log.Error(e.Message, e);

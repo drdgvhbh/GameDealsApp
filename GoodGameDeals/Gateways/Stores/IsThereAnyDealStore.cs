@@ -22,7 +22,7 @@
         private static readonly ILogger Log = LogManagerFactory
             .DefaultLogManager.GetLogger<IsThereAnyDealStore>();
 
-         private const int RecentDealsLimit = 50;
+        private const int RecentDealsLimit = 50;
 
         private readonly string apiKey;
 
@@ -53,7 +53,6 @@
                 Query = query.ToString()
             };
 
-            var observableResponse = new Subject<CurrentPricesResponse>();
             var file = await this.cache.GetFromCacheAsync(uriBuilder.Uri, true);
             var text = await FileIO.ReadTextAsync(file);
             var response =

@@ -157,6 +157,22 @@ namespace GoodGameDeals.Threading
 
 namespace GoodGameDeals.Gateways.Contracts
 {
+    [CompilerGenerated]
+    public class StubIIGDBStore : IIGDBStore
+    {
+        private readonly StubContainer<StubIIGDBStore> _stubs = new StubContainer<StubIIGDBStore>();
+
+        public MockBehavior MockBehavior { get; set; }
+
+        public StubIIGDBStore(MockBehavior mockBehavior = MockBehavior.Loose)
+        {
+            MockBehavior = mockBehavior;
+        }
+    }
+}
+
+namespace GoodGameDeals.Gateways.Contracts
+{
     using System;
     using System.Threading.Tasks;
 
