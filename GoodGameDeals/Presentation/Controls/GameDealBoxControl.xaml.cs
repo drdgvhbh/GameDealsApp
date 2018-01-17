@@ -56,13 +56,15 @@
             this.InitializeComponent();
             this.RegisterPropertyChangedCallback(
                 DealsListProperty,
-                (sender, dp) =>
-                    {
-                        var prop =
-                            ((ObservableCollection<DealModel>)this.GetValue(dp))
-                            [0];
+                (sender, dp) => {
+                    var propArray = (ObservableCollection<DealModel>)this.GetValue(dp);
+                    if (propArray.Count > 0) {
+                        var prop = propArray[0];
                         this.GamePrice = prop.GamePrice.ToString("C");
                         this.GamePriceOld = prop.GamePriceOld.ToString("C");
+                    }
+
+
                     });
         }
 

@@ -157,12 +157,68 @@ namespace GoodGameDeals.Threading
 
 namespace GoodGameDeals.Gateways.Contracts
 {
+    using System.Threading.Tasks;
+
+    using GoodGameDeals.Data.ApiResponses.IGDB;
+
     [CompilerGenerated]
     public class StubIIGDBStore : IIGDBStore
     {
         private readonly StubContainer<StubIIGDBStore> _stubs = new StubContainer<StubIIGDBStore>();
 
         public MockBehavior MockBehavior { get; set; }
+
+        global::System.Threading.Tasks.Task<global::GoodGameDeals.Data.ApiResponses.IGDB.SearchForGameResponse[]> global::GoodGameDeals.Gateways.Contracts.IIGDBStore.SearchForGame(string searchQuery)
+        {
+            SearchForGame_String_Delegate del;
+            if (MockBehavior == MockBehavior.Strict)
+            {
+                del = _stubs.GetMethodStub<SearchForGame_String_Delegate>("SearchForGame");
+            }
+            else
+            {
+                if (!_stubs.TryGetMethodStub<SearchForGame_String_Delegate>("SearchForGame", out del))
+                {
+                    return Task.FromResult(default(global::GoodGameDeals.Data.ApiResponses.IGDB.SearchForGameResponse[]));
+                }
+            }
+
+            return del.Invoke(searchQuery);
+        }
+
+        public delegate global::System.Threading.Tasks.Task<global::GoodGameDeals.Data.ApiResponses.IGDB.SearchForGameResponse[]> SearchForGame_String_Delegate(string searchQuery);
+
+        public StubIIGDBStore SearchForGame(SearchForGame_String_Delegate del, int count = Times.Forever, bool overwrite = false)
+        {
+            _stubs.SetMethodStub(del, count, overwrite);
+            return this;
+        }
+
+        global::System.Threading.Tasks.Task<global::GoodGameDeals.Data.ApiResponses.IGDB.CoverResponse[]> global::GoodGameDeals.Gateways.Contracts.IIGDBStore.CoverImage(long id)
+        {
+            CoverImage_Int64_Delegate del;
+            if (MockBehavior == MockBehavior.Strict)
+            {
+                del = _stubs.GetMethodStub<CoverImage_Int64_Delegate>("CoverImage");
+            }
+            else
+            {
+                if (!_stubs.TryGetMethodStub<CoverImage_Int64_Delegate>("CoverImage", out del))
+                {
+                    return Task.FromResult(default(global::GoodGameDeals.Data.ApiResponses.IGDB.CoverResponse[]));
+                }
+            }
+
+            return del.Invoke(id);
+        }
+
+        public delegate global::System.Threading.Tasks.Task<global::GoodGameDeals.Data.ApiResponses.IGDB.CoverResponse[]> CoverImage_Int64_Delegate(long id);
+
+        public StubIIGDBStore CoverImage(CoverImage_Int64_Delegate del, int count = Times.Forever, bool overwrite = false)
+        {
+            _stubs.SetMethodStub(del, count, overwrite);
+            return this;
+        }
 
         public StubIIGDBStore(MockBehavior mockBehavior = MockBehavior.Loose)
         {

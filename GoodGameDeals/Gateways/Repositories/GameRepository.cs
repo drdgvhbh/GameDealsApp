@@ -175,7 +175,13 @@
                                 && imageResponse[i].CoverDetail.Url != null) {
                             imageUrl = imageResponse[i].CoverDetail.Url;
                             imageUrl = imageUrl.Replace("thumb", "cover_big");
-                            imageUrl = "https:" + imageUrl;
+                            Uri result;
+                            if (!Uri.IsWellFormedUriString(
+                                    imageUrl,
+                                    UriKind.Absolute)) {
+                                imageUrl = "https:" + imageUrl;
+                            }
+
                         }
                     }
 

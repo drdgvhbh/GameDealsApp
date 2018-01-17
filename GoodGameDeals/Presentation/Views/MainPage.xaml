@@ -3,8 +3,6 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:isAcrylicBrushPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:isAcrylicBrushNotPresent="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
     xmlns:Controls="using:GoodGameDeals.Controls"
     xmlns:controls="using:GoodGameDeals.Presentation.Controls"
     x:Class="GoodGameDeals.Presentation.Views.MainPage"
@@ -70,6 +68,16 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates"
                               CurrentStateChanged="AdaptiveStatesCurrentStateChanged">
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1008" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Left" />
+                    </VisualState.Setters>
+                </VisualState>
                 <VisualState x:Name="DefaultState">
                     <VisualState.Setters>
                         <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
@@ -137,36 +145,36 @@
                 </ItemsControl.ItemTemplate>
             </ItemsControl>
         </ScrollViewer>
-        <isAcrylicBrushNotPresent:RelativePanel isAcrylicBrushNotPresent:Grid.RowSpan="1"
-                                                isAcrylicBrushNotPresent:Grid.ColumnSpan="2"
-                                                isAcrylicBrushNotPresent:Grid.Row="1" Width="Auto" Height="Auto">
-            <isAcrylicBrushNotPresent:GridView x:Name="GameListView" SelectionMode="None"
-                                               ItemsSource="{isAcrylicBrushNotPresent:Binding GamesCollectionView}"
-                                               HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
-                                               Margin="24,24,0,24"
-                                               Visibility="Collapsed" IsItemClickEnabled="True"
-                                               ItemClick="GameListView_OnItemClick">
-                <isAcrylicBrushNotPresent:GridView.ItemTemplate>
-                    <isAcrylicBrushNotPresent:DataTemplate>
+        <RelativePanel Grid.RowSpan="1"
+                       Grid.ColumnSpan="2" Grid.Column="0"
+                       Grid.Row="1" Width="Auto" Height="Auto">
+            <GridView x:Name="GameListView" SelectionMode="None"
+                      ItemsSource="{Binding GamesCollectionView}"
+                      HorizontalAlignment="Stretch" VerticalAlignment="Stretch"
+                      Margin="24,24,0,24"
+                      Visibility="Collapsed" IsItemClickEnabled="True"
+                      ItemClick="GameListView_OnItemClick">
+                <GridView.ItemTemplate>
+                    <DataTemplate>
                         <!--                    "{Binding ViewModelLocatorInstance.MainPageViewModelInstance, Source={StaticResource Root}-->
-                        <controls:GameDealBoxControl Image="{isAcrylicBrushNotPresent:Binding GameImage}"
-                                                     GameTitle="{isAcrylicBrushNotPresent:Binding GameTitle}"
-                                                     GameSubtitle="{isAcrylicBrushNotPresent:Binding GameSubtitle}"
-                                                     DealsList="{isAcrylicBrushNotPresent:Binding DealsList}" />
-                    </isAcrylicBrushNotPresent:DataTemplate>
-                </isAcrylicBrushNotPresent:GridView.ItemTemplate>
-                <isAcrylicBrushNotPresent:GridView.ItemsPanel>
-                    <isAcrylicBrushNotPresent:ItemsPanelTemplate>
-                        <isAcrylicBrushNotPresent:ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal" />
-                    </isAcrylicBrushNotPresent:ItemsPanelTemplate>
-                </isAcrylicBrushNotPresent:GridView.ItemsPanel>
-            </isAcrylicBrushNotPresent:GridView>
+                        <controls:GameDealBoxControl Image="{Binding GameImage}"
+                                                     GameTitle="{Binding GameTitle}"
+                                                     GameSubtitle="{Binding GameSubtitle}"
+                                                     DealsList="{Binding DealsList}" />
+                    </DataTemplate>
+                </GridView.ItemTemplate>
+                <GridView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsWrapGrid MaximumRowsOrColumns="1" Orientation="Horizontal" Loaded="ItemsWrapGrid_OnLoaded" />
+                    </ItemsPanelTemplate>
+                </GridView.ItemsPanel>
+            </GridView>
             <controls:GameDetailControl x:Name="GameDetailControl"
-                                        Visibility="Collapsed" isAcrylicBrushNotPresent:Grid.Column="1"
-                                        DealsList="{isAcrylicBrushNotPresent:Binding SelectedDealsCollectionView.Source}"
-                                        GameTitle="{isAcrylicBrushNotPresent:Binding SelectedGameName}"
-                                        isAcrylicBrushNotPresent:Grid.RowSpan="2" RelativePanel.RightOf="GameListView"
+                                        Visibility="Collapsed" Grid.Column="1"
+                                        DealsList="{Binding SelectedDealsCollectionView.Source}"
+                                        GameTitle="{Binding SelectedGameName}"
+                                        Grid.RowSpan="2" RelativePanel.RightOf="GameListView"
                                         RelativePanel.AlignRightWithPanel="True" />
-        </isAcrylicBrushNotPresent:RelativePanel>
+        </RelativePanel>
     </Grid>
 </Page>
