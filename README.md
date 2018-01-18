@@ -8,27 +8,40 @@ The project is still in development and has not been released to the Windows Sto
 
 ### Prerequisites
 
-You will need to clone this repository onto your computer using [git](https://git-scm.com/downloads), have [Visual Studio 2017](https://www.visualstudio.com/downloads/) installed, and create a [Is There Any Deal](https://isthereanydeal.com/apps/) account to access their api. 
+You will need to clone this repository onto your computer using [git](https://git-scm.com/downloads), have [Visual Studio 2017](https://www.visualstudio.com/downloads/) installed. You will also need accounts on [Is There Any Deal](https://isthereanydeal.com/apps/) and [IGDB](https://www.igdb.com/api) to access their api. 
 
 ### Installing
 
-Clone the repistory onto your computer
-
+1. Clone the repository onto your computer
 ```
 git clone https://github.com/drdgvhbh/GoodGameDeals.git
 ```
 
-Create a new app from the `Is There Any deal` [page](https://isthereanydeal.com/apps/new/).
+2. Search for the `For Developer Settings` on your computer and change the `Use Developer Features` mode to `Developer Mode`.
 
-![app](https://i.imgur.com/5XETMtm.png)
+3. Create a new app from the `Is There Any deal` [page](https://isthereanydeal.com/dev/app/).
 
-Generate an api key.
+![app](https://i.imgur.com/QPPj6EV.png)
 
-![apiKey](https://i.imgur.com/bON6Ygj.png)
+4. Request an api key.
 
-Add your key to the `ITAD` key in the `apiKeys.resw` file. Build the application and run!
+![apiKey](https://i.imgur.com/3Yaqd4W.png)
 
-![build](https://i.imgur.com/1IVjf1Q.png)
+5. Request a key from the `IGDB` api [page](https://api.igdb.com/).
+![page](https://i.imgur.com/ms0d8GA.png).
+
+6. Store these keys in your `apiKeys.resw` file.
+
+7. Restore Nuget packages in your Visual Studio solution and make sure the `GoodGameDeals` project is in deploy mode.
+
+
+### Running the App
+Build the solution and run it in debug mode.
+Currently there is a bottleneck in the load times on the first load but subsequent loads are significantly faster because the API data is cached.
+
+It should now look like this.
+
+![build](buildGif.gif)
 
 
 ## Built With
@@ -45,4 +58,4 @@ This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md
 ## Acknowledgments
 
 * [Is There Any Deal Api](https://itad.docs.apiary.io/)
-* [SteamSpy Api](https://steamspy.com/api.php)
+* [IGDB Api](https://www.igdb.com/api)

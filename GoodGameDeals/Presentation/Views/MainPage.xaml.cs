@@ -1,4 +1,6 @@
 ﻿namespace GoodGameDeals.Presentation.Views {
+    using Windows.Foundation;
+    using Windows.UI.ViewManagement;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Controls;
     using Windows.UI.Xaml.Navigation;
@@ -27,12 +29,16 @@
                 this.GameBarView.Visibility = Visibility.Visible;
             }
 
-            if (newState == this.DefaultState || newState == this.WideState) {
+            if (newState == this.DefaultState || newState == this.WideState || newState == this.VeryWideState) {
                 this.GameBarView.Visibility = Visibility.Collapsed;
             }
 
-            if (newState == this.WideState) {
+            if (newState == this.VeryWideState) {
                 this.itemsWrapGrid.MaximumRowsOrColumns = 3;
+            }
+
+            if (newState == this.WideState) {
+                this.itemsWrapGrid.MaximumRowsOrColumns = 2;
             }
 
             if (newState == this.DefaultState) {

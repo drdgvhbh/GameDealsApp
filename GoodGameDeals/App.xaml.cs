@@ -15,7 +15,9 @@
     using Unity;
 
     using Windows.ApplicationModel.Activation;
+    using Windows.Foundation;
     using Windows.Storage;
+    using Windows.UI.ViewManagement;
     using Windows.UI.Xaml;
     using Windows.UI.Xaml.Data;
 
@@ -46,6 +48,8 @@
             this.RequestedTheme = settings.AppTheme;
             this.CacheMaxDuration = settings.CacheMaxDuration;
             this.ShowShellBackButton = settings.UseShellBackButton;
+            ApplicationView.PreferredLaunchViewSize = new Size(700, 800);
+            ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.PreferredLaunchViewSize;
 
 #if DEBUG
             LogManagerFactory.DefaultConfiguration.AddTarget(

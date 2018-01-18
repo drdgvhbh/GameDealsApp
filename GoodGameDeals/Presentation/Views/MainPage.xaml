@@ -68,6 +68,16 @@
         <VisualStateManager.VisualStateGroups>
             <VisualStateGroup x:Name="AdaptiveStates"
                               CurrentStateChanged="AdaptiveStatesCurrentStateChanged">
+                <VisualState x:Name="VeryWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1208" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Left" />
+                    </VisualState.Setters>
+                 </VisualState >
                 <VisualState x:Name="WideState">
                     <VisualState.StateTriggers>
                         <AdaptiveTrigger MinWindowWidth="1008" />
