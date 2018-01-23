@@ -100,6 +100,7 @@
     <Compile Include="Containers\SettingsContainer.cs" />
     <Compile Include="Data\ApiResponses\IGDB\CoverResponse.cs" />
     <Compile Include="Data\ApiResponses\IGDB\SearchForGameResponse.cs" />
+    <Compile Include="Data\ApiResponses\IGDB\SummaryResponse.cs" />
     <Compile Include="Data\Cache\CacheBase.cs" />
     <Compile Include="Data\Cache\FileCache.cs" />
     <Compile Include="Data\Collections\ObjectModel\ObservableLinkedList.cs" />

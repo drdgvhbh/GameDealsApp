@@ -21,6 +21,8 @@ namespace GoodGameDeals.Models {
 
         public DateTime Id { get; }
 
+        public string GameSummary { get; }
+
         /// <summary>
         ///     Gets the deals list.
         /// </summary>

@@ -148,15 +148,19 @@
 
         public async Task PopulateGamesList() {
             this.GamesCollectionView.Clear();
-            var response =
+            while (this.GamesCollectionView.Count < 50) {
+                var response =
                     await this.recentGameDealsInteractor.Handle(
-                        new RecentGameDealsRequestMessage(25));
-            foreach (var game in response.Games) {
-                this.GamesCollectionView.Add(this.mapper.Map<GameModel>(game));
-            }
+                        new RecentGameDealsRequestMessage(5, this.GamesCollectionView.Count));
+                foreach (var game in response.Games) {
+                    this.GamesCollectionView.Add(
+                        this.mapper.Map<GameModel>(game));
+                }
 
-            if (this.GamesCollectionView.Count > 0) {
-                this.SetSelectedDeal(this.GamesCollectionView[0] as GameModel);
+                if (this.GamesCollectionView.Count > 0) {
+                    this.SetSelectedDeal(
+                        this.GamesCollectionView[0] as GameModel);
+                }
             }
         }
 

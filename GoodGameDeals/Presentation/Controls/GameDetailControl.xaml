@@ -12,22 +12,130 @@
     d:DesignHeight="1080"
     d:DesignWidth="641"
     xmlns:Custom="using:WinRTXamlToolkit.Controls.DataVisualization">
+    <UserControl.Resources>
+        <Style x:Key="ButtonStyle1" TargetType="Button">
+            <Setter Property="Background" Value="{ThemeResource SystemControlHighlightListAccentMediumBrush}"/>
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
+            <Setter Property="Padding" Value="8,4,8,4"/>
+            <Setter Property="HorizontalAlignment" Value="Left"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontWeight" Value="SemiLight"/>
+            <Setter Property="FontSize" Value="24"/>
+            <Setter Property="UseSystemFocusVisuals" Value="True"/>
+            <Setter Property="FocusVisualMargin" Value="-3"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="{TemplateBinding Background}">
+                            <VisualStateManager.VisualStateGroups>
+                                <VisualStateGroup x:Name="CommonStates">
+                                    <VisualState x:Name="Normal">
+                                        <Storyboard>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="PointerOver">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlHighlightListAccentLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Pressed">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundListMediumBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="RootGrid"/>
+                                        </Storyboard>
+                                    </VisualState>
+                                    <VisualState x:Name="Disabled">
+                                        <Storyboard>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="RootGrid" Storyboard.TargetProperty="Background">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource SystemControlBackgroundBaseMediumLowBrush}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                            <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundDisabled}"/>
+                                            </ObjectAnimationUsingKeyFrames>
+                                        </Storyboard>
+                                    </VisualState>
+                                </VisualStateGroup>
+                            </VisualStateManager.VisualStateGroups>
+                            <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" BorderThickness="{TemplateBinding BorderThickness}" BorderBrush="{TemplateBinding BorderBrush}" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
     <Grid Margin="24,0,24,0">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="2*" />
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
-            <RowDefinition Height="*" />
             <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup x:Name="AdaptiveStates"
+                              CurrentStateChanged="AdaptiveStatesCurrentStateChanged">
+                <VisualState x:Name="VeryWideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1208" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState >
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="1008" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="DefaultState">
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="640" />
+                    </VisualState.StateTriggers>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
         <charting:Chart
             x:Name="GameDealChart"
             MinWidth="400"
             MinHeight="350"
             Title="Stacked Column Chart"
-            Margin="0,0">
+            Margin="0,0" Grid.ColumnSpan="2">
             <charting:Chart.Palette>
                 <charting:ResourceDictionaryCollection>
                     <!-- Blue -->
@@ -126,113 +234,6 @@
                     </Setter>
                 </Style>
             </charting:Chart.TitleStyle>
-            <!--        <charting:Chart.LegendStyle>
-                <Style
-                        TargetType="datavis:Legend">
-                    <Setter
-                            Property="VerticalAlignment"
-                            Value="Stretch" />
-                    <Setter
-                            Property="Background"
-                            Value="#444" />
-                    <Setter
-                            Property="ItemsPanel">
-                        <Setter.Value>
-                            <ItemsPanelTemplate>
-                                <controls:UniformGrid
-                                        Columns="1"
-                                        Rows="5" />
-                            </ItemsPanelTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter
-                            Property="TitleStyle">
-                        <Setter.Value>
-                            <Style
-                                    TargetType="datavis:Title">
-                                <Setter
-                                        Property="Margin"
-                                        Value="0,5,0,10" />
-                                <Setter
-                                        Property="FontWeight"
-                                        Value="Bold" />
-                                <Setter
-                                        Property="HorizontalAlignment"
-                                        Value="Center" />
-                            </Style>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter
-                            Property="ItemContainerStyle"
-                            xmlns:series="using:WinRTXamlToolkit.Controls.DataVisualization.Charting">
-                        <Setter.Value>
-                            <Style
-                                    TargetType="series:LegendItem">
-                                <Setter
-                                        Property="Template">
-                                    <Setter.Value>
-                                        <ControlTemplate
-                                                TargetType="series:LegendItem">
-                                            <Border
-                                                    MinWidth="200"
-                                                    Margin="20,10"
-                                                    CornerRadius="10"
-                                                    VerticalAlignment="Stretch"
-                                                    HorizontalAlignment="Stretch"
-                                                    Background="{Binding Background}">
-                                                <datavis:Title
-                                                        HorizontalAlignment="Center"
-                                                        VerticalAlignment="Center"
-                                                        FontSize="24"
-                                                        FontWeight="Bold"
-                                                        Content="{TemplateBinding Content}" />
-                                            </Border>
-                                        </ControlTemplate>
-                                    </Setter.Value>
-                                </Setter>
-                            </Style>
-                        </Setter.Value>
-                    </Setter>
-                    <Setter
-                            Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate
-                                    TargetType="datavis:Legend">
-                                <Border
-                                        CornerRadius="10"
-                                        Background="{TemplateBinding Background}"
-                                        BorderBrush="{TemplateBinding BorderBrush}"
-                                        BorderThickness="{TemplateBinding BorderThickness}"
-                                        Padding="2">
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition
-                                                    Height="Auto" />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
-                                        <datavis:Title
-                                                Grid.Row="0"
-                                                x:Name="HeaderContent"
-                                                Content="{TemplateBinding Header}"
-                                                ContentTemplate="{TemplateBinding HeaderTemplate}"
-                                                Style="{TemplateBinding TitleStyle}" />
-                                        <ScrollViewer
-                                                Grid.Row="1"
-                                                VerticalScrollBarVisibility="Auto"
-                                                BorderThickness="0"
-                                                Padding="0"
-                                                IsTabStop="False">
-                                            <ItemsPresenter
-                                                    x:Name="Items"
-                                                    Margin="10,0,10,10" />
-                                        </ScrollViewer>
-                                    </Grid>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                </Style>
-            </charting:Chart.LegendStyle>-->
             <charting:StackedColumnSeries>
                 <charting:SeriesDefinition
                     DependentValuePath="Value"
@@ -246,72 +247,83 @@
                     Title="Old Price" />
             </charting:StackedColumnSeries>
         </charting:Chart>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1">
+        <Grid x:Name="PurchaseBox" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.ColumnSpan="2">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="2*" />
+                <ColumnDefinition Width="1*" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto" />
-                <RowDefinition Height="110" />
-                <RowDefinition Height="Auto" />
+                <RowDefinition Height="5*" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-            <Ellipse x:Name="UserScoreBackground" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="110"
-                     Fill="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush	}" Height="110"
-                     Grid.Row="1" Grid.Column="1" />
-            <Ellipse x:Name="HistoricalLowBackground" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="110"
-                     Fill="{ThemeResource SystemControlForegroundBaseMediumHighBrush }" Height="110"
-                     Grid.Row="1" Grid.Column="3" />
-            <TextBlock x:Name="UserScore" HorizontalAlignment="Center" Text="86" TextWrapping="Wrap"
+            <Rectangle HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Fill="{ThemeResource SystemControlForegroundChromeHighBrush}" Grid.ColumnSpan="2"/>
+            <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="8,8,8,8">
+                <TextBlock x:Name="PurchaseTitle" HorizontalAlignment="Left" Text="Purchase Europa Universalis 4" TextWrapping="Wrap" VerticalAlignment="Top" 
+                       Style="{StaticResource TitleTextBlockStyle}" AccessKey=""/>
+                <TextBlock x:Name="PurchaseSubtitle" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Left" Text="Seller: Steam" TextWrapping="Wrap" VerticalAlignment="Stretch" RelativePanel.Below="PurchaseTitle"/>
+            </RelativePanel>
+        </Grid>
+        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1" Grid.RowSpan="2">
+            <Grid.ColumnDefinitions>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,20,0,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Ellipse x:Name="UserScoreBackground" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="110"
+                     Fill="{ThemeResource SystemControlAccentAcrylicElementAccentMediumHighBrush}" Height="110" Grid.Row="1" />
+                <TextBlock x:Name="UserScore" HorizontalAlignment="Center" Text="86" TextWrapping="Wrap"
                        VerticalAlignment="Center" Style="{StaticResource HeaderTextBlockStyle}" TextAlignment="Center"
-                       Grid.Row="1" Grid.Column="1" FontFamily="Segoe UI" />
-            <TextBlock x:Name="UserScoreTitle" HorizontalAlignment="Center" Text="User Score" TextWrapping="Wrap"
-                       VerticalAlignment="Center" Grid.Column="1" TextAlignment="Center"
+                       FontFamily="Segoe UI" Grid.Row="1" />
+                <TextBlock x:Name="UserScoreTitle" HorizontalAlignment="Center" Text="User Score" TextWrapping="Wrap"
+                       VerticalAlignment="Center" TextAlignment="Center"
                        Style="{StaticResource TitleTextBlockStyle}" Padding="10,10,10,10" />
-            <TextBlock x:Name="HistoricalLowTitle" HorizontalAlignment="Center" Text="Historical Low" TextWrapping="Wrap"
-                       VerticalAlignment="Center" Grid.Column="3" TextAlignment="Center"
+                <TextBlock x:Name="UserScoreSubtitle" HorizontalAlignment="Center" Text="37000 Reviews" TextWrapping="Wrap"
+                       VerticalAlignment="Center" TextAlignment="Center"
+                       Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,10,10,10" Grid.Row="2" />
+            </Grid>
+            <Grid HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Ellipse x:Name="HistoricalLowBackground" HorizontalAlignment="Center" VerticalAlignment="Stretch" Width="110"
+                     Fill="{ThemeResource SystemControlForegroundBaseMediumHighBrush}" Height="110" Grid.Row="1" />
+                <TextBlock x:Name="HistoricalLowTitle" HorizontalAlignment="Center" Text="Historical Low" TextWrapping="Wrap"
+                       VerticalAlignment="Center" TextAlignment="Center"
                        Style="{StaticResource TitleTextBlockStyle}" Padding="10,10,10,10" />
-            <TextBlock x:Name="UserScoreSubtitle" HorizontalAlignment="Center" Text="37000 Reviews" TextWrapping="Wrap"
-                       VerticalAlignment="Center" Grid.Column="1" TextAlignment="Center"
+                <TextBlock x:Name="HistoricalLowSubtitle" HorizontalAlignment="Center" Text="$39.99" TextWrapping="Wrap"
+                       VerticalAlignment="Center" TextAlignment="Center"
                        Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,10,10,10" Grid.Row="2" />
-            <TextBlock x:Name="HistoricalLowSubtitle" HorizontalAlignment="Center" Text="$39.99" TextWrapping="Wrap"
-                       VerticalAlignment="Center" Grid.Column="3" TextAlignment="Center"
-                       Style="{StaticResource SubtitleTextBlockStyle}" Padding="10,10,10,10" Grid.Row="2" />
-            <Path Stretch="Fill" Fill="{ThemeResource SystemControlForegroundAltMediumHighBrush }"
+                <Path Stretch="Fill" Fill="{ThemeResource SystemControlForegroundAltMediumHighBrush}"
           Data="M 0,110 70,110 45,90 75,90 120,120 75,150 45,150 70,130 0,130 Z"
-          HorizontalAlignment="Center"  Width="30" Height="24" Margin="0,0,2,0"
-          RenderTransformOrigin=".5,.5" Grid.Column="3" VerticalAlignment="Center" Grid.Row="1">
-                <Path.RenderTransform>
-                    <CompositeTransform Rotation="90"/>
-                </Path.RenderTransform>
-            </Path>
+          HorizontalAlignment="Center"  Width="30" Height="24"
+          RenderTransformOrigin=".5,.5" VerticalAlignment="Center" UseLayoutRounding="False" Grid.Row="1">
+                    <Path.RenderTransform>
+                        <CompositeTransform Rotation="90"/>
+                    </Path.RenderTransform>
+                </Path>
+            </Grid>
 
         </Grid>
-        <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="Auto" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
-<!--            <TextBlock x:Name="BestDeal" Style="{StaticResource TitleTextBlockStyle}" HorizontalAlignment="Center" Text="Best Deal" TextWrapping="Wrap" VerticalAlignment="Center" TextAlignment="Center" Grid.Column="2" />
-            <TextBlock x:Name="BestPrice" Style="{StaticResource SubtitleTextBlockStyle}" HorizontalAlignment="Center" Text="$25.99" TextWrapping="Wrap" VerticalAlignment="Center"  TextAlignment="Center" Grid.Column="2" Grid.Row="1" />
-            <Image HorizontalAlignment="Center" VerticalAlignment="Center" Width="100" Grid.Column="1" Source="ms-appx:///Presentation/Assets/Square150x150Logo.png" Margin="10,10,10,10" Grid.Row="1"/>
-            <RelativePanel HorizontalAlignment="Left" Height="100" VerticalAlignment="Top" Width="100">
-                <Button HorizontalAlignment="Center" VerticalAlignment="Center" Foreground="{x:Null}" Background="{x:Null}" Margin="0,0,20,20">
-                    <Image Stretch="UniformToFill" Source="ms-appx:///Presentation/Assets/109-External-512.png" Width="50" Height="50" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                </Button>
-                <TextBlock HorizontalAlignment="Left" Height="20" Text="TextBlock" TextWrapping="Wrap" VerticalAlignment="Top" Width="62"/>
-            </RelativePanel>-->
-        </Grid>
+        <RelativePanel HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Column="1" Grid.Row="1">
+            <TextBlock x:Name="PurchasePrice" HorizontalAlignment="Center" Style="{StaticResource TitleTextBlockStyle}"  Text="$59.99" TextWrapping="Wrap" VerticalAlignment="Center" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignVerticalCenterWithPanel="True" Margin="0,-16.5,0,8.5"/>
+            <Button Style="{StaticResource ButtonStyle1}" Opacity="1.0"  x:Name="PurchaseButton" Content="Buy Now" HorizontalAlignment="Center" VerticalAlignment="Bottom" Canvas.ZIndex="10" RelativePanel.AlignHorizontalCenterWithPanel="True" RelativePanel.AlignBottomWithPanel="False" RelativePanel.Below="PurchasePrice" />
+        </RelativePanel>
+        <RelativePanel x:Name="TextDetails" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2">
+            <TextBlock x:Name="SummaryTitle" HorizontalAlignment="Left" Text="Summary" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource TitleTextBlockStyle}" LineHeight="28"/>
+            <TextBlock x:Name="Summary" HorizontalAlignment="Left" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque nunc arcu, ultrices in sem a, rutrum feugiat sapien. Praesent nec tristique arcu. Fusce vel dui magna. Vivamus aliquam nunc ac massa elementum sollicitudin ut et elit. Nullam sodales ex sapien, id ultrices magna vulputate nec. Maecenas eget massa id ipsum blandit gravida. Pellentesque sit amet lectus at diam dapibus luctus. Quisque cursus urna erat, sit amet molestie ex tempus a. Aliquam ac tellus dignissim, suscipit lorem ut, mollis arcu. Donec venenatis varius nibh, at facilisis tortor malesuada a. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Pellentesque tempus lectus sed efficitur porta. Aenean cursus arcu quis elementum tempor. Phasellus vestibulum viverra mi eu venenatis." TextWrapping="Wrap" VerticalAlignment="Top" RelativePanel.Below="SummaryTitle" Style="{StaticResource BodyTextBlockStyle}" LineHeight="20" Margin="0,8,0,0"/>
+            <TextBlock x:Name="SynopsisTitle" HorizontalAlignment="Left" Text="Synopsis" TextWrapping="Wrap" VerticalAlignment="Top" Style="{StaticResource TitleTextBlockStyle}" LineHeight="28" RelativePanel.Below="Summary" Margin="0,8,0,0"/>
+            <TextBlock x:Name="Synopsis" HorizontalAlignment="Left" Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris iaculis lorem eu odio fringilla, vel ornare nisi rutrum. Sed laoreet dictum diam, ac gravida nisi malesuada id. Sed lectus massa, ullamcorper id venenatis non, pharetra at diam. Nulla tristique, nisi at euismod pulvinar, lorem lorem volutpat lectus, vel dignissim quam dui sit amet urna. Aenean pretium quam eget odio ultricies finibus. Vivamus ut velit consequat, efficitur arcu vitae, lacinia sapien. Integer id leo tellus. Maecenas volutpat dapibus interdum. Proin at mauris nunc. Quisque vel aliquet tellus. Vestibulum venenatis sagittis interdum. Etiam lacus arcu, malesuada non nibh id, suscipit eleifend justo. Duis placerat est sit amet tellus commodo fringilla. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Suspendisse potenti. Suspendisse vestibulum ex augue, eget vehicula mi maximus vitae." TextWrapping="Wrap" VerticalAlignment="Top" RelativePanel.Below="SynopsisTitle" Margin="0,8,0,0" Style="{StaticResource BodyTextBlockStyle}" LineHeight="20" />
+        </RelativePanel>
 
     </Grid>
 </UserControl>

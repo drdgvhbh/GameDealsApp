@@ -102,5 +102,8 @@ namespace GoodGameDeals.Presentation.Controls {
 
             set => this.SetValue(DealsListProperty, value);
         }
+
+        private void AdaptiveStatesCurrentStateChanged(object sender, VisualStateChangedEventArgs e) {
+        }
     }
 }

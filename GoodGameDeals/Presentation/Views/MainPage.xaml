@@ -73,7 +73,7 @@
                         <AdaptiveTrigger MinWindowWidth="1208" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="GameDetailView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Left" />
                     </VisualState.Setters>
@@ -83,14 +83,14 @@
                         <AdaptiveTrigger MinWindowWidth="1008" />
                     </VisualState.StateTriggers>
                     <VisualState.Setters>
-                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="GameDetailView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Left" />
                     </VisualState.Setters>
                 </VisualState>
                 <VisualState x:Name="DefaultState">
                     <VisualState.Setters>
-                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Visible" />
+                        <Setter Target="GameDetailView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="GameListView.(UIElement.Visibility)" Value="Visible" />
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Left" />
                     </VisualState.Setters>
@@ -105,7 +105,7 @@
                     <VisualState.Setters>
                         <Setter Target="MasterColumn.Width" Value="*" />
                         <Setter Target="DetailColumn.Width" Value="0" />
-                        <Setter Target="GameDetailControl.(UIElement.Visibility)" Value="Collapsed" />
+                        <Setter Target="GameDetailView.(UIElement.Visibility)" Value="Collapsed" />
                         <Setter Target="GameListView.(UIElement.Visibility)" Value="Collapsed" />
                         <Setter Target="Header.(UIElement.HorizontalAlignment)" Value="Center" />
                     </VisualState.Setters>
@@ -179,12 +179,14 @@
                     </ItemsPanelTemplate>
                 </GridView.ItemsPanel>
             </GridView>
-            <controls:GameDetailControl x:Name="GameDetailControl"
-                                        Visibility="Collapsed" Grid.Column="1"
-                                        DealsList="{Binding SelectedDealsCollectionView.Source}"
-                                        GameTitle="{Binding SelectedGameName}"
-                                        Grid.RowSpan="2" RelativePanel.RightOf="GameListView"
-                                        RelativePanel.AlignRightWithPanel="True" />
+            <ScrollViewer x:Name="GameDetailView" Margin="24,24,0,24" Grid.Column="1" HorizontalAlignment="Stretch" Grid.RowSpan="2" 
+                          Visibility="Collapsed" RelativePanel.AlignRightWithPanel="True" RelativePanel.RightOf="GameListView" >
+                <controls:GameDetailControl x:Name="GameDetailControl"
+                                            DealsList="{Binding SelectedDealsCollectionView.Source}"
+                                            GameTitle="{Binding SelectedGameName}"
+                                            HorizontalAlignment="Stretch" />
+            </ScrollViewer>
+
         </RelativePanel>
     </Grid>
 </Page>

@@ -73,5 +73,25 @@
                     .FromJson(text);
             return response;
         }
+
+        public async Task<SummaryResponse> GameSummary(long id) {
+            var path = new StringBuilder();
+            path.AppendFormat("games/{0}/", id);
+            var uriBuilder = new UriBuilder
+                                 {
+                                     Scheme = "https",
+                                     Host =
+                                         "api-2445582011268.apicast.io",
+                                     Path = path.ToString(),
+                                     Query = "fields=summary"
+                                 };
+            var file = await this.cache.GetFromCacheAsync(uriBuilder.Uri, true);
+            var text = await FileIO.ReadTextAsync(file);
+            var response =
+                new JsonService<SummaryResponse>(
+                        this.deserializationSettings)
+                    .FromJson(text);
+            return response;
+        }
     }
 }
